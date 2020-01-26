@@ -7,6 +7,9 @@ import { LoginComponent } from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { Page404Component } from './components/page404/page404.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { ProductosComponent } from './components/productos/productos.component';
+import { NoticiasComponent } from './components/noticias/noticias.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +17,10 @@ import { Page404Component } from './components/page404/page404.component';
     LoginComponent,
     NavbarComponent,
     HomeComponent,
-    Page404Component
+    Page404Component,
+    UsuariosComponent,
+    ProductosComponent,
+    NoticiasComponent
   ],
   imports: [
     BrowserModule,
