@@ -10,6 +10,7 @@ import { Page404Component } from './components/page404/page404.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { NoticiasComponent } from './components/noticias/noticias.component';
+import { NovedadesComponent } from './components/novedades/novedades.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { NoticiasComponent } from './components/noticias/noticias.component';
     Page404Component,
     UsuariosComponent,
     ProductosComponent,
-    NoticiasComponent
+    NoticiasComponent,
+    NovedadesComponent
   ],
   imports: [
     BrowserModule,

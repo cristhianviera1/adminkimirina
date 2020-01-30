@@ -4,6 +4,12 @@ import {LoginComponent} from './components/login/login.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { Page404Component } from './components/page404/page404.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { ProductosComponent } from './components/productos/productos.component';
+import { NovedadesComponent } from './components/novedades/novedades.component';
+
+
+
 
 
 const routes: Routes = [
@@ -11,6 +17,9 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full'},
   { path: 'navbar', component: NavbarComponent},
   { path: 'home', component: HomeComponent},
+  { path: 'usuarios', component: UsuariosComponent},
+  { path: 'productos', component: ProductosComponent},
+  { path: 'novedades', component: NovedadesComponent},
   { path: '**', component: Page404Component}
 ];
 
