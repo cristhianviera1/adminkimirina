@@ -15,6 +15,7 @@ export class UsuariosComponent implements OnInit {
   usuarios: Array<Usuario>;
   addUsuario = false;
   updUsuario = false;
+  paginaActual: number = 1;
 
 
   constructor(private usuarioService: UserService) { }
