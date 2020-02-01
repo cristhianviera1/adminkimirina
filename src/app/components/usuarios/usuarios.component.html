@@ -1,2 +1,219 @@
 <app-navbar></app-navbar>
-<p>usuarios works!</p>
+
+<h1 class="title is-2">Lista de usuarios</h1>
+<button class="button is-primary is-outlined" (click)="addUsuarioForm()">Nuevo <span class="fas fa-plus" style="margin-left: 5px;"></span></button>
+
+
+<div class="content">
+
+<table class="table is-striped">
+    <thead>
+      <tr>
+        <th>Nº</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Edad</th>
+        <th>Genero</th>
+        <th>Rol</th>
+        <th>Operaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuarioService.usuarios">
+        <th>1</th>
+        <td>{{usuario.nombre}}</td>
+        <td>{{usuario.correo}}</td>
+        <td>{{usuario.edad}}</td>
+        <td>{{usuario.genero}}</td>
+        <td>{{usuario.rol}}</td>
+        <td>
+            <button class="button is-warning is-outlined" (click)="updUsuarioForm(usuario)"><span class="fas fa-edit"></span>Editar</button>
+            <button class="button is-danger is-outlined" style="margin-left: 5px;" (click)="deleteUsuario(usuario._id)"><span class="fas fa-trash-alt"></span>Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="content">
+    <ng-template [ngIf]="addUsuario">
+        <div id="modal" class="modal is-active">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Nuevo usuario</p>
+                    <button class="delete" aria-label="close" (click)="cerrarModal(usuarioForm)"></button>
+                </header>
+                <section class="modal-card-body">
+
+                    <form #usuarioForm='ngForm' (ngSubmit)='postUsuario(usuarioForm)' action="">
+
+                        <div class="field">
+                            <label class="label">Nombre</label>
+                            <div class="control">
+                              <input class="input" type="text" placeholder="Ingresa tu nombre" name="nombre" #name="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre">
+                            </div>
+                          </div>
+                          
+                          <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control has-icons-left has-icons-right">
+                              <input class="input" type="email" placeholder="hola@gmail.com" name="correo" #correo="ngModel" [(ngModel)]="usuarioService.selectedUsuario.correo">
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="field">
+                            <label class="label">Contraseña</label>
+                            <p class="control has-icons-left">
+                              <input class="input" type="password" placeholder="Password" name="password" #password="ngModel" [(ngModel)]="usuarioService.selectedUsuario.password">
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                              </span>
+                            </p>
+                          </div>
+
+                          <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label class="label">Edad</label>
+                                    <div class="control">
+                                      <input class="input" type="number" placeholder="edad" name="edad" #edad="ngModel" [(ngModel)]="usuarioService.selectedUsuario.edad">
+                                    </div>
+                                  </div>
+                                <div class="field">
+                                    <label class="label">Genero</label>
+                                    <div class="control">
+                                      <div class="select">
+                                        <select name="genero" #genero="ngModel" [(ngModel)]="usuarioService.selectedUsuario.genero">
+                                          <option value="Masculino">Masculino</option>
+                                          <option value="Femenino">Femenino</option>
+                                          <option value="Otro">Otro</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="field">
+                                    <label class="label">Rol</label>
+                                    <div class="control">
+                                      <div class="select">
+                                        <select name="rol" #rol="ngModel" [(ngModel)]="usuarioService.selectedUsuario.rol">
+                                          <option value="Administrador">Administrador</option>
+                                          <option value="Brigadista">Brigadista</option>
+                                          <option value="Usuario">Usuario</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                            </div>
+                          </div>
+                          
+                          
+                          <div class="field is-grouped">
+                            <div class="control">
+                              <button class="button is-link" type="submit">Crear</button>
+                            </div>
+                          </div>
+                    </form>
+
+                </section>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+
+<div class="content">
+    <ng-template [ngIf]="updUsuario">
+        <div id="modalupd" class="modal is-active">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Editar usuario</p>
+                    <button class="delete" aria-label="close" (click)="cerrarModalUpd(usuarioUdpForm)"></button>
+                </header>
+                <section class="modal-card-body">
+
+                    <form #usuarioUdpForm='ngForm' (ngSubmit)='putUsuario(usuarioUdpForm)' action="">
+                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="usuarioService.selectedUsuario._id">
+
+                        <div class="field">
+                            <label class="label">Nombre</label>
+                            <div class="control">
+                              <input class="input" type="text" placeholder="Ingresa tu nombre" name="nombre" #name="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre">
+                            </div>
+                          </div>
+                          
+                          <div class="field">
+                            <label class="label">Email</label>
+                            <div class="control has-icons-left has-icons-right">
+                              <input class="input" type="email" placeholder="hola@gmail.com" name="correo" #correo="ngModel" [(ngModel)]="usuarioService.selectedUsuario.correo">
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                              </span>
+                            </div>
+                          </div>
+
+                          <div class="field">
+                            <label class="label">Contraseña</label>
+                            <p class="control has-icons-left">
+                              <input class="input" type="password" placeholder="Password" name="password" #password="ngModel" [(ngModel)]="usuarioService.selectedUsuario.password">
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                              </span>
+                            </p>
+                          </div>
+
+                          <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <label class="label">Edad</label>
+                                    <div class="control">
+                                      <input class="input" type="number" placeholder="edad" name="edad" #edad="ngModel" [(ngModel)]="usuarioService.selectedUsuario.edad">
+                                    </div>
+                                  </div>
+                                <div class="field">
+                                    <label class="label">Genero</label>
+                                    <div class="control">
+                                      <div class="select">
+                                        <select name="genero" #genero="ngModel" [(ngModel)]="usuarioService.selectedUsuario.genero">
+                                          <option value="Masculino">Masculino</option>
+                                          <option value="Femenino">Femenino</option>
+                                          <option value="Otro">Otro</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="field">
+                                    <label class="label">Rol</label>
+                                    <div class="control">
+                                      <div class="select">
+                                        <select name="rol" #rol="ngModel" [(ngModel)]="usuarioService.selectedUsuario.rol">
+                                          <option value="Administrador">Administrador</option>
+                                          <option value="Brigadista">Brigadista</option>
+                                          <option value="Usuario">Usuario</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                              
+                            </div>
+                          </div>
+                          
+                          
+                          <div class="field is-grouped">
+                            <div class="control">
+                              <button class="button is-link" type="submit">Actualizar</button>
+                            </div>
+                          </div>
+                    </form>
+
+                </section>
+            </div>
+        </div>
+    </ng-template>
+</div>
