@@ -1,2 +1,108 @@
 <app-navbar></app-navbar>
-<p>novedades works!</p>
+<div class="content">
+    <div class="colums is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
+        <div class="column">
+        <div class="card" *ngFor="let novedad of novedadService.novedades | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
+            <div class="card-image">
+            <figure class="image is-4by3">
+                <img src="{{novedad.imagen}}" alt="Placeholder image">
+            </figure>
+            </div>
+            <div class="card-content">
+            <div class="media">
+                <div class="media-content">
+                <p class="title is-4">{{novedad.titulo}}</p>
+                <p class="subtitle is-6">{{novedad.fechaPublicacion}}</p>
+                </div>
+            </div>
+        
+            <div class="content">
+                {{novedad.descripcion}}
+                <br>
+                
+            </div>
+            </div>
+            <footer class="card-footer">
+                <a href="#" class="card-footer-item">Edit</a>
+                <a href="#" class="card-footer-item">Delete</a>
+            </footer>
+                
+        </div>
+    </div>
+    </div>
+</div>
+
+<div class="columns is-centered" style="padding: 2rem" *ngFor="let novedad of novedadService.novedades | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
+    <div class="column">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-2by1">
+                    <img src="{{novedad.imagen}}" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">John Smith</p>
+                        <p class="subtitle is-6">@johnsmith</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                    <a>@bulmaio</a>.
+                    <a href="#">#css</a>
+                    <a href="#">#responsive</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-2by1">
+                    <img src="https://images.pexels.com/photos/167635/pexels-photo-167635.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">John Smith</p>
+                        <p class="subtitle is-6">@johnsmith</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                    <a>@bulmaio</a>.
+                    <a href="#">#css</a>
+                    <a href="#">#responsive</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-2by1">
+                    <img src="https://images.pexels.com/photos/167635/pexels-photo-167635.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="Placeholder image">
+                </figure>
+            </div>
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content">
+                        <p class="title is-4">John Smith</p>
+                        <p class="subtitle is-6">@johnsmith</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
+                    <a>@bulmaio</a>.
+                    <a href="#">#css</a>
+                    <a href="#">#responsive</a>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
