@@ -11,6 +11,7 @@
       <tr>
         <th>Nº</th>
         <th>Nombre</th>
+        <th>Imagen</th>
         <th>Correo</th>
         <th>Edad</th>
         <th>Genero</th>
@@ -22,6 +23,9 @@
       <tr *ngFor="let usuario of usuarioService.usuarios | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
         <th>{{i+1}}</th>
         <td>{{usuario.nombre}}</td>
+        <td><figure class="image is-128x128">
+          <img src="{{usuario.imagen}}">
+        </figure></td>
         <td>{{usuario.correo}}</td>
         <td>{{usuario.edad}}</td>
         <td>{{usuario.genero}}</td>
@@ -110,13 +114,15 @@
                                       </div>
                                     </div>
                                   </div>
+
+                                  <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="usuarioService.selectedUsuario.imagen">
                               
                             </div>
                           </div>
 
                           <div class="file has-name is-fullwidth">
                             <label class="file-label">
-                              <input class="file-input" type="file" name="resume">
+                              <input class="file-input" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
@@ -125,9 +131,9 @@
                                   Sube una foto…
                                 </span>
                               </span>
-                              <span class="file-name">
-                                Screen Shot 2017-07-29 at 15.54.25.png
-                              </span>
+                              <figure class="image is-128x128">
+                                <img src="{{previewImagen}}">
+                              </figure>
                             </label>
                           </div>
                           
@@ -219,8 +225,27 @@
                                       </div>
                                     </div>
                                   </div>
+
+                                  <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="usuarioService.selectedUsuario.imagen">
                               
                             </div>
+                          </div>
+
+                          <div class="file has-name is-fullwidth">
+                            <label class="file-label">
+                              <input class="file-input" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <span class="file-cta">
+                                <span class="file-icon">
+                                  <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                  Sube una foto…
+                                </span>
+                              </span>
+                              <figure class="image is-128x128">
+                                <img src="{{previewImagen}}">
+                              </figure>
+                            </label>
                           </div>
                           
                           

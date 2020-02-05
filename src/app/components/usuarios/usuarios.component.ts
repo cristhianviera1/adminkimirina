@@ -15,6 +15,7 @@ export class UsuariosComponent implements OnInit {
   addUsuario = false;
   updUsuario = false;
   paginaActual: number = 1;
+  previewImagen: "";
 
 
   constructor(private usuarioService: UserService) { }
@@ -38,11 +39,18 @@ export class UsuariosComponent implements OnInit {
     this.usuarioService.selectedUsuario = usuario;
   }
 
+  onFileChanges(files) {
+    console.log("Archivo en base 64: ", files[0].base64);
+    this.previewImagen = files[0].base64;
+  }
+
   postUsuario(form: NgForm) {
+    form.controls['imagen'].setValue(this.previewImagen);
     console.log(form.value);
     this.usuarioService.postUsuarios(form.value).subscribe(res => {
       console.log(res);
       this.getUsuarios();
+      this.previewImagen = "";
     });
     this.cerrarModal(form);
     Swal.fire(
@@ -53,9 +61,11 @@ export class UsuariosComponent implements OnInit {
   }
 
   putUsuario(form: NgForm) {
+    form.controls['imagen'].setValue(this.previewImagen);
     this.usuarioService.putUsuarios(form.value).subscribe(res => {
       console.log(res);
       this.getUsuarios();
+      this.previewImagen = "";
     });
     this.cerrarModalUpd();
     Swal.fire(
