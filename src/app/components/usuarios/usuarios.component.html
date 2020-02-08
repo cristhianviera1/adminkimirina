@@ -23,8 +23,8 @@
       <tr *ngFor="let usuario of usuarioService.usuarios | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
         <th>{{i+1}}</th>
         <td>{{usuario.nombre}}</td>
-        <td><figure class="image is-128x128">
-          <img src="{{usuario.imagen}}">
+        <td><figure class="image is-32x32">
+          <img class="is-rounded" src="{{usuario.imagen}}">
         </figure></td>
         <td>{{usuario.correo}}</td>
         <td>{{usuario.edad}}</td>
@@ -120,9 +120,9 @@
                             </div>
                           </div>
 
-                          <div class="file has-name is-fullwidth">
+                          <div class="file is-centered is-success is-boxed">
                             <label class="file-label">
-                              <input class="file-input" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <input class="file-input" accept="image/*" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
@@ -131,11 +131,18 @@
                                   Sube una foto…
                                 </span>
                               </span>
-                              <figure class="image is-128x128">
-                                <img src="{{previewImagen}}">
-                              </figure>
+
+                              <div class="file is-centered" style="margin-top: 10px;">
+                                <figure class="image is-128x128">
+                                  <img src="{{previewImagen}}">
+                                </figure>
+                              </div> 
+                              
                             </label>
                           </div>
+
+                                                  
+                          
                           
                           
                           <div class="field is-grouped">
@@ -231,9 +238,9 @@
                             </div>
                           </div>
 
-                          <div class="file has-name is-fullwidth">
+                          <div class="file is-centered is-success is-boxed">
                             <label class="file-label">
-                              <input class="file-input" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <input class="file-input" type="file" accept="image/*" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
@@ -242,9 +249,11 @@
                                   Sube una foto…
                                 </span>
                               </span>
-                              <figure class="image is-128x128">
-                                <img src="{{previewImagen}}">
-                              </figure>
+                              <div class="file is-centered" style="margin-top: 10px;">
+                                <figure class="image is-128x128">
+                                  <img src="{{previewImagen}}">
+                                </figure>
+                              </div> 
                             </label>
                           </div>
                           

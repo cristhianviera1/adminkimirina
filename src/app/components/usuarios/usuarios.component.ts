@@ -32,21 +32,23 @@ export class UsuariosComponent implements OnInit {
 
   addUsuarioForm() {
     this.addUsuario = true;
+    this.previewImagen = "";
   }
 
   updUsuarioForm(usuario: Usuario) {
     this.updUsuario = true;
     this.usuarioService.selectedUsuario = usuario;
+    this.previewImagen = "";
   }
 
   onFileChanges(files) {
-    console.log("Archivo en base 64: ", files[0].base64);
+    //console.log("Archivo en base 64: ", files[0].base64);
     this.previewImagen = files[0].base64;
   }
 
   postUsuario(form: NgForm) {
     form.controls['imagen'].setValue(this.previewImagen);
-    console.log(form.value);
+    //console.log(form.value);
     this.usuarioService.postUsuarios(form.value).subscribe(res => {
       console.log(res);
       this.getUsuarios();
