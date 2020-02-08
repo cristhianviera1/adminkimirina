@@ -1,27 +1,36 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Producto } from '../models/producto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductosService {
 
-  constructor(private httpClient: HttpClient) { }
+  selectedProducto: Producto;
+  productos: Producto[];
+  url = '/productos';
 
-  getProductos(url: string){
-    return this.httpClient.get(environment.API_URL + url);
+  constructor(private httpClient: HttpClient) {
+    this.selectedProducto = new Producto();
+   }
+
+  getProductos() {
+    return this.httpClient.get(environment.API_URL + this.url);
   }
 
-  postProductos(url: string, data: any){
-    return this.httpClient.post(environment.API_URL + url, data);
+  postProducto(producto: Producto) {
+    return this.httpClient.post(environment.API_URL + this.url, producto);
   }
 
-  putProductos(url: string, data: any){
-    return this.httpClient.put(environment.API_URL + url, data);
+  putProducto(producto: Producto) {
+    return this.httpClient.put(environment.API_URL + this.url + `/${producto._id}`, producto);
   }
 
-  deleteProductos(url: string){
-    return this.httpClient.delete(environment.API_URL + url);
+  deleteProducto(_id: string) {
+    return this.httpClient.delete(environment.API_URL + this.url + `/${_id}`);
   }
+
+
 }

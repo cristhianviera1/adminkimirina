@@ -29,6 +29,6 @@ export class NovedadesService {
   }
 
   deleteNovedad(_id: string) {
-    return this.httpClient.delete(environment.API_URL + this.url+ `/${_id}`);
+    return this.httpClient.delete(environment.API_URL + this.url + `/${_id}`);
   }
 }

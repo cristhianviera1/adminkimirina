@@ -85,9 +85,9 @@ export class NovedadesComponent implements OnInit {
           'Eliminado!',
           'La novedad ha sido eliminada.',
           'success'
-        )
+        );
       }
-    })
+    });
   }
 
   cerrarModal(form?: NgForm) {
