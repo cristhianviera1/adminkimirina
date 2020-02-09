@@ -15,6 +15,7 @@ export class NovedadesComponent implements OnInit {
   addNovedad = false;
   updNovedad = false;
   paginaActual: number = 1;
+  previewImagen: "";
 
   constructor(private novedadService: NovedadesService) { }
 
@@ -24,11 +25,17 @@ export class NovedadesComponent implements OnInit {
 
   addNovedadForm() {
     this.addNovedad = true;
+    this.previewImagen = "";
   }
 
   updNovedadForm(novedad: Novedad) {
     this.updNovedad = true;
     this.novedadService.selectedNovedad = novedad;
+    this.previewImagen = "";
+  }
+
+  onFileChanges(files) {
+    this.previewImagen = files[0].base64;
   }
 
   getNovedades() {
@@ -38,10 +45,12 @@ export class NovedadesComponent implements OnInit {
   }
 
   postNovedad(form: NgForm) {
-    console.log(form.value);
+    form.controls['imagen'].setValue(this.previewImagen);
+    //console.log(form.value);
     this.novedadService.postNovedad(form.value).subscribe(res => {
       console.log(res);
       this.getNovedades();
+      this.previewImagen = "";
     });
     this.cerrarModal(form);
     Swal.fire(
@@ -52,9 +61,11 @@ export class NovedadesComponent implements OnInit {
   }
 
   putNovedad(form: NgForm) {
+    form.controls['imagen'].setValue(this.previewImagen);
     this.novedadService.putNovedad(form.value).subscribe(res => {
       console.log(res);
       this.getNovedades();
+      this.previewImagen = "";
     });
     this.cerrarModalUpd();
     Swal.fire(

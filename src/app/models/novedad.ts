@@ -4,6 +4,7 @@ export class Novedad {
     imagen: string;
     fechaPublicacion: string;
     link: string;
+    titulo: string;
 
     constructor() {
         this._id = "";
@@ -11,5 +12,6 @@ export class Novedad {
         this.imagen = "";
         this.fechaPublicacion = "";
         this.link = "";
+        this.titulo = "";
     }
 }
