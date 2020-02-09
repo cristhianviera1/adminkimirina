@@ -1,2 +1,223 @@
 <app-navbar></app-navbar>
-<p>productos works!</p>
+
+<h1 class="title is-2">Lista de productos y servicios</h1>
+<button class="button is-primary is-outlined" (click)="addProductoForm()">Nuevo <span class="fas fa-plus" style="margin-left: 5px;"></span></button>
+
+
+<div class="content">
+
+<table class="table is-striped">
+    <thead>
+      <tr>
+        <th>Nº</th>
+        <th>Titulo</th>
+        <th>Descripcion</th>
+        <th>Precio</th>
+        <th>Observaciones</th>
+        <th>Link</th>
+        <th>Operaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productoService.productos | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
+        <th>{{i+1}}</th>
+        <td>{{producto.titulo}}</td>
+        <td>{{producto.descripcion}}</td>
+        <td>{{producto.precio}}</td>
+        <td>{{producto.observaciones}}</td>
+        <td>{{producto.link}}</td>
+        <td>
+            <button class="button is-warning is-outlined" (click)="updProductoForm(producto)"><span class="fas fa-edit"></span>Editar</button>
+            <button class="button is-danger is-outlined" style="margin-top: 5px;" (click)="deleteProducto(producto._id)"><span class="fas fa-trash-alt"></span>Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+
+</div>
+
+<div class="content">
+    <ng-template [ngIf]="addProducto">
+        <div id="modal" class="modal is-active">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Nuevo producto o servicio</p>
+                    <button class="delete" aria-label="close" (click)="cerrarModal(productoForm)"></button>
+                </header>
+                <section class="modal-card-body">
+
+                    <form #productoForm='ngForm' (ngSubmit)='postProducto(productoForm)' action="">
+
+                        <div class="field">
+                            <label class="label">Titulo</label>
+                            <div class="control">
+                              <input class="input" type="text" placeholder="Ingresa el titulo del producto o servicio" name="titulo" #titulo="ngModel" [(ngModel)]="productoService.selectedProducto.titulo">
+                            </div>
+                          </div>
+                          
+                          <div class="field">
+                            <label class="label">Descripcion</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="Ingresa una breve descripción" name="descripcion" #descripcion="ngModel" [(ngModel)]="productoService.selectedProducto.descripcion"></textarea>
+                            </div>
+                          </div>
+
+                          <div class="field">
+                            <label class="label">Precio</label>
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Ingresa el precio del servicio o producto" name="precio" #precio="ngModel" [(ngModel)]="productoService.selectedProducto.precio">
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-dollar-sign"></i>
+                              </span>
+                            </p>
+                          </div>
+
+                          <div class="field">
+                            <label class="label">Observaciones</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="Ingresa las observaciones acerca del producto o servicio" name="observaciones" #observaciones="ngModel" [(ngModel)]="productoService.selectedProducto.observaciones"></textarea>
+                            </div>
+                          </div>
+
+                          <div class="field">
+                            <label class="label">Link</label>
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" name="link" #link="ngModel" [(ngModel)]="productoService.selectedProducto.link">
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-link"></i>
+                              </span>
+                            </p>
+                          </div>
+
+                          <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="productoService.selectedProducto.imagen">
+
+                          <div class="file is-centered is-success is-boxed">
+                            <label class="file-label">
+                              <input class="file-input" accept="image/*" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <span class="file-cta">
+                                <span class="file-icon">
+                                  <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                  Sube una foto…
+                                </span>
+                              </span>
+
+                              <div class="file is-centered" style="margin-top: 10px;">
+                                <figure class="image is-128x128">
+                                  <img src="{{previewImagen}}">
+                                </figure>
+                              </div> 
+                              
+                            </label>
+                          </div>
+                       
+                          
+                          <div class="field is-grouped">
+                            <div class="control">
+                              <button class="button is-link" type="submit">Crear</button>
+                            </div>
+                          </div>
+                    </form>
+
+                </section>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+
+<div class="content">
+    <ng-template [ngIf]="updProducto">
+        <div id="modalupd" class="modal is-active">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Editar productos o servicios</p>
+                    <button class="delete" aria-label="close" (click)="cerrarModalUpd()"></button>
+                </header>
+                <section class="modal-card-body">
+
+                    <form #productoUdpForm='ngForm' (ngSubmit)='putProducto(productoUdpForm)' action="PUT">
+                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="productoService.selectedProducto._id">
+
+                        <div class="field">
+                            <label class="label">Titulo</label>
+                            <div class="control">
+                              <input class="input" type="text" placeholder="Ingresa el titulo del producto o servicio" name="titulo" #titulo="ngModel" [(ngModel)]="productoService.selectedProducto.titulo">
+                            </div>
+                          </div>
+                          
+                          <div class="field">
+                            <label class="label">Descripcion</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="Ingresa una breve descripción" name="descripcion" #descripcion="ngModel" [(ngModel)]="productoService.selectedProducto.descripcion"></textarea>
+                            </div>
+                          </div>
+
+                          <div class="field">
+                            <label class="label">Precio</label>
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Ingresa el precio del producto o servicio" name="precio" #precio="ngModel" [(ngModel)]="productoService.selectedProducto.precio">
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-dollar-sign"></i>
+                              </span>
+                            </p>
+                          </div>
+
+                          <div class="field">
+                            <label class="label">Observaciones</label>
+                            <div class="control">
+                                <textarea class="textarea" placeholder="Ingresa las observaciones acerca del producto o servicio" name="observaciones" #observaciones="ngModel" [(ngModel)]="productoService.selectedProducto.observaciones"></textarea>
+                            </div>
+                          </div>
+
+                          <div class="field">
+                            <label class="label">Link</label>
+                            <p class="control has-icons-left">
+                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" name="link" #link="ngModel" [(ngModel)]="productoService.selectedProducto.link">
+                              <span class="icon is-small is-left">
+                                <i class="fas fa-link"></i>
+                              </span>
+                            </p>
+                          </div>
+
+                          <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="productoService.selectedProducto.imagen">
+
+                          <div class="file is-centered is-success is-boxed">
+                            <label class="file-label">
+                              <input class="file-input" accept="image/*" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <span class="file-cta">
+                                <span class="file-icon">
+                                  <i class="fas fa-upload"></i>
+                                </span>
+                                <span class="file-label">
+                                  Sube una foto…
+                                </span>
+                              </span>
+
+                              <div class="file is-centered" style="margin-top: 10px;">
+                                <figure class="image is-128x128">
+                                  <img src="{{previewImagen}}">
+                                </figure>
+                              </div> 
+                              
+                            </label>
+                          </div>
+                          
+                          
+                          <div class="field is-grouped">
+                            <div class="control">
+                              <button class="button is-link" type="submit">Actualizar</button>
+                            </div>
+                          </div>
+                    </form>
+
+                </section>
+            </div>
+        </div>
+    </ng-template>
+</div>

@@ -16,6 +16,7 @@ export class ProductosComponent implements OnInit {
   addProducto = false;
   updProducto = false;
   paginaActual: number = 1;
+  previewImagen: "";
 
   constructor(private productoService: ProductosService) { }
 
@@ -25,11 +26,17 @@ export class ProductosComponent implements OnInit {
 
   addProductoForm() {
     this.addProducto = true;
+    this.previewImagen = "";
   }
 
   updProductoForm(producto: Producto) {
     this.updProducto = true;
     this.productoService.selectedProducto = producto;
+    this.previewImagen = "";
+  }
+
+  onFileChanges(files) {
+    this.previewImagen = files[0].base64;
   }
 
   getProductos() {
@@ -39,6 +46,7 @@ export class ProductosComponent implements OnInit {
   }
 
   postProducto(form: NgForm) {
+    form.controls['imagen'].setValue(this.previewImagen);
     console.log(form.value);
     this.productoService.postProducto(form.value).subscribe(res => {
       console.log(res);
@@ -52,7 +60,8 @@ export class ProductosComponent implements OnInit {
       );
   }
 
-  putNovedad(form: NgForm) {
+  putProducto(form: NgForm) {
+    form.controls['imagen'].setValue(this.previewImagen);
     this.productoService.putProducto(form.value).subscribe(res => {
       console.log(res);
       this.getProductos();
@@ -65,7 +74,7 @@ export class ProductosComponent implements OnInit {
       );
   }
 
-  deleteNovedad(_id: string) {
+  deleteProducto(_id: string) {
 
     Swal.fire({
       title: 'Estas seguro?',
