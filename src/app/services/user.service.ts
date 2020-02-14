@@ -11,6 +11,9 @@ export class UserService {
   selectedUsuario: Usuario;
   usuarios: Usuario[];
   url = '/usuario';
+  login = '/login';
+  logout = '/logout';
+  cuenta: Usuario[];
 
   constructor(private httpClient: HttpClient) {
     this.selectedUsuario = new Usuario();
@@ -31,4 +34,17 @@ export class UserService {
   deleteUsuario(_id: string) {
     return this.httpClient.delete(environment.API_URL + this.url+ `/${_id}`);
   }
+
+  loginUsuario(usuario: Usuario) {
+    return this.httpClient.post(environment.API_URL + this.url + this.login, usuario);
+  }
+
+  logoutUsuario(json) {
+    const headers = {
+      responseType: 'text'
+}
+
+    return this.httpClient.post(environment.API_URL + this.url + this.logout, json,{headers});
+  }
+
 }
