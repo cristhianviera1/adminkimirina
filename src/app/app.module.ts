@@ -15,6 +15,9 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { NoticiasComponent } from './components/noticias/noticias.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
+import { FormularioComponent } from './components/formulario/formulario.component';
+import { ExportadorxlsService } from './services/exportadorxls.service';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { NovedadesComponent } from './components/novedades/novedades.component';
     UsuariosComponent,
     ProductosComponent,
     NoticiasComponent,
-    NovedadesComponent
+    NovedadesComponent,
+    FormularioComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,7 @@ import { NovedadesComponent } from './components/novedades/novedades.component';
     NgxPaginationModule,
     AlifeFileToBase64Module
   ],
-  providers: [],
+  providers: [ExportadorxlsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

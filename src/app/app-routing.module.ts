@@ -7,6 +7,8 @@ import { Page404Component } from './components/page404/page404.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
+import { FormularioComponent } from './components/formulario/formulario.component';
+
 
 
 
@@ -20,6 +22,7 @@ const routes: Routes = [
   { path: 'usuarios', component: UsuariosComponent},
   { path: 'productos', component: ProductosComponent},
   { path: 'novedades', component: NovedadesComponent},
+  { path: 'formularios', component: FormularioComponent},
   { path: '**', component: Page404Component}
 ];
 

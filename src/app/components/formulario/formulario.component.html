@@ -1,0 +1,44 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+
+  <h1 class="title is-2">Lista de formularios</h1>
+  <button class="button is-primary is-outlined" (click)="exportarToExcel()">Exportar a Excel<span class="fas fa-file-excel" style="margin-left: 5px;"></span></button>
+  <button class="button is-dark is-outlined" style="margin-left: 5px;" [routerLink]="['/home']"><i class="fas fa-arrow-left" style="margin-right: 2px;"></i> Regresar</button>
+  <hr>
+  <div class="content">
+    <table class="table is-striped">
+        <thead>
+          <tr>
+            <th>Nº</th>
+            <th>Usuario</th>
+            <th>Fecha</th>
+            <th>Pregunta 1</th>
+            <th>Pregunta 2</th>
+            <th>Pregunta 3</th>
+            <th>Pregunta 4</th>
+            <th>Pregunta 5</th>
+            <th>Pregunta 6</th>
+            <th>Pregunta 7</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let formulario of formularioService.formularios | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
+            <th>{{i+1}}</th>
+            <td>{{formulario.personaLlena.nombre}}</td>
+            <td>{{formulario.fechaLlena}}</td>
+            <td>{{formulario.pregunta1}}</td>
+            <td>{{formulario.pregunta2}}</td>
+            <td>{{formulario.pregunta3}}</td>
+            <td>{{formulario.pregunta4}}</td>
+            <td>{{formulario.pregunta5}}</td>
+            <td>{{formulario.pregunta6}}</td>
+            <td>{{formulario.pregunta7}}</td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+    
+  </div>
+</div>

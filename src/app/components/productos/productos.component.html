@@ -1,7 +1,10 @@
 <app-navbar></app-navbar>
 
+<div class="container">
 <h1 class="title is-2">Lista de productos y servicios</h1>
 <button class="button is-primary is-outlined" (click)="addProductoForm()">Nuevo <span class="fas fa-plus" style="margin-left: 5px;"></span></button>
+<button class="button is-dark is-outlined" style="margin-left: 5px;" [routerLink]="['/home']"><i class="fas fa-arrow-left" style="margin-right: 2px;"></i> Regresar</button>
+<hr>
 
 
 <div class="content">
@@ -35,6 +38,8 @@
   </table>
 
   <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+
+</div>
 
 </div>
 
