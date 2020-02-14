@@ -25,7 +25,7 @@
         <tbody>
           <tr *ngFor="let formulario of formularioService.formularios | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
             <th>{{i+1}}</th>
-            <td>{{formulario.personaLlena.nombre}}</td>
+            <td>{{formulario.personaLlena}}</td>
             <td>{{formulario.fechaLlena}}</td>
             <td>{{formulario.pregunta1}}</td>
             <td>{{formulario.pregunta2}}</td>
