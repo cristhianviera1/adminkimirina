@@ -8,6 +8,7 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
+import { LoginGuardGuard } from './guards/login-guard.guard';
 
 
 
@@ -17,12 +18,12 @@ import { FormularioComponent } from './components/formulario/formulario.componen
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: '', redirectTo: 'login', pathMatch: 'full'},
-  { path: 'navbar', component: NavbarComponent},
-  { path: 'home', component: HomeComponent},
-  { path: 'usuarios', component: UsuariosComponent},
-  { path: 'productos', component: ProductosComponent},
-  { path: 'novedades', component: NovedadesComponent},
-  { path: 'formularios', component: FormularioComponent},
+  { path: 'navbar', component: NavbarComponent, canActivate: [LoginGuardGuard]},
+  { path: 'home', component: HomeComponent, canActivate: [LoginGuardGuard]},
+  { path: 'usuarios', component: UsuariosComponent, canActivate: [LoginGuardGuard]},
+  { path: 'productos', component: ProductosComponent, canActivate: [LoginGuardGuard]},
+  { path: 'novedades', component: NovedadesComponent, canActivate: [LoginGuardGuard]},
+  { path: 'formularios', component: FormularioComponent, canActivate: [LoginGuardGuard]},
   { path: '**', component: Page404Component}
 ];
 

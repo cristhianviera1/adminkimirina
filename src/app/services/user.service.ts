@@ -13,7 +13,8 @@ export class UserService {
   url = '/usuario';
   login = '/login';
   logout = '/logout';
-  cuenta: Usuario[];
+  urlIntentaAcceder = '';
+  cuenta: Usuario;
 
   constructor(private httpClient: HttpClient) {
     this.selectedUsuario = new Usuario();
@@ -42,9 +43,20 @@ export class UserService {
   logoutUsuario(json) {
     const headers = {
       responseType: 'text'
-}
-
+    };
     return this.httpClient.post(environment.API_URL + this.url + this.logout, json,{headers});
+  }
+
+  isLoggedIn() {
+    var usuarioLogado: Usuario;
+    var session = localStorage.getItem('usuariologeado');
+    usuarioLogado = JSON.parse(session);
+    let esAdmin = usuarioLogado.rol;
+
+    if (esAdmin !== "Administrador" || esAdmin == null) {
+      return false;
+    }
+    return true;
   }
 
 }
