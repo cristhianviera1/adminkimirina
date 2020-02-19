@@ -16,6 +16,7 @@
         <th>Fecha de publicación</th>
         <th>Descripcion</th>
         <th>Link</th>
+        <th>Imagen</th>
         <th>Operaciones</th>
       </tr>
     </thead>
@@ -26,6 +27,7 @@
         <td>{{novedad.fechaPublicacion}}</td>
         <td>{{novedad.descripcion}}</td>
         <td>{{novedad.link}}</td>
+        <td><img class="img-responsive" src="{{novedad.imagen}}" alt=""></td>
         <td>
             <button class="button is-warning is-outlined" (click)="updNovedadForm(novedad)"><span class="fas fa-edit"></span>Editar</button>
             <button class="button is-danger is-outlined" style="margin-top: 5px;" (click)="deleteNovedad(novedad._id)"><span class="fas fa-trash-alt"></span>Eliminar</button>
@@ -47,41 +49,40 @@
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Nueva novedad</p>
-                    <button class="delete" aria-label="close" (click)="cerrarModal(novedadForm)"></button>
+                    <button class="delete" aria-label="close" (click)="cerrarModal()"></button>
                 </header>
                 <section class="modal-card-body">
 
-                    <form #novedadForm='ngForm' (ngSubmit)='postNovedad(novedadForm)' action="">
+                    <form [formGroup]="postForm" (ngSubmit)='postNovedad()'>
 
                         <div class="field">
                             <label class="label">Titulo</label>
                             <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa el titulo de la novedad" name="titulo" #titulo="ngModel" [(ngModel)]="novedadService.selectedNovedad.titulo">
+                              <input class="input" type="text" placeholder="Ingresa el titulo de la novedad" formControlName="titulo">
                             </div>
                           </div>
                           
                           <div class="field">
                             <label class="label">Descripcion</label>
                             <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa una breve descripción" name="descripcion" #descripcion="ngModel" [(ngModel)]="novedadService.selectedNovedad.descripcion"></textarea>
+                                <textarea class="textarea" placeholder="Ingresa una breve descripción" formControlName="descripcion"></textarea>
                             </div>
                           </div>
 
                           <div class="field">
                             <label class="label">Link</label>
                             <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" name="link" #link="ngModel" [(ngModel)]="novedadService.selectedNovedad.link">
+                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" formControlName="link">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-link"></i>
                               </span>
                             </p>
                           </div>
 
-                          <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="novedadService.selectedNovedad.imagen">
 
                           <div class="file is-centered is-success is-boxed">
                             <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <input class="file-input" accept="image/*" type="file" (change)="uploadFile($event)">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
@@ -90,20 +91,26 @@
                                   Sube una foto…
                                 </span>
                               </span>
-
-                              <div class="file is-centered" style="margin-top: 10px;">
-                                <figure class="image is-128x128">
-                                  <img src="{{previewImagen}}">
-                                </figure>
-                              </div> 
-                              
                             </label>
+                          </div>
+
+                          <div class="content">
+
+                            <div class="card">
+                              <div class="card-image">
+                                <div class="preview" *ngIf="preview && preview !== null">
+                                  <figure class="image is-4by5">
+                                    <img [src]="preview">
+                                  </figure>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                        
                           
                           <div class="field is-grouped">
                             <div class="control">
-                              <button class="button is-link" type="submit">Crear</button>
+                              <button class="button is-link">Crear</button>
                             </div>
                           </div>
                     </form>
@@ -126,60 +133,66 @@
                 </header>
                 <section class="modal-card-body">
 
-                    <form #novedadUdpForm='ngForm' (ngSubmit)='putNovedad(novedadUdpForm)' action="">
-                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="novedadService.selectedNovedad._id">
+                    <form [formGroup]="putForm" (ngSubmit)='putNovedad()'>
+                        <input type="hidden" formControlName="_id" [(ngModel)]="novedadService.selectedNovedad._id">
 
                         <div class="field">
                             <label class="label">Titulo</label>
                             <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa el titulo de la novedad" name="titulo" #titulo="ngModel" [(ngModel)]="novedadService.selectedNovedad.titulo">
+                              <input class="input" type="text" placeholder="Ingresa el titulo de la novedad" formControlName="titulo" [(ngModel)]="novedadService.selectedNovedad.titulo">
                             </div>
                           </div>
                           
                           <div class="field">
                             <label class="label">Descripcion</label>
                             <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa una breve descripción" name="descripcion" #descripcion="ngModel" [(ngModel)]="novedadService.selectedNovedad.descripcion"></textarea>
+                                <textarea class="textarea" placeholder="Ingresa una breve descripción" formControlName="descripcion" [(ngModel)]="novedadService.selectedNovedad.descripcion"></textarea>
                             </div>
                           </div>
 
                           <div class="field">
                             <label class="label">Link</label>
                             <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" name="link" #link="ngModel" [(ngModel)]="novedadService.selectedNovedad.link">
+                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" formControlName="link" [(ngModel)]="novedadService.selectedNovedad.link">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-link"></i>
                               </span>
                             </p>
                           </div>
 
-                          <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="novedadService.selectedNovedad.imagen">
+                          <input type="hidden" formControlName="image" [(ngModel)]="novedadService.selectedNovedad.imagen">
 
                           <div class="file is-centered is-success is-boxed">
                             <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <input class="file-input" accept="image/*" type="file" (change)="updateFile($event)">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
                                 </span>
                                 <span class="file-label">
-                                  Sube una imagen
+                                  Sube una foto…
                                 </span>
                               </span>
-
-                              <div class="file is-centered" style="margin-top: 10px;">
-                                <figure class="image is-128x128">
-                                  <img src="{{previewImagen}}">
-                                </figure>
-                              </div> 
-                              
                             </label>
+                          </div>
+
+                          <div class="content">
+
+                            <div class="card">
+                              <div class="card-image">
+                                <div class="preview" *ngIf="preview && preview !== null">
+                                  <figure class="image is-4by5">
+                                    <img [src]="preview">
+                                  </figure>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           
                           
                           <div class="field is-grouped">
                             <div class="control">
-                              <button class="button is-link" type="submit">Actualizar</button>
+                              <button class="button is-link">Actualizar</button>
                             </div>
                           </div>
                     </form>

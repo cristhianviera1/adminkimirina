@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductosService } from 'src/app/services/productos.service';
 import { Producto } from 'src/app/models/producto';
-import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 
@@ -16,27 +16,44 @@ export class ProductosComponent implements OnInit {
   addProducto = false;
   updProducto = false;
   paginaActual: number = 1;
-  previewImagen: "";
+  postForm: FormGroup;
+  putForm: FormGroup;
+  preview: string;
 
-  constructor(private productoService: ProductosService) { }
+  constructor(private productoService: ProductosService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getProductos();
+
+    this.postForm = this.formBuilder.group({
+      titulo: ['', Validators.minLength(6)],
+      descripcion: ['', Validators.required],
+      link: ['', Validators.required],
+      precio: ['', Validators.required],
+      observaciones: ['', Validators.required],
+      image: [null]
+    });
+
+    this.putForm = this.formBuilder.group({
+      _id: [''],
+      titulo: ['', Validators.minLength(6)],
+      descripcion: ['', Validators.required],
+      link: ['', Validators.required],
+      precio: ['', Validators.required],
+      observaciones: ['', Validators.required],
+      image: [null]
+    });
   }
 
   addProductoForm() {
     this.addProducto = true;
-    this.previewImagen = "";
+    this.preview = '';
   }
 
   updProductoForm(producto: Producto) {
     this.updProducto = true;
     this.productoService.selectedProducto = producto;
-    this.previewImagen = "";
-  }
-
-  onFileChanges(files) {
-    this.previewImagen = files[0].base64;
+    this.preview = '';
   }
 
   getProductos() {
@@ -45,33 +62,83 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-  postProducto(form: NgForm) {
-    form.controls['imagen'].setValue(this.previewImagen);
-    console.log(form.value);
-    this.productoService.postProducto(form.value).subscribe(res => {
-      console.log(res);
-      this.getProductos();
+  //---------------------------------------------------
+  uploadFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.postForm.patchValue({
+      image: file
     });
-    this.cerrarModal(form);
-    Swal.fire(
-      'Muy Bien',
-        'Producto creado exitosamente',
-        'success'
-      );
+
+    this.postForm.get('image').updateValueAndValidity();
+
+    //File preview
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
-  putProducto(form: NgForm) {
-    form.controls['imagen'].setValue(this.previewImagen);
-    this.productoService.putProducto(form.value).subscribe(res => {
+  updateFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.putForm.patchValue({
+      image: file
+    });
+
+    this.putForm.get('image').updateValueAndValidity();
+
+    //File preview
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+  //------------------------------------------------
+
+  postProducto() {
+    console.log(this.postForm.value);
+    this.productoService.postProducto(
+      this.postForm.value.titulo,
+      this.postForm.value.descripcion,
+      this.postForm.value.link,
+      this.postForm.value.precio,
+      this.postForm.value.observaciones,
+      this.postForm.value.image
+    ).subscribe(res => {
+        console.log(res);
+        this.getProductos();
+      });
+    this.cerrarModal();
+    Swal.fire(
+      'Muy Bien',
+      'Producto creado exitosamente',
+      'success'
+    );
+  }
+
+  putProducto() {
+    this.productoService.putProducto(
+      this.putForm.value._id,
+      this.putForm.value.titulo,
+      this.putForm.value.descripcion,
+      this.putForm.value.link,
+      this.putForm.value.precio,
+      this.putForm.value.observaciones,
+      this.putForm.value.image
+    ).subscribe(res => {
       console.log(res);
       this.getProductos();
+      location.reload();
     });
     this.cerrarModalUpd();
     Swal.fire(
       'Muy Bien',
-        'Producto actualizado exitosamente',
-        'success'
-      );
+      'Producto actualizado exitosamente',
+      'success'
+    );
   }
 
   deleteProducto(_id: string) {
@@ -100,20 +167,19 @@ export class ProductosComponent implements OnInit {
     });
   }
 
-  cerrarModal(form?: NgForm) {
+  cerrarModal() {
     const modal = document.getElementById("modal");
     modal.classList.remove("is-active");
     this.addProducto = false;
-    if (form) {
-      form.reset();
-      this.productoService.selectedProducto = new Producto();
-    }
+    this.postForm.reset();
+    this.preview = null;
   }
 
   cerrarModalUpd() {
     const modal = document.getElementById("modalupd");
     modal.classList.remove("is-active");
     this.updProducto = false;
+    this.preview = null;
   }
 
 }

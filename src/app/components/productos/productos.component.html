@@ -18,6 +18,7 @@
         <th>Precio</th>
         <th>Observaciones</th>
         <th>Link</th>
+        <th>Imagen</th>
         <th>Operaciones</th>
       </tr>
     </thead>
@@ -29,6 +30,7 @@
         <td>{{producto.precio}}</td>
         <td>{{producto.observaciones}}</td>
         <td>{{producto.link}}</td>
+        <td><img class="img-responsive" src="{{producto.imagen}}" alt=""></td>
         <td>
             <button class="button is-warning is-outlined" (click)="updProductoForm(producto)"><span class="fas fa-edit"></span>Editar</button>
             <button class="button is-danger is-outlined" style="margin-top: 5px;" (click)="deleteProducto(producto._id)"><span class="fas fa-trash-alt"></span>Eliminar</button>
@@ -50,30 +52,30 @@
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Nuevo producto o servicio</p>
-                    <button class="delete" aria-label="close" (click)="cerrarModal(productoForm)"></button>
+                    <button class="delete" aria-label="close" (click)="cerrarModal()"></button>
                 </header>
                 <section class="modal-card-body">
 
-                    <form #productoForm='ngForm' (ngSubmit)='postProducto(productoForm)' action="">
+                    <form [formGroup]="postForm" (ngSubmit)='postProducto()'>
 
                         <div class="field">
                             <label class="label">Titulo</label>
                             <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa el titulo del producto o servicio" name="titulo" #titulo="ngModel" [(ngModel)]="productoService.selectedProducto.titulo">
+                              <input class="input" type="text" placeholder="Ingresa el titulo del producto o servicio" formControlName="titulo">
                             </div>
                           </div>
                           
                           <div class="field">
                             <label class="label">Descripcion</label>
                             <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa una breve descripción" name="descripcion" #descripcion="ngModel" [(ngModel)]="productoService.selectedProducto.descripcion"></textarea>
+                                <textarea class="textarea" placeholder="Ingresa una breve descripción" formControlName="descripcion"></textarea>
                             </div>
                           </div>
 
                           <div class="field">
                             <label class="label">Precio</label>
                             <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa el precio del servicio o producto" name="precio" #precio="ngModel" [(ngModel)]="productoService.selectedProducto.precio">
+                                <input class="input" type="text" placeholder="Ingresa el precio del servicio o producto" formControlName="precio">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-dollar-sign"></i>
                               </span>
@@ -83,25 +85,24 @@
                           <div class="field">
                             <label class="label">Observaciones</label>
                             <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa las observaciones acerca del producto o servicio" name="observaciones" #observaciones="ngModel" [(ngModel)]="productoService.selectedProducto.observaciones"></textarea>
+                                <textarea class="textarea" placeholder="Ingresa las observaciones acerca del producto o servicio" formControlName="observaciones"></textarea>
                             </div>
                           </div>
 
                           <div class="field">
                             <label class="label">Link</label>
                             <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" name="link" #link="ngModel" [(ngModel)]="productoService.selectedProducto.link">
+                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" formControlName="link">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-link"></i>
                               </span>
                             </p>
                           </div>
 
-                          <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="productoService.selectedProducto.imagen">
 
                           <div class="file is-centered is-success is-boxed">
                             <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <input class="file-input" accept="image/*" type="file" (change)="uploadFile($event)">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
@@ -110,20 +111,26 @@
                                   Sube una foto…
                                 </span>
                               </span>
-
-                              <div class="file is-centered" style="margin-top: 10px;">
-                                <figure class="image is-128x128">
-                                  <img src="{{previewImagen}}">
-                                </figure>
-                              </div> 
-                              
                             </label>
+                          </div>
+
+                          <div class="content">
+
+                            <div class="card">
+                              <div class="card-image">
+                                <div class="preview" *ngIf="preview && preview !== null">
+                                  <figure class="image is-4by5">
+                                    <img [src]="preview">
+                                  </figure>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                        
                           
                           <div class="field is-grouped">
                             <div class="control">
-                              <button class="button is-link" type="submit">Crear</button>
+                              <button class="button is-link">Crear</button>
                             </div>
                           </div>
                     </form>
@@ -146,27 +153,27 @@
                 </header>
                 <section class="modal-card-body">
 
-                    <form #productoUdpForm='ngForm' (ngSubmit)='putProducto(productoUdpForm)' action="PUT">
-                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="productoService.selectedProducto._id">
+                    <form [formGroup]="putForm" (ngSubmit)='putProducto()'>
+                        <input type="hidden" formControlName="_id" [(ngModel)]="productoService.selectedProducto._id">
 
                         <div class="field">
                             <label class="label">Titulo</label>
                             <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa el titulo del producto o servicio" name="titulo" #titulo="ngModel" [(ngModel)]="productoService.selectedProducto.titulo">
+                              <input class="input" type="text" placeholder="Ingresa el titulo del producto o servicio" formControlName="titulo" [(ngModel)]="productoService.selectedProducto.titulo">
                             </div>
                           </div>
                           
                           <div class="field">
                             <label class="label">Descripcion</label>
                             <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa una breve descripción" name="descripcion" #descripcion="ngModel" [(ngModel)]="productoService.selectedProducto.descripcion"></textarea>
+                                <textarea class="textarea" placeholder="Ingresa una breve descripción" formControlName="descripcion" [(ngModel)]="productoService.selectedProducto.descripcion"></textarea>
                             </div>
                           </div>
 
                           <div class="field">
                             <label class="label">Precio</label>
                             <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa el precio del producto o servicio" name="precio" #precio="ngModel" [(ngModel)]="productoService.selectedProducto.precio">
+                                <input class="input" type="text" placeholder="Ingresa el precio del producto o servicio" formControlName="precio" [(ngModel)]="productoService.selectedProducto.precio">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-dollar-sign"></i>
                               </span>
@@ -176,25 +183,25 @@
                           <div class="field">
                             <label class="label">Observaciones</label>
                             <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa las observaciones acerca del producto o servicio" name="observaciones" #observaciones="ngModel" [(ngModel)]="productoService.selectedProducto.observaciones"></textarea>
+                                <textarea class="textarea" placeholder="Ingresa las observaciones acerca del producto o servicio" formControlName="observaciones" [(ngModel)]="productoService.selectedProducto.observaciones"></textarea>
                             </div>
                           </div>
 
                           <div class="field">
                             <label class="label">Link</label>
                             <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" name="link" #link="ngModel" [(ngModel)]="productoService.selectedProducto.link">
+                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" formControlName="link" [(ngModel)]="productoService.selectedProducto.link">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-link"></i>
                               </span>
                             </p>
                           </div>
 
-                          <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="productoService.selectedProducto.imagen">
+                          <input type="hidden" formControlName="image" [(ngModel)]="productoService.selectedProducto.imagen">
 
                           <div class="file is-centered is-success is-boxed">
                             <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <input class="file-input" accept="image/*" type="file" (change)="updateFile($event)">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
@@ -203,20 +210,26 @@
                                   Sube una foto…
                                 </span>
                               </span>
-
-                              <div class="file is-centered" style="margin-top: 10px;">
-                                <figure class="image is-128x128">
-                                  <img src="{{previewImagen}}">
-                                </figure>
-                              </div> 
-                              
                             </label>
+                          </div>
+
+                          <div class="content">
+
+                            <div class="card">
+                              <div class="card-image">
+                                <div class="preview" *ngIf="preview && preview !== null">
+                                  <figure class="image is-4by5">
+                                    <img [src]="preview">
+                                  </figure>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           
                           
                           <div class="field is-grouped">
                             <div class="control">
-                              <button class="button is-link" type="submit">Actualizar</button>
+                              <button class="button is-link">Actualizar</button>
                             </div>
                           </div>
                     </form>

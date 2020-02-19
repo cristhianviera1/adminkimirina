@@ -53,23 +53,23 @@
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Nuevo usuario</p>
-                    <button class="delete" aria-label="close" (click)="cerrarModal(usuarioForm)"></button>
+                    <button class="delete" aria-label="close" (click)="cerrarModal()"></button>
                 </header>
                 <section class="modal-card-body">
 
-                    <form #usuarioForm='ngForm' (ngSubmit)='postUsuario(usuarioForm)' action="">
+                    <form [formGroup]="postForm" (ngSubmit)='postUsuario()'>
 
                         <div class="field">
                             <label class="label">Nombre</label>
                             <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa tu nombre" name="nombre" #name="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre">
+                              <input class="input" type="text" placeholder="Ingresa tu nombre" formControlName="nombre">
                             </div>
                           </div>
                           
                           <div class="field">
                             <label class="label">Email</label>
                             <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="hola@gmail.com" name="correo" #correo="ngModel" [(ngModel)]="usuarioService.selectedUsuario.correo">
+                              <input class="input" type="email" placeholder="hola@gmail.com" formControlName="correo" >
                               <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                               </span>
@@ -79,7 +79,7 @@
                           <div class="field">
                             <label class="label">Contraseña</label>
                             <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password" name="password" #password="ngModel" [(ngModel)]="usuarioService.selectedUsuario.password">
+                              <input class="input" type="password" placeholder="Password" formControlName="password">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                               </span>
@@ -91,14 +91,14 @@
                                 <div class="field">
                                     <label class="label">Edad</label>
                                     <div class="control">
-                                      <input class="input" type="number" placeholder="edad" name="edad" #edad="ngModel" [(ngModel)]="usuarioService.selectedUsuario.edad">
+                                      <input class="input" type="number" placeholder="edad" formControlName="edad" >
                                     </div>
                                   </div>
                                 <div class="field">
                                     <label class="label">Genero</label>
                                     <div class="control">
                                       <div class="select">
-                                        <select name="genero" #genero="ngModel" [(ngModel)]="usuarioService.selectedUsuario.genero">
+                                        <select formControlName="genero">
                                           <option value="Masculino">Masculino</option>
                                           <option value="Femenino">Femenino</option>
                                           <option value="Otro">Otro</option>
@@ -110,7 +110,7 @@
                                     <label class="label">Rol</label>
                                     <div class="control">
                                       <div class="select">
-                                        <select name="rol" #rol="ngModel" [(ngModel)]="usuarioService.selectedUsuario.rol">
+                                        <select formControlName="rol">
                                           <option value="Administrador">Administrador</option>
                                           <option value="Brigadista">Brigadista</option>
                                           <option value="Usuario">Usuario</option>
@@ -118,15 +118,14 @@
                                       </div>
                                     </div>
                                   </div>
-
-                                  <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="usuarioService.selectedUsuario.imagen">
                               
                             </div>
                           </div>
-
+                    
+                          
                           <div class="file is-centered is-success is-boxed">
                             <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <input class="file-input" accept="image/*" type="file" (change)="uploadFile($event)">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
@@ -135,25 +134,34 @@
                                   Sube una foto…
                                 </span>
                               </span>
-
-                              <div class="file is-centered" style="margin-top: 10px;">
-                                <figure class="image is-128x128">
-                                  <img src="{{previewImagen}}">
-                                </figure>
-                              </div> 
-                              
                             </label>
                           </div>
 
-                                                  
+                          <div class="content">
+
+                            <div class="card">
+                              <div class="card-image">
+                                <div class="preview" *ngIf="preview && preview !== null">
+                                  <figure class="image is-4by5">
+                                    <img [src]="preview">
+                                  </figure>
+                                </div>
+                              </div>
+                            </div>
+
+
+                            <div class="file is-centered" style="margin-top: 10px;">
+                              
+                            </div> 
+                          </div>
                           
-                          
-                          
+                          <hr>
                           <div class="field is-grouped">
                             <div class="control">
-                              <button class="button is-link" type="submit">Crear</button>
+                              <button class="button is-link">Crear</button>
                             </div>
                           </div>
+                          
                     </form>
 
                 </section>
@@ -174,20 +182,20 @@
                 </header>
                 <section class="modal-card-body">
 
-                    <form #usuarioUdpForm='ngForm' (ngSubmit)='putUsuario(usuarioUdpForm)' action="">
-                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="usuarioService.selectedUsuario._id">
+                    <form [formGroup]="putForm" (ngSubmit)='putUsuario()'>
+                        <input type="hidden" formControlName="_id" [(ngModel)]="usuarioService.selectedUsuario._id">
 
                         <div class="field">
                             <label class="label">Nombre</label>
                             <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa tu nombre" name="nombre" #name="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre">
+                              <input class="input" type="text" placeholder="Ingresa tu nombre" formControlName="nombre" [(ngModel)]="usuarioService.selectedUsuario.nombre">
                             </div>
                           </div>
                           
                           <div class="field">
                             <label class="label">Email</label>
                             <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="hola@gmail.com" name="correo" #correo="ngModel" [(ngModel)]="usuarioService.selectedUsuario.correo">
+                              <input class="input" type="email" placeholder="hola@gmail.com" formControlName="correo" [(ngModel)]="usuarioService.selectedUsuario.correo">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                               </span>
@@ -197,7 +205,7 @@
                           <div class="field">
                             <label class="label">Contraseña</label>
                             <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password" name="password" #password="ngModel" [(ngModel)]="usuarioService.selectedUsuario.password">
+                              <input class="input" type="password" placeholder="Password" formControlName="password" [(ngModel)]="usuarioService.selectedUsuario.password">
                               <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                               </span>
@@ -209,14 +217,14 @@
                                 <div class="field">
                                     <label class="label">Edad</label>
                                     <div class="control">
-                                      <input class="input" type="number" placeholder="edad" name="edad" #edad="ngModel" [(ngModel)]="usuarioService.selectedUsuario.edad">
+                                      <input class="input" type="number" placeholder="edad" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.edad">
                                     </div>
                                   </div>
                                 <div class="field">
                                     <label class="label">Genero</label>
                                     <div class="control">
                                       <div class="select">
-                                        <select name="genero" #genero="ngModel" [(ngModel)]="usuarioService.selectedUsuario.genero">
+                                        <select formControlName="genero" [(ngModel)]="usuarioService.selectedUsuario.genero">
                                           <option value="Masculino">Masculino</option>
                                           <option value="Femenino">Femenino</option>
                                           <option value="Otro">Otro</option>
@@ -228,7 +236,7 @@
                                     <label class="label">Rol</label>
                                     <div class="control">
                                       <div class="select">
-                                        <select name="rol" #rol="ngModel" [(ngModel)]="usuarioService.selectedUsuario.rol">
+                                        <select formControlName="rol" [(ngModel)]="usuarioService.selectedUsuario.rol">
                                           <option value="Administrador">Administrador</option>
                                           <option value="Brigadista">Brigadista</option>
                                           <option value="Usuario">Usuario</option>
@@ -237,14 +245,14 @@
                                     </div>
                                   </div>
 
-                                  <input type="hidden" value="{{previewImagen}}" name="imagen" #imagen="ngModel" [(ngModel)]="usuarioService.selectedUsuario.imagen">
+                                  <input type="hidden" formControlName="image" [(ngModel)]="usuarioService.selectedUsuario.imagen">
                               
                             </div>
                           </div>
-
+                          
                           <div class="file is-centered is-success is-boxed">
                             <label class="file-label">
-                              <input class="file-input" type="file" accept="image/*" alife-file-to-base64 (onFileChanged)="onFileChanges($event)" [(fileModel)]="files">
+                              <input class="file-input" accept="image/*" type="file" (change)="updateFile($event)">
                               <span class="file-cta">
                                 <span class="file-icon">
                                   <i class="fas fa-upload"></i>
@@ -253,12 +261,20 @@
                                   Sube una foto…
                                 </span>
                               </span>
-                              <div class="file is-centered" style="margin-top: 10px;">
-                                <figure class="image is-128x128">
-                                  <img src="{{previewImagen}}">
-                                </figure>
-                              </div> 
                             </label>
+                          </div>
+
+                          <div class="content">
+
+                            <div class="card">
+                              <div class="card-image">
+                                <div class="preview" *ngIf="preview && preview !== null">
+                                  <figure class="image is-4by5">
+                                    <img [src]="preview">
+                                  </figure>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           
                           
