@@ -24,12 +24,35 @@ export class UserService {
     return this.httpClient.get(environment.API_URL + this.url);
   }
 
-  postUsuarios(usuario: Usuario) {
-    return this.httpClient.post(environment.API_URL + this.url, usuario);
+  postUsuarios(password: string, correo: string, nombre: string, edad: string, genero: string, rol: string, image: File) {
+    var formData = new FormData();
+    formData.append("password", password);
+    formData.append("correo", correo);
+    formData.append("nombre", nombre);
+    formData.append("edad", edad);
+    formData.append("genero", genero);
+    formData.append("rol", rol);
+    formData.append("image", image);
+
+    return this.httpClient.post<Usuario>(environment.API_URL + this.url, formData, { reportProgress: true, observe: 'events'});
   }
 
-  putUsuarios(usuario: Usuario) {
-    return this.httpClient.put(environment.API_URL + this.url + `/${usuario._id}`, usuario);
+  /*
+  postUsuarios(usuario) {
+    return this.httpClient.post(environment.API_URL + this.url, usuario);
+  }*/
+
+  putUsuarios(_id: string, password: string, correo: string, nombre: string, edad: string, genero: string, rol: string, image: File) {
+    var formData = new FormData();
+    formData.append("password", password);
+    formData.append("correo", correo);
+    formData.append("nombre", nombre);
+    formData.append("edad", edad);
+    formData.append("genero", genero);
+    formData.append("rol", rol);
+    formData.append("image", image);
+
+    return this.httpClient.put<Usuario>(environment.API_URL + this.url + `/${_id}`, formData);
   }
 
   deleteUsuario(_id: string) {

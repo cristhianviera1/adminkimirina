@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Usuario } from './../../models/usuario';
-import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,14 +15,97 @@ export class UsuariosComponent implements OnInit {
   addUsuario = false;
   updUsuario = false;
   paginaActual: number = 1;
-  previewImagen: "";
+  postForm: FormGroup;
+  putForm: FormGroup;
+  preview: string;
 
 
-  constructor(private usuarioService: UserService) { }
+  constructor(private usuarioService: UserService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getUsuarios();
+
+    this.postForm = this.formBuilder.group({
+      password: ['', Validators.minLength(6)],
+      correo: ['', Validators.email],
+      nombre: ['', Validators.required],
+      edad: ['', Validators.required],
+      genero: ['', Validators.required],
+      rol: ['', Validators.required],
+      image: [null]
+    });
+
+    this.putForm = this.formBuilder.group({
+      _id: [''],
+      password: ['', Validators.minLength(6)],
+      correo: ['', Validators.email],
+      nombre: ['', Validators.required],
+      edad: ['', Validators.required],
+      genero: ['', Validators.required],
+      rol: ['', Validators.required],
+      image: [null]
+    });
   }
+
+  uploadFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.postForm.patchValue({
+      image: file
+    });
+
+
+    this.postForm.get('image').updateValueAndValidity();
+
+    //File preview
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  updateFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.putForm.patchValue({
+      image: file
+    });
+
+    this.putForm.get('image').updateValueAndValidity();
+
+    //File preview
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  postUsuario() {
+    this.usuarioService.postUsuarios(
+      this.postForm.value.password,
+      this.postForm.value.correo,
+      this.postForm.value.nombre,
+      this.postForm.value.edad,
+      this.postForm.value.genero,
+      this.postForm.value.rol,
+      this.postForm.value.image
+    ).subscribe(res => {
+      console.log(res);
+      this.getUsuarios();
+    });
+    this.cerrarModal();
+    Swal.fire(
+      'Muy Bien',
+        'Usuario creado exitosamente',
+        'success'
+      );
+  }
+
+
+
+  //---------------------------------------------------------------------------------------------
 
   getUsuarios() {
     this.usuarioService.getUsuarios().subscribe(res => {
@@ -32,40 +115,30 @@ export class UsuariosComponent implements OnInit {
 
   addUsuarioForm() {
     this.addUsuario = true;
-    this.previewImagen = "";
+    this.preview = '';
   }
 
   updUsuarioForm(usuario: Usuario) {
     this.updUsuario = true;
     this.usuarioService.selectedUsuario = usuario;
-    this.previewImagen = "";
+    this.preview = '';
   }
 
-  onFileChanges(files) {
-    this.previewImagen = files[0].base64;
-  }
-
-  postUsuario(form: NgForm) {
-    form.controls['imagen'].setValue(this.previewImagen);
-    this.usuarioService.postUsuarios(form.value).subscribe(res => {
+  putUsuario() {
+    //this.putForm.controls['image'].setValue(this.usuarioService.selectedUsuario.imagen.toString());
+    this.usuarioService.putUsuarios(
+      this.putForm.value._id,
+      this.putForm.value.password,
+      this.putForm.value.correo,
+      this.putForm.value.nombre,
+      this.putForm.value.edad,
+      this.putForm.value.genero,
+      this.putForm.value.rol,
+      this.putForm.value.image
+    ).subscribe(res => {
       console.log(res);
       this.getUsuarios();
-      this.previewImagen = "";
-    });
-    this.cerrarModal(form);
-    Swal.fire(
-      'Muy Bien',
-        'Usuario creado exitosamente',
-        'success'
-      );
-  }
-
-  putUsuario(form: NgForm) {
-    form.controls['imagen'].setValue(this.previewImagen);
-    this.usuarioService.putUsuarios(form.value).subscribe(res => {
-      console.log(res);
-      this.getUsuarios();
-      this.previewImagen = "";
+      location.reload();
     });
     this.cerrarModalUpd();
     Swal.fire(
@@ -73,6 +146,20 @@ export class UsuariosComponent implements OnInit {
         'Usuario actualizado exitosamente',
         'success'
       );
+
+
+    /*
+    this.usuarioService.putUsuarios(form.value).subscribe(res => {
+      console.log(res);
+      this.getUsuarios();
+    });
+    this.cerrarModalUpd();
+    Swal.fire(
+      'Muy Bien',
+        'Usuario actualizado exitosamente',
+        'success'
+      );
+      */
   }
 
   deleteUsuario(_id: string) {
@@ -101,20 +188,20 @@ export class UsuariosComponent implements OnInit {
     })
   }
 
-  cerrarModal(form?: NgForm) {
+  cerrarModal() {
     const modal = document.getElementById("modal");
     modal.classList.remove("is-active");
     this.addUsuario = false;
-    if (form) {
-      form.reset();
-      this.usuarioService.selectedUsuario = new Usuario();
-    }
+    this.postForm.reset();
+    this.preview = null;
   }
 
   cerrarModalUpd() {
     const modal = document.getElementById("modalupd");
     modal.classList.remove("is-active");
     this.updUsuario = false;
+    this.preview = null;
+    //this.putForm.controls['image'].reset();
   }
 
 

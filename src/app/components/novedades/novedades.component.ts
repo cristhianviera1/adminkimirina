@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NovedadesService } from './../../services/novedades.service';
 import { Novedad } from './../../models/novedad';
-import { FormControl, FormGroup, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,27 +15,40 @@ export class NovedadesComponent implements OnInit {
   addNovedad = false;
   updNovedad = false;
   paginaActual: number = 1;
-  previewImagen: "";
+  postForm: FormGroup;
+  putForm: FormGroup;
+  preview: string;
 
-  constructor(private novedadService: NovedadesService) { }
+  constructor(private novedadService: NovedadesService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getNovedades();
+
+    this.postForm = this.formBuilder.group({
+      titulo: ['', Validators.minLength(6)],
+      descripcion: ['', Validators.required],
+      link: ['', Validators.required],
+      image: [null]
+    });
+
+    this.putForm = this.formBuilder.group({
+      _id: [''],
+      titulo: ['', Validators.minLength(6)],
+      descripcion: ['', Validators.required],
+      link: ['', Validators.required],
+      image: [null]
+    });
   }
 
   addNovedadForm() {
     this.addNovedad = true;
-    this.previewImagen = "";
+    this.preview = '';
   }
 
   updNovedadForm(novedad: Novedad) {
     this.updNovedad = true;
     this.novedadService.selectedNovedad = novedad;
-    this.previewImagen = "";
-  }
-
-  onFileChanges(files) {
-    this.previewImagen = files[0].base64;
+    this.preview = '';
   }
 
   getNovedades() {
@@ -44,35 +57,79 @@ export class NovedadesComponent implements OnInit {
     });
   }
 
-  postNovedad(form: NgForm) {
-    form.controls['imagen'].setValue(this.previewImagen);
-    //console.log(form.value);
-    this.novedadService.postNovedad(form.value).subscribe(res => {
-      console.log(res);
-      this.getNovedades();
-      this.previewImagen = "";
+  //---------------------------------------------------
+  uploadFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.postForm.patchValue({
+      image: file
     });
-    this.cerrarModal(form);
-    Swal.fire(
-      'Muy Bien',
-        'Novedad creada exitosamente',
-        'success'
-      );
+
+    this.postForm.get('image').updateValueAndValidity();
+
+    //File preview
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
-  putNovedad(form: NgForm) {
-    form.controls['imagen'].setValue(this.previewImagen);
-    this.novedadService.putNovedad(form.value).subscribe(res => {
+  updateFile(event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.putForm.patchValue({
+      image: file
+    });
+
+    this.putForm.get('image').updateValueAndValidity();
+
+    //File preview
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.preview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+  //------------------------------------------------
+
+  postNovedad() {
+    console.log(this.postForm.value);
+    this.novedadService.postNovedad(
+      this.postForm.value.titulo,
+      this.postForm.value.descripcion,
+      this.postForm.value.link,
+      this.postForm.value.image
+    ).subscribe(res => {
+        console.log(res);
+        this.getNovedades();
+      });
+    this.cerrarModal();
+    Swal.fire(
+      'Muy Bien',
+      'Novedad creada exitosamente',
+      'success'
+    );
+  }
+
+  putNovedad() {
+    this.novedadService.putNovedad(
+      this.putForm.value._id,
+      this.putForm.value.titulo,
+      this.putForm.value.descripcion,
+      this.putForm.value.link,
+      this.putForm.value.image
+    ).subscribe(res => {
       console.log(res);
       this.getNovedades();
-      this.previewImagen = "";
+      location.reload();
     });
     this.cerrarModalUpd();
     Swal.fire(
       'Muy Bien',
-        'Novedad actualizada exitosamente',
-        'success'
-      );
+      'Novedad actualizada exitosamente',
+      'success'
+    );
   }
 
   deleteNovedad(_id: string) {
@@ -101,20 +158,19 @@ export class NovedadesComponent implements OnInit {
     });
   }
 
-  cerrarModal(form?: NgForm) {
+  cerrarModal() {
     const modal = document.getElementById("modal");
     modal.classList.remove("is-active");
     this.addNovedad = false;
-    if (form) {
-      form.reset();
-      this.novedadService.selectedNovedad = new Novedad();
-    }
+    this.postForm.reset();
+    this.preview = null;
   }
 
   cerrarModalUpd() {
     const modal = document.getElementById("modalupd");
     modal.classList.remove("is-active");
     this.updNovedad = false;
+    this.preview = null;
   }
 
 
