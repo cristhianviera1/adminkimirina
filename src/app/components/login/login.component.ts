@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
 
       this.usuarioService.cuenta = res as Usuario;
       const usuarioLogado = this.usuarioService.cuenta;
-      if (usuarioLogado.rol !== "Administrador") {
+      if (usuarioLogado.rol !== "admin") {
         Swal.fire('Error', `Ha ocurrido un error al iniciar la session!`, 'error');
       } else {
         localStorage.setItem("usuariologeado", JSON.stringify(this.usuarioService.cuenta));

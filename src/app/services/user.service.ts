@@ -80,7 +80,7 @@ export class UserService {
     }
     this.esAdmin = usuarioLogado.rol;
 
-    if (this.esAdmin !== "Administrador" || this.esAdmin == null) {
+    if (this.esAdmin !== "admin" || this.esAdmin == null) {
       return false;
     }
     return true;
