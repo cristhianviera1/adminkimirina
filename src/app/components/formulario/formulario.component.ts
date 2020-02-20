@@ -3,6 +3,7 @@ import { FormularioService } from 'src/app/services/formulario.service';
 import { Formulario } from 'src/app/models/formulario';
 import { ExportadorxlsService } from 'src/app/services/exportadorxls.service';
 import Swal from 'sweetalert2';
+import { CompileShallowModuleMetadata } from '@angular/compiler';
 
 
 
@@ -22,7 +23,9 @@ export class FormularioComponent implements OnInit {
 
   getFormularios() {
     this.formularioService.getFormularios().subscribe(res => {
+      console.log(res);
       this.formularioService.formularios = res as Formulario[];
+      console.log("esto tengo"+ this.formularioService.formularios);
     });
   }
 

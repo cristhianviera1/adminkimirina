@@ -64,7 +64,16 @@
                             <div class="control">
                               <input class="input" type="text" placeholder="Ingresa tu nombre" formControlName="nombre">
                             </div>
-                          </div>
+                            <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
+                              <div *ngIf="f.nombre.errors.required">
+                                <article class="message is-danger" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    El nombre es un campo <strong>Requerido</strong>.
+                                  </div>
+                                </article>
+                              </div>
+                            </div>
+                        </div>
                           
                           <div class="field">
                             <label class="label">Email</label>
@@ -74,6 +83,22 @@
                                 <i class="fas fa-envelope"></i>
                               </span>
                             </div>
+                            <div *ngIf="submitted && f.correo.errors" class="invalid-feedback">
+                              <div *ngIf="f.correo.errors.required">
+                                <article class="message is-danger" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    El correo es un campo <strong>Requerido</strong>.
+                                  </div>
+                                </article>
+                              </div>
+                              <div *ngIf="f.correo.errors.email">
+                                <article class="message is-danger" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    Debe ser un email valido.
+                                  </div>
+                                </article>
+                              </div>
+                          </div>
                           </div>
 
                           <div class="field">
@@ -111,9 +136,9 @@
                                     <div class="control">
                                       <div class="select">
                                         <select formControlName="rol">
-                                          <option value="Administrador">Administrador</option>
-                                          <option value="Brigadista">Brigadista</option>
-                                          <option value="Usuario">Usuario</option>
+                                          <option value="admin">Administrador</option>
+                                          <option value="brigadista">Brigadista</option>
+                                          <option value="usuario">Usuario</option>
                                         </select>
                                       </div>
                                     </div>
@@ -237,9 +262,9 @@
                                     <div class="control">
                                       <div class="select">
                                         <select formControlName="rol" [(ngModel)]="usuarioService.selectedUsuario.rol">
-                                          <option value="Administrador">Administrador</option>
-                                          <option value="Brigadista">Brigadista</option>
-                                          <option value="Usuario">Usuario</option>
+                                          <option value="admin">Administrador</option>
+                                          <option value="brigadista">Brigadista</option>
+                                          <option value="usuario">Usuario</option>
                                         </select>
                                       </div>
                                     </div>

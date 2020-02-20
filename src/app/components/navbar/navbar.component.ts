@@ -29,6 +29,11 @@ export class NavbarComponent implements OnInit {
         localStorage.clear();
         this.router.navigateByUrl('/login');
       }
+      if (res["status"] == 400) {
+        console.log(res);
+        localStorage.clear();
+        this.router.navigateByUrl('/login');
+      }
     });
   }
 

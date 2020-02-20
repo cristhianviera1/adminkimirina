@@ -18,6 +18,7 @@ export class UsuariosComponent implements OnInit {
   postForm: FormGroup;
   putForm: FormGroup;
   preview: string;
+  submitted = false;
 
 
   constructor(private usuarioService: UserService, private formBuilder: FormBuilder) { }
@@ -46,6 +47,10 @@ export class UsuariosComponent implements OnInit {
       image: [null]
     });
   }
+
+  //Aceso a los controles de la forms
+  get f() { return this.postForm.controls; }
+  get fp() { return this.putForm.controls; }
 
   uploadFile(event) {
     const file = (event.target as HTMLInputElement).files[0];
@@ -83,24 +88,29 @@ export class UsuariosComponent implements OnInit {
   }
 
   postUsuario() {
-    this.usuarioService.postUsuarios(
-      this.postForm.value.password,
-      this.postForm.value.correo,
-      this.postForm.value.nombre,
-      this.postForm.value.edad,
-      this.postForm.value.genero,
-      this.postForm.value.rol,
-      this.postForm.value.image
-    ).subscribe(res => {
-      console.log(res);
-      this.getUsuarios();
-    });
-    this.cerrarModal();
-    Swal.fire(
-      'Muy Bien',
-        'Usuario creado exitosamente',
-        'success'
-      );
+    this.submitted = true;
+    if (this.postForm.invalid) {
+      return;
+    } else {
+      this.usuarioService.postUsuarios(
+        this.postForm.value.password,
+        this.postForm.value.correo,
+        this.postForm.value.nombre,
+        this.postForm.value.edad,
+        this.postForm.value.genero,
+        this.postForm.value.rol,
+        this.postForm.value.image
+      ).subscribe(res => {
+        console.log(res);
+        this.getUsuarios();
+      });
+      this.cerrarModal();
+      Swal.fire(
+        'Muy Bien',
+          'Usuario creado exitosamente',
+          'success'
+        );
+    }
   }
 
 
