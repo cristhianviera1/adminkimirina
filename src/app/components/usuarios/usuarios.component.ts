@@ -27,10 +27,10 @@ export class UsuariosComponent implements OnInit {
     this.getUsuarios();
 
     this.postForm = this.formBuilder.group({
-      password: ['', Validators.minLength(6)],
-      correo: ['', Validators.email],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      correo: ['',  [Validators.required, Validators.email]],
       nombre: ['', Validators.required],
-      edad: ['', Validators.required],
+      edad: ['', [Validators.required, Validators.min(18)]],
       genero: ['', Validators.required],
       rol: ['', Validators.required],
       image: [null]

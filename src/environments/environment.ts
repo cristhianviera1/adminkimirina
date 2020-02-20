@@ -4,10 +4,6 @@
 
 export const environment = {
   production: false,
-<<<<<<< HEAD
   API_URL: 'http://localhost:4000'
-=======
-  API_URL: 'http://192.168.100.175:4000'
->>>>>>> 59cf778c7470f60f179cae4932d67935315b5d45
 };
 

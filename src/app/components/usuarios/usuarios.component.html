@@ -66,7 +66,7 @@
                             </div>
                             <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
                               <div *ngIf="f.nombre.errors.required">
-                                <article class="message is-danger" style="margin-top: 5px;">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
                                   <div class="message-body">
                                     El nombre es un campo <strong>Requerido</strong>.
                                   </div>
@@ -85,14 +85,14 @@
                             </div>
                             <div *ngIf="submitted && f.correo.errors" class="invalid-feedback">
                               <div *ngIf="f.correo.errors.required">
-                                <article class="message is-danger" style="margin-top: 5px;">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
                                   <div class="message-body">
                                     El correo es un campo <strong>Requerido</strong>.
                                   </div>
                                 </article>
                               </div>
                               <div *ngIf="f.correo.errors.email">
-                                <article class="message is-danger" style="margin-top: 5px;">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
                                   <div class="message-body">
                                     Debe ser un email valido.
                                   </div>
@@ -109,6 +109,22 @@
                                 <i class="fas fa-lock"></i>
                               </span>
                             </p>
+                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                              <div *ngIf="f.password.errors.required">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    La contraseña es un campo <strong>Requerido</strong>.
+                                  </div>
+                                </article>
+                              </div>
+                              <div *ngIf="f.password.errors.minlength">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    La contraseña debe tener al menos 6 caracteres.
+                                  </div>
+                                </article>
+                              </div>
+                          </div>
                           </div>
 
                           <div class="field is-horizontal">
@@ -118,7 +134,25 @@
                                     <div class="control">
                                       <input class="input" type="number" placeholder="edad" formControlName="edad" >
                                     </div>
-                                  </div>
+                                    <div *ngIf="submitted && f.edad.errors" class="invalid-feedback">
+                                      <div *ngIf="f.edad.errors.required">
+                                        <article class="message is-danger is-small" style="margin-top: 5px;">
+                                          <div class="message-body">
+                                            La edad es un campo <strong>Requerido</strong>.
+                                          </div>
+                                        </article>
+                                      </div>
+                                      <div *ngIf="f.edad.errors.min">
+                                        <article class="message is-danger is-small" style="margin-top: 5px;">
+                                          <div class="message-body">
+                                            Debes tener al menos 18 años.
+                                          </div>
+                                        </article>
+                                      </div>
+                                    </div>
+                                </div>
+                                  
+
                                 <div class="field">
                                     <label class="label">Genero</label>
                                     <div class="control">
@@ -128,6 +162,15 @@
                                           <option value="Femenino">Femenino</option>
                                           <option value="Otro">Otro</option>
                                         </select>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="submitted && f.genero.errors" class="invalid-feedback">
+                                      <div *ngIf="f.genero.errors.required">
+                                        <article class="message is-danger is-small" style="margin-top: 5px;">
+                                          <div class="message-body">
+                                            Debes seleccionar un item.
+                                          </div>
+                                        </article>
                                       </div>
                                     </div>
                                   </div>
@@ -140,6 +183,15 @@
                                           <option value="brigadista">Brigadista</option>
                                           <option value="usuario">Usuario</option>
                                         </select>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="submitted && f.rol.errors" class="invalid-feedback">
+                                      <div *ngIf="f.rol.errors.required">
+                                        <article class="message is-danger is-small" style="margin-top: 5px;">
+                                          <div class="message-body">
+                                            Debes seleccionar un item.
+                                          </div>
+                                        </article>
                                       </div>
                                     </div>
                                   </div>
