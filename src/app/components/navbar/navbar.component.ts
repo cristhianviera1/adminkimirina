@@ -18,18 +18,12 @@ export class NavbarComponent implements OnInit {
   }
 
   logoutUsuario() {
-    var usuarioObjeto: Usuario;
     var usuarioJson = localStorage.getItem('usuariologeado');
-    usuarioObjeto = JSON.parse(usuarioJson);
-    console.log(usuarioObjeto._id);
-    var env = { id: usuarioObjeto._id };
+    var usuarioObjeto = JSON.parse(usuarioJson);
+    console.log(usuarioObjeto.id);
+    var env = { id: usuarioObjeto.id };
     this.usuarioService.logoutUsuario(env).subscribe(res => {
       if (res["status"] == 200) {
-        console.log(res);
-        localStorage.clear();
-        this.router.navigateByUrl('/login');
-      }
-      if (res["status"] == 400) {
         console.log(res);
         localStorage.clear();
         this.router.navigateByUrl('/login');

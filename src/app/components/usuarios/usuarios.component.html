@@ -179,9 +179,9 @@
                                     <div class="control">
                                       <div class="select">
                                         <select formControlName="rol">
-                                          <option value="admin">Administrador</option>
-                                          <option value="brigadista">Brigadista</option>
-                                          <option value="usuario">Usuario</option>
+                                          <option value="admin">admin</option>
+                                          <option value="brigadista">brigadista</option>
+                                          <option value="usuario">usuario</option>
                                         </select>
                                       </div>
                                     </div>
@@ -267,6 +267,15 @@
                             <div class="control">
                               <input class="input" type="text" placeholder="Ingresa tu nombre" formControlName="nombre" [(ngModel)]="usuarioService.selectedUsuario.nombre">
                             </div>
+                            <div *ngIf="submitted && fp.nombre.errors" class="invalid-feedback">
+                              <div *ngIf="fp.nombre.errors.required">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    El nombre es un campo <strong>Requerido</strong>.
+                                  </div>
+                                </article>
+                              </div>
+                            </div>
                           </div>
                           
                           <div class="field">
@@ -277,6 +286,22 @@
                                 <i class="fas fa-envelope"></i>
                               </span>
                             </div>
+                            <div *ngIf="submitted && fp.correo.errors" class="invalid-feedback">
+                              <div *ngIf="fp.correo.errors.required">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    El correo es un campo <strong>Requerido</strong>.
+                                  </div>
+                                </article>
+                              </div>
+                              <div *ngIf="fp.correo.errors.email">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    Debe ser un email valido.
+                                  </div>
+                                </article>
+                              </div>
+                          </div>
                           </div>
 
                           <div class="field">
@@ -287,6 +312,22 @@
                                 <i class="fas fa-lock"></i>
                               </span>
                             </p>
+                            <div *ngIf="submitted && fp.password.errors" class="invalid-feedback">
+                              <div *ngIf="fp.password.errors.required">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    La contraseña es un campo <strong>Requerido</strong>.
+                                  </div>
+                                </article>
+                              </div>
+                              <div *ngIf="fp.password.errors.minlength">
+                                <article class="message is-danger is-small" style="margin-top: 5px;">
+                                  <div class="message-body">
+                                    La contraseña debe tener al menos 6 caracteres.
+                                  </div>
+                                </article>
+                              </div>
+                          </div>
                           </div>
 
                           <div class="field is-horizontal">
@@ -295,6 +336,22 @@
                                     <label class="label">Edad</label>
                                     <div class="control">
                                       <input class="input" type="number" placeholder="edad" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.edad">
+                                    </div>
+                                    <div *ngIf="submitted && fp.edad.errors" class="invalid-feedback">
+                                      <div *ngIf="fp.edad.errors.required">
+                                        <article class="message is-danger is-small" style="margin-top: 5px;">
+                                          <div class="message-body">
+                                            La edad es un campo <strong>Requerido</strong>.
+                                          </div>
+                                        </article>
+                                      </div>
+                                      <div *ngIf="fp.edad.errors.min">
+                                        <article class="message is-danger is-small" style="margin-top: 5px;">
+                                          <div class="message-body">
+                                            Debes tener al menos 18 años.
+                                          </div>
+                                        </article>
+                                      </div>
                                     </div>
                                   </div>
                                 <div class="field">
@@ -308,16 +365,34 @@
                                         </select>
                                       </div>
                                     </div>
+                                    <div *ngIf="submitted && fp.genero.errors" class="invalid-feedback">
+                                      <div *ngIf="fp.genero.errors.required">
+                                        <article class="message is-danger is-small" style="margin-top: 5px;">
+                                          <div class="message-body">
+                                            Debes seleccionar un item.
+                                          </div>
+                                        </article>
+                                      </div>
+                                    </div>
                                   </div>
                                   <div class="field">
                                     <label class="label">Rol</label>
                                     <div class="control">
                                       <div class="select">
                                         <select formControlName="rol" [(ngModel)]="usuarioService.selectedUsuario.rol">
-                                          <option value="admin">Administrador</option>
-                                          <option value="brigadista">Brigadista</option>
-                                          <option value="usuario">Usuario</option>
+                                          <option value="admin">admin</option>
+                                          <option value="brigadista">brigadista</option>
+                                          <option value="usuario">usuario</option>
                                         </select>
+                                      </div>
+                                    </div>
+                                    <div *ngIf="submitted && fp.rol.errors" class="invalid-feedback">
+                                      <div *ngIf="fp.rol.errors.required">
+                                        <article class="message is-danger is-small" style="margin-top: 5px;">
+                                          <div class="message-body">
+                                            Debes seleccionar un item.
+                                          </div>
+                                        </article>
                                       </div>
                                     </div>
                                   </div>

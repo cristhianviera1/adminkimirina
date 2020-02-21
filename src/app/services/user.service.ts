@@ -75,6 +75,10 @@ export class UserService {
     var session = localStorage.getItem('usuariologeado');
     usuarioLogado = JSON.parse(session);
 
+    if (usuarioLogado == null) {
+      usuarioLogado = new Usuario();
+    }
+
     if (usuarioLogado.rol == null) {
       this.esAdmin = '';
     }

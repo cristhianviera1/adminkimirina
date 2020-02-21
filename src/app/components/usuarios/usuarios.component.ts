@@ -38,10 +38,10 @@ export class UsuariosComponent implements OnInit {
 
     this.putForm = this.formBuilder.group({
       _id: [''],
-      password: ['', Validators.minLength(6)],
-      correo: ['', Validators.email],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      correo: ['',  [Validators.required, Validators.email]],
       nombre: ['', Validators.required],
-      edad: ['', Validators.required],
+      edad: ['', [Validators.required, Validators.min(18)]],
       genero: ['', Validators.required],
       rol: ['', Validators.required],
       image: [null]
@@ -135,41 +135,31 @@ export class UsuariosComponent implements OnInit {
   }
 
   putUsuario() {
-    //this.putForm.controls['image'].setValue(this.usuarioService.selectedUsuario.imagen.toString());
-    this.usuarioService.putUsuarios(
-      this.putForm.value._id,
-      this.putForm.value.password,
-      this.putForm.value.correo,
-      this.putForm.value.nombre,
-      this.putForm.value.edad,
-      this.putForm.value.genero,
-      this.putForm.value.rol,
-      this.putForm.value.image
-    ).subscribe(res => {
-      console.log(res);
-      this.getUsuarios();
-      location.reload();
-    });
-    this.cerrarModalUpd();
-    Swal.fire(
-      'Muy Bien',
-        'Usuario actualizado exitosamente',
-        'success'
-      );
-
-
-    /*
-    this.usuarioService.putUsuarios(form.value).subscribe(res => {
-      console.log(res);
-      this.getUsuarios();
-    });
-    this.cerrarModalUpd();
-    Swal.fire(
-      'Muy Bien',
-        'Usuario actualizado exitosamente',
-        'success'
-      );
-      */
+    this.submitted = true;
+    if (this.putForm.invalid) {
+      return;
+    } else {
+      this.usuarioService.putUsuarios(
+        this.putForm.value._id,
+        this.putForm.value.password,
+        this.putForm.value.correo,
+        this.putForm.value.nombre,
+        this.putForm.value.edad,
+        this.putForm.value.genero,
+        this.putForm.value.rol,
+        this.putForm.value.image
+      ).subscribe(res => {
+        console.log(res);
+        this.getUsuarios();
+        location.reload();
+      });
+      this.cerrarModalUpd();
+      Swal.fire(
+        'Muy Bien',
+          'Usuario actualizado exitosamente',
+          'success'
+        );
+    }
   }
 
   deleteUsuario(_id: string) {
