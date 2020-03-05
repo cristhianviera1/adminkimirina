@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   loginUsuario(form: NgForm) {
     this.usuarioService.loginUsuario(form.value).subscribe(res => {
 
-      this.usuarioService.cuenta = res as Usuario;
+      this.usuarioService.cuenta = res["usuario"] as Usuario;
       const usuarioLogado = this.usuarioService.cuenta;
       if (usuarioLogado.rol !== "admin") {
         Swal.fire('Error', `Ha ocurrido un error al iniciar la session!`, 'error');
