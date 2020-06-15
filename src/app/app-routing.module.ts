@@ -8,6 +8,10 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
+import { RegisterComponent} from './components/register/register.component';
+import { KimirinaComponent } from './components/kimirina/kimirina.component';
+
+// Guard
 import { LoginGuardGuard } from './guards/login-guard.guard';
 
 
@@ -17,7 +21,9 @@ import { LoginGuardGuard } from './guards/login-guard.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: '', redirectTo: 'login', pathMatch: 'full'},
+  { path: 'register', component: RegisterComponent},
+  { path: 'kimirina', component: KimirinaComponent},
+  { path: '', redirectTo: 'kimirina', pathMatch: 'full'},
   { path: 'navbar', component: NavbarComponent, canActivate: [LoginGuardGuard]},
   { path: 'home', component: HomeComponent, canActivate: [LoginGuardGuard]},
   { path: 'usuarios', component: UsuariosComponent, canActivate: [LoginGuardGuard]},

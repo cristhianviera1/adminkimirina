@@ -17,6 +17,8 @@ import { NoticiasComponent } from './components/noticias/noticias.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { ExportadorxlsService } from './services/exportadorxls.service';
+import { RegisterComponent } from './components/register/register.component';
+import { KimirinaComponent } from './components/kimirina/kimirina.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { ExportadorxlsService } from './services/exportadorxls.service';
     ProductosComponent,
     NoticiasComponent,
     NovedadesComponent,
-    FormularioComponent
+    FormularioComponent,
+    RegisterComponent,
+    KimirinaComponent
   ],
   imports: [
     BrowserModule,

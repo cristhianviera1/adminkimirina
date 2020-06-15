@@ -1,0 +1,98 @@
+<body>
+    <nav class="navbar is-black" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img src="../../../assets/img/logo-kimirina.png" width="112" height="28">
+          </a>
+      
+          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-start">
+            <a class="navbar-item">
+              Home
+            </a>
+          </div>
+      
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-info" [routerLink]="['/register']">
+                  <strong>Registrate</strong>
+                </a>
+                <a class="button is-dark" [routerLink]="['/login']">
+                  Inicia Sesión
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    <section class="container">
+      <div class="columns is-multiline">
+        <div class="column is-8 is-offset-2 register">
+          <div class="columns">
+            <div class="column left">
+              <h1 class="title is-1">Kimirina App</h1>
+              <h2 class="subtitle colored is-4">Lorem ipsum dolor sit amet.</h2>
+              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis ex deleniti aliquam tempora libero excepturi vero soluta odio optio sed.</p>
+            </div>
+            <div class="column right has-text-centered">
+              <h1 class="title is-4">Crea tu cuenta</h1>
+              <p class="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
+              <form>
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="text" placeholder="Name">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="control">
+                    <input class="input is-medium" type="email" placeholder="Email">
+                  </div>
+                </div>
+                <button class="button is-block is-info is-fullwidth is-medium">Submit</button>
+                <br />
+                <small><em>Lorem ipsum dolor sit amet consectetur.</em></small>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="column is-8 is-offset-2">
+          <br>
+          <nav class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <span class="icon">
+                  <i class="fab fa-twitter"></i>
+                </span> &emsp;
+                <span class="icon">
+                  <i class="fab fa-facebook"></i>
+                </span> &emsp;
+                <span class="icon">
+                  <i class="fab fa-instagram"></i>
+                </span> &emsp;
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span> &emsp;
+                <span class="icon">
+                  <i class="fas fa-envelope"></i>
+                </span>
+              </div>
+            </div>
+            <div class="level-right">
+              <small class="level-item" style="color: var(--textLight)">
+                &copy; Kimirina App. Todos los derechos reservados.
+              </small>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </body>
