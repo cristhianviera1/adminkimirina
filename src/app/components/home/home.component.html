@@ -1,100 +1,48 @@
 <app-navbar></app-navbar>
 
-<div class="container">
-    <div id="flow">
-        <span class="flow-1"></span>
-        <span class="flow-2"></span>
-        <span class="flow-3"></span>
-    </div>
-    <div class="section">
-
-        <!-- Developers -->
-        <div class="row columns">
-            <div class="column is-one-quarter">
-                <div class="card large">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img src="../../../assets/img/baner_usuarios.jpeg" alt="Image">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-content">
-                                <p class="title is-4 no-padding">Usuarios</p>
-                            </div>
-                        </div>
-                        <div class="content">
-                            Administra todos los usuarios de la aplicación movil y crea nuevos brigadistas o administradores.
-                            <hr>
-                            <button class="button is-danger is-outlined" [routerLink]="['/usuarios']">Ingresar  </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-one-quarter">
-                <div class="card large">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img src="../../../assets/img/baner_productos.jpg" alt="Image">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-content">
-                                <p class="title is-4 no-padding">Productos y servicios</p>
-                            </div>
-                        </div>
-                        <div class="content">
-                            Crea, modifica o elimina los productos y servicios los cuales se muestran el la applicación movil.
-                            <hr>
-                            <button class="button is-warning is-outlined" [routerLink]="['/productos']">Ingresar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-one-quarter">
-                <div class="card large">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img src="../../../assets/img/baner_novedades.png" alt="Image">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-content">
-                                <p class="title is-4 no-padding">Noticias y novedades</p>
-                            </div>
-                        </div>
-                        <div class="content">
-                            Manten al dia a todos los usuarios de la applicacion movil actualizandola con nueva información.
-                            <hr>
-                            <button class="button is-info is-outlined" [routerLink]="['/novedades']">Ingresar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="column is-one-quarter">
-                <div class="card large">
-                    <div class="card-image">
-                        <figure class="image">
-                            <img src="../../../assets/img/estadistica.jpg" alt="Image">
-                        </figure>
-                    </div>
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-content">
-                                <p class="title is-4 no-padding">Datos estadisticos</p>
-                            </div>
-                        </div>
-                        <div class="content">
-                            Revisa los resultados de los formularios llenados por los usuarios de la app movil.
-                            <hr>
-                            <button class="button is-info is-outlined" [routerLink]="['/formularios']">Ingresar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<body>
+    <div class="container">
+      <div class="section">
+        <div class="columns">
+          <div class="column has-text-centered">
+            <h1 class="title" style="color: gray;">Bienvenido al administrador de Kimirina App</h1><br>
+          </div>
         </div>
-        <!-- End Developers -->
+        <div id="app" class="row columns is-multiline">
+          <div *ngFor="let cardData of cardsData" class="column is-3">
+            <div class="card large">
+              <div class="card-image is-16by9">
+                <figure class="image">
+                  <img src="{{cardData.image}}" alt="Image">
+                </figure>
+              </div>
+              <div class="card-content">
+                <div class="media">
+                  <div class="media-content">
+                    <p class="title is-4 no-padding">{{cardData.title}}</p>
+                    <p>
+                    <p class="subtitle is-6">{{cardData.subtitle}}</p>
+                  </div>
+                </div>
+                <div class="content">
+                    {{cardData.content}}
+                  <div class="background-icon"><span class="icon-twitter"></span></div>
+                  <hr>
+                    <button class="button is-info is-outlined" [routerLink]="[cardData.redirect]">Ingresar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+    <footer class="footer">
+        <div class="content has-text-centered">
+          <p>
+            <strong>Kimirina App</strong> es parte de la organización <a href="https://jgthms.com">Kimirina</a> la cual se dedica a combatir el
+            <a href="http://opensource.org/licenses/mit-license.php">VIH</a> en el Ecuador y cualquier otra enfermedad de 
+             <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Transmisión sexual</a>.
+          </p>
+        </div>
+      </footer>
+  </body>
