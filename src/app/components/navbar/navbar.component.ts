@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { Usuario } from './../../models/usuario';
-import { Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +13,10 @@ export class NavbarComponent implements OnInit {
   constructor(private usuarioService: UserService, private router: Router) { }
 
   ngOnInit() {
+    // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function() {
+      $('.sidenav').sidenav();
+     });
   }
 
   logoutUsuario() {

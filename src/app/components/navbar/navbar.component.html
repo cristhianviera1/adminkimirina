@@ -1,26 +1,13 @@
-<nav class="navbar is-dark">
-    <div class="container">
-        <div class="navbar-brand">
-            <a class="navbar-item" [routerLink]="['/home']">
-                    <img src="../../../assets/img/logo-kimirina.png" alt="Logo">
-                </a>
-            <span class="navbar-burger burger" data-target="navbarMenu">
-                    <span></span>
-            <span></span>
-            <span></span>
-            </span>
-        </div>
-        <div id="navbarMenu" class="navbar-menu">
-            <div class="navbar-end">
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                            Cuenta
-                        </a>
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item" (click)="logoutUsuario()">Salir</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<nav>
+    <div class="nav-wrapper">
+        <a [routerLink]="['/home']" class="brand-logo">Kimirina App</a>
+        <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+        <li><a style="margin-right: 5px;" (click)="logoutUsuario()"><i class="material-icons right">exit_to_app</i>Cerrar Sesión</a></li>
+        </ul>
     </div>
 </nav>
+
+<ul class="sidenav" id="mobile-demo">
+    <li><a (click)="logoutUsuario()"><i class="material-icons left">exit_to_app</i>Cerrar Sesión</a></li>
+</ul>

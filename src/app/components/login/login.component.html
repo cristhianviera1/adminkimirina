@@ -1,77 +1,60 @@
 <body>
-    <nav class="navbar is-black" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
-            <img src="../../../assets/img/logo-kimirina.png" width="112" height="28">
-          </a>
-      
-          <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-      
-        <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-start">
-            <a class="navbar-item">
-              Home
-            </a>
-          </div>
-      
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <a class="button is-info" [routerLink]="['/register']">
-                  <strong>Registrate</strong>
-                </a>
-                <a class="button is-dark" [routerLink]="['/login']">
-                  Inicia Sesión
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>
-    <section class="hero is-success is-fullheight">
-        <div class="hero-body">
-            <div class="container has-text-centered">
-                <div class="column is-4 is-offset-4">
-                    <h3 class="title has-text-black"><strong>Login</strong></h3>
-                    <hr class="login-hr">
-                    <p class="subtitle has-text-black">Por favor inicia sesión.</p>
-                    <div class="box">
-                        <figure class="avatar">
-                            <img src="../../../assets/img/logoTransparente.png" style="max-width: 128px; max-height: 129px;">
-                        </figure>
-                        <form #loginForm='ngForm' (ngSubmit)='loginUsuario(loginForm)' action="">
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input" type="email" placeholder="Tu Email" autofocus="" name="correo"  #correo="ngModel" [(ngModel)]="usuarioService.selectedUsuario.correo">
-                                </div>
-                            </div>
+    
+  <nav>
+    <div class="nav-wrapper">
+      <a [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
+      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a [routerLink]="['/kimirina']">Inicio</a></li>
+        <li><a href="#">Quienes somos?</a></li>
+        <li><a [routerLink]="['/register']">Registrate</a></li>
+        <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
+      </ul>
+    </div>
+  </nav>
 
-                            <div class="field">
-                                <div class="control">
-                                    <input class="input" type="password" placeholder="Tu Password" name="password"  #password="ngModel" [(ngModel)]="usuarioService.selectedUsuario.password">
-                                </div>
-                            </div>
-                            <div class="field">
-                                <label class="checkbox">
-                                <input type="checkbox">
-                                Recuerdame
-                                </label>
-                            </div>
-                            <button class="button is-block is-info is-medium is-fullwidth" type="submit">Ingresar <i class="fa fa-sign-in" aria-hidden="true"></i></button>
-                        </form>
-                    </div>
-                    <p class="has-text-grey">
-                        <a [routerLink]="['/register']">Registrate</a> &nbsp;·&nbsp;
-                        <a [routerLink]="['/kimirina']">Olvidaste tu contraseña?</a> &nbsp;·&nbsp;
-                        <a [routerLink]="['/kimirina']">Necesitas ayuda?</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <ul class="sidenav" id="mobile-demo">
+    <li><a [routerLink]="['/kimirina']">Inicio</a></li>
+    <li><a href="#">Quienes somos?</a></li>
+    <li><a [routerLink]="['/register']">Registrate</a></li>
+    <li><a [routerLink]="['/login']">Inicia Sesión</a></li>
+  </ul>
+
+  <section class="hero is-success is-fullheight">
+      <div class="hero-body">
+          <div class="container has-text-centered">
+              <div class="column is-4 is-offset-4">
+                  <h3 class="title has-text-black"><strong>Login</strong></h3>
+                  <hr class="login-hr">
+                  <p class="subtitle has-text-black">Por favor inicia sesión.</p>
+                  <div class="box">
+                      <figure class="avatar">
+                          <img src="../../../assets/img/logoTransparente.png" style="max-width: 128px; max-height: 129px;">
+                      </figure>
+                      <form #loginForm='ngForm' (ngSubmit)='loginUsuario(loginForm)' action="">
+                          <div class="field">
+                              <div class="control">
+                                  <input class="input" type="email" placeholder="Tu Email" autofocus="" name="correo"  #correo="ngModel" [(ngModel)]="usuarioService.selectedUsuario.correo">
+                              </div>
+                          </div>
+
+                          <div class="field">
+                              <div class="control">
+                                  <input class="input" type="password" placeholder="Tu Password" name="password"  #password="ngModel" [(ngModel)]="usuarioService.selectedUsuario.password">
+                              </div>
+                          </div>
+                          <button class="btn waves-effect waves-light btn-large red lighten-1" type="submit">Ingresar
+                            <i class="material-icons left">input</i>
+                          </button>
+                      </form>
+                  </div>
+                  <p class="has-text-grey">
+                      <a [routerLink]="['/register']" class="rosadito">Registrate</a> &nbsp;·&nbsp;
+                      <a [routerLink]="['/kimirina']" class="rosadito">Olvidaste tu contraseña?</a> &nbsp;·&nbsp;
+                      <a [routerLink]="['/kimirina']" class="rosadito">Necesitas ayuda?</a>
+                  </p>
+              </div>
+          </div>
+      </div>
+  </section>
 </body>

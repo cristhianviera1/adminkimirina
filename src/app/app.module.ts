@@ -19,6 +19,7 @@ import { FormularioComponent } from './components/formulario/formulario.componen
 import { ExportadorxlsService } from './services/exportadorxls.service';
 import { RegisterComponent } from './components/register/register.component';
 import { KimirinaComponent } from './components/kimirina/kimirina.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { KimirinaComponent } from './components/kimirina/kimirina.component';
     NovedadesComponent,
     FormularioComponent,
     RegisterComponent,
-    KimirinaComponent
+    KimirinaComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

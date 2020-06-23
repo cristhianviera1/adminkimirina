@@ -1,38 +1,25 @@
 <body>
-  <nav class="navbar is-black" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://bulma.io">
-        <img src="../../../assets/img/logo-kimirina.png" width="112" height="28">
-      </a>
   
-      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-  
-    <div id="navbarBasicExample" class="navbar-menu">
-      <div class="navbar-start">
-        <a class="navbar-item">
-          Home
-        </a>
-      </div>
-  
-      <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons">
-            <a class="button is-info" [routerLink]="['/register']">
-              <strong>Registrate</strong>
-            </a>
-            <a class="button is-dark" [routerLink]="['/login']">
-              Inicia Sesión
-            </a>
-          </div>
-        </div>
-      </div>
+  <nav>
+    <div class="nav-wrapper">
+      <a [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
+      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a [routerLink]="['/kimirina']">Inicio</a></li>
+        <li><a href="#">Quienes somos?</a></li>
+        <li><a [routerLink]="['/register']">Registrate</a></li>
+        <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
+      </ul>
     </div>
   </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li><a [routerLink]="['/kimirina']">Inicio</a></li>
+    <li><a href="#">Quienes somos?</a></li>
+    <li><a [routerLink]="['/register']">Registrate</a></li>
+    <li><a [routerLink]="['/login']">Inicia Sesión</a></li>
+  </ul>
+
   <section class="hero is-medium">
     <div class="hero-body">
       <div class="container">
