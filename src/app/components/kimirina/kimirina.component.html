@@ -1,117 +1,207 @@
 <body>
-  
-  <nav>
-    <div class="nav-wrapper">
-      <a [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
-      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a [routerLink]="['/kimirina']">Inicio</a></li>
-        <li><a href="#">Quienes somos?</a></li>
-        <li><a [routerLink]="['/register']">Registrate</a></li>
-        <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <ul class="sidenav" id="mobile-demo">
-    <li><a [routerLink]="['/kimirina']">Inicio</a></li>
-    <li><a href="#">Quienes somos?</a></li>
-    <li><a [routerLink]="['/register']">Registrate</a></li>
-    <li><a [routerLink]="['/login']">Inicia Sesión</a></li>
-  </ul>
-
-  <section class="hero is-medium">
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title is-1 ">Kimirina App</h1>
-        <h2 class="subtitle">A simple boilerplate for setting up parallax <br> using the Bulma Hero container.</h2>
-        <a href="#" class="button is-white is-medium is-inverted">Learn More&ensp;<i class="fad fa-chevron-right"></i></a>
+  <section class="hero is-info is-medium is-bold">
+      <div class="hero-head">
+        <nav>
+          <div class="nav-wrapper">
+            <a [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
+            <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+              <li><a [routerLink]="['/kimirina']">Inicio</a></li>
+              <li><a href="#">Quienes somos?</a></li>
+              <li><a [routerLink]="['/register']">Registrate</a></li>
+              <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
+            </ul>
+          </div>
+        </nav>
+      
+        <ul class="sidenav" id="mobile-demo">
+          <li><a [routerLink]="['/kimirina']">Inicio</a></li>
+          <li><a href="#">Quienes somos?</a></li>
+          <li><a [routerLink]="['/register']">Registrate</a></li>
+          <li><a [routerLink]="['/login']">Inicia Sesión</a></li>
+        </ul>
       </div>
-    </div>
-  </section>
-  <section id="parallax-1" class="hero is-large ">
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-6 is-offset-6">
-            <h1 class="title is-1 ">Lorem Ipsum</h1>
-            <hr class="content-divider">
-            <h2 class="subtitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit explicabo amet magni illum eum voluptate! Eveniet voluptatem nam magnam necessitatibus.</h2>
-            <a href="#" class="button is-white is-inverted">Next&ensp;<i class="fad fa-chevron-right"></i></a>
+      <div class="hero-body red accent-1">
+          <div class="container has-text-centered">
+              <h1 class="title">
+              Organización Kimirina
+              </h1>
+              <h2 class="subtitle">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              </h2>
           </div>
-        </div>
       </div>
-    </div>
   </section>
-  <section id="parallax-2" class="hero is-large ">
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-6">
-            <h1 class="title is-1 ">Dolor Sit</h1>
-            <hr class="content-divider">
-            <h2 class="subtitle">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque veritatis sequi natus minima distinctio ullam deleniti quasi quisquam autem deserunt.</h2>
-            <a href="#" class="button is-white is-inverted">Next&ensp;<i class="fad fa-chevron-right"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="parallax-3" class="hero is-large ">
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-6 is-offset-6">
-            <h1 class="title is-1 ">Amet Consectetur</h1>
-            <hr class="content-divider">
-            <h2 class="subtitle">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure minus nam necessitatibus neque in perferendis eveniet dolorum assumenda dolores accusamus.</h2>
-            <a href="#" class="button is-white is-inverted">Next&ensp;<i class="fad fa-chevron-right"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="cta va">
-    <div class="container">
-      <div class="columns">
-        <div class="column is-6">
-          <h1 class="title is-1 ">Adipisicing Elit</h1>
-          <hr class="content-divider">
-          <h2 class="subtitle">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas ut nulla maiores, beatae voluptas sunt excepturi deserunt vero. Beatae est ratione quia neque molestias, cum asperiores quibusdam rem illum, debitis dolorem natus, eos fuga eveniet numquam ab officia reiciendis inventore. Tempore repudiandae exercitationem quisquam? Fugiat!</h2>
-        </div>
-        <div class="column is-6">
-          <div class="field">
-            <label class="label">Name</label>
-            <div class="control">
-              <input class="input is-medium" type="text" placeholder="Jon Snow">
-            </div>
-          </div>
-          <br>
-          <div class="field">
-            <label class="label">Email</label>
-            <div class="control">
-              <input class="input is-medium" type="email" placeholder="jon@winterfell.com">
-            </div>
-          </div>
-          <br>
-          <div class="field is-grouped">
-            <div class="control">
-              <button class="button is-white is-rounded is-outlined">Submit</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </section>
-  <footer class="footer">
-    <div class="content has-text-centered">
-      <p>
-        <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
-        <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-        is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+  <div class="box cta">
+      <p class="has-text-centered">
+          <span class="tag is-primary">New</span> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
       </p>
-    </div>
-  </footer>
+  </div>
+  <section class="container">
+      <div class="columns features">
+          <div class="column is-4">
+              <div class="card is-shady">
+                  <div class="card-image has-text-centered">
+                    <i class="large material-icons">favorite</i>
+                  </div>
+                  <div class="card-content">
+                      <div class="content">
+                          <h4>Tristique senectus et netus et. </h4>
+                          <p>Purus semper eget duis at tellus at urna condimentum mattis. Non blandit massa enim nec. Integer enim neque volutpat ac tincidunt vitae semper quis. Accumsan tortor posuere ac ut consequat semper viverra nam.</p>
+                          <p><a href="#">Learn more</a></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="column is-4">
+              <div class="card is-shady">
+                  <div class="card-image has-text-centered">
+                    <i class="large material-icons">ac_unit</i>
+                  </div>
+                  <div class="card-content">
+                      <div class="content">
+                          <h4>Tempor orci dapibus ultrices in.</h4>
+                          <p>Ut venenatis tellus in metus vulputate. Amet consectetur adipiscing elit pellentesque. Sed arcu non odio euismod lacinia at quis risus. Faucibus turpis in eu mi bibendum neque egestas cmonsu songue. Phasellus vestibulum lorem
+                          sed risus.</p>
+                          <p><a href="#">Learn more</a></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="column is-4">
+              <div class="card is-shady">
+                  <div class="card-image has-text-centered">
+                      <i class="large material-icons">android</i>
+                  </div>
+                  <div class="card-content">
+                      <div class="content">
+                          <h4> Leo integer malesuada nunc vel risus. </h4>
+                          <p>Imperdiet dui accumsan sit amet nulla facilisi morbi. Fusce ut placerat orci nulla pellentesque dignissim enim. Libero id faucibus nisl tincidunt eget nullam. Commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                          <p><a href="#">Learn more</a></p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="intro column is-8 is-offset-2">
+          <h2 class="title">Ingresa a nuestra comunidad!</h2><br>
+          <p class="subtitle">Vel fringilla est ullamcorper eget nulla facilisi. Nulla facilisi nullam vehicula ipsum a. Neque egestas congue quisque egestas diam in arcu cursus.</p>
+      </div>
+      <div class="sandbox">
+          <div class="tile is-ancestor">
+              <div class="tile is-parent is-shady">
+                  <article class="tile is-child notification is-white">
+                      <p class="title">Hello World</p>
+                      <p class="subtitle">What is up?</p>
+                  </article>
+              </div>
+              <div class="tile is-parent is-shady">
+                  <article class="tile is-child notification is-white">
+                      <p class="title">Foo</p>
+                      <p class="subtitle">Bar</p>
+                  </article>
+              </div>
+              <div class="tile is-parent is-shady">
+                  <article class="tile is-child notification is-white">
+                      <p class="title">Third column</p>
+                      <p class="subtitle">With some content</p>
+                      <div class="content">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                      </div>
+                  </article>
+              </div>
+          </div>
+          <div class="tile is-ancestor">
+              <div class="tile is-vertical is-8">
+                  <div class="tile">
+                      <div class="tile is-parent is-vertical">
+                          <article class="tile is-child notification is-white">
+                              <p class="title">Vertical tiles</p>
+                              <p class="subtitle">Top box</p>
+                          </article>
+                          <article class="tile is-child notification is-white">
+                              <p class="title">Vertical tiles</p>
+                              <p class="subtitle">Bottom box</p>
+                          </article>
+                      </div>
+                      <div class="tile is-parent">
+                          <article class="tile is-child notification is-white">
+                              <p class="title">Middle box</p>
+                              <p class="subtitle">With an image</p>
+                              <figure class="image is-4by3">
+                                  <img src="https://picsum.photos/640/480/?random" alt="Description">
+                              </figure>
+                          </article>
+                      </div>
+                  </div>
+                  <div class="tile is-parent is-shady">
+                      <article class="tile is-child notification is-white">
+                          <p class="title">Wide column</p>
+                          <p class="subtitle">Aligned with the right column</p>
+                          <div class="content">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                          </div>
+                      </article>
+                  </div>
+              </div>
+              <div class="tile is-parent is-shady">
+                  <article class="tile is-child notification is-white">
+                      <div class="content">
+                          <p class="title">Tall column</p>
+                          <p class="subtitle">With even more content</p>
+                          <div class="content">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper diam at erat pulvinar, at pulvinar felis blandit. Vestibulum volutpat tellus diam, consequat gravida libero rhoncus ut. Morbi maximus, leo sit amet vehicula
+                              eleifend, nunc dui porta orci, quis semper odio felis ut quam.</p>
+                              <p>Suspendisse varius ligula in molestie lacinia. Maecenas varius eget ligula a sagittis. Pellentesque interdum, nisl nec interdum maximus, augue diam porttitor lorem, et sollicitudin felis neque sit amet erat. Maecenas imperdiet
+                              felis nisi, fringilla luctus felis hendrerit sit amet. Aenean vitae gravida diam, finibus dignissim turpis. Sed eget varius ligula, at volutpat tortor.</p>
+                              <p>Integer sollicitudin, tortor a mattis commodo, velit urna rhoncus erat, vitae congue lectus dolor consequat libero. Donec leo ligula, maximus et pellentesque sed, gravida a metus. Cras ullamcorper a nunc ac porta. Aliquam
+                              ut aliquet lacus, quis faucibus libero. Quisque non semper leo.</p>
+                          </div>
+                      </div>
+                  </article>
+              </div>
+          </div>
+          <div class="tile is-ancestor">
+              <div class="tile is-parent is-shady">
+                  <article class="tile is-child notification is-white">
+                      <p class="title">Side column</p>
+                      <p class="subtitle">With some content</p>
+                      <div class="content">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                      </div>
+                  </article>
+              </div>
+              <div class="tile is-parent is-8 is-shady">
+                  <article class="tile is-child notification is-white">
+                      <p class="title">Main column</p>
+                      <p class="subtitle">With some content</p>
+                      <div class="content">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                      </div>
+                  </article>
+              </div>
+          </div>
+          <div class="tile is-ancestor">
+              <div class="tile is-parent is-8 is-shady">
+                  <article class="tile is-child notification is-white">
+                      <p class="title">Murphy's law</p>
+                      <p class="subtitle">Anything that can go wrong will go wrong</p>
+                      <div class="content">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                      </div>
+                  </article>
+              </div>
+              <div class="tile is-parent is-shady">
+                  <article class="tile is-child notification is-white">
+                      <p class="title">Main column</p>
+                      <p class="subtitle">With some content</p>
+                      <div class="content">
+                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+                      </div>
+                  </article>
+              </div>
+          </div>
+      </div>
+  </section>
+  <app-footer></app-footer>
 </body>

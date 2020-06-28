@@ -28,7 +28,7 @@ export class NavbarComponent implements OnInit {
       if (res["status"] == 200) {
         console.log(res);
         localStorage.clear();
-        this.router.navigateByUrl('/login');
+        this.router.navigateByUrl('/kimirina');
       }
     });
   }

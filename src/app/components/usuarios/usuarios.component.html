@@ -2,19 +2,18 @@
 
 <div class="container">
 <h1 class="title is-2">Lista de usuarios</h1>
-<button class="button is-primary is-outlined" (click)="addUsuarioForm()">Nuevo <span class="fas fa-plus" style="margin-left: 5px;"></span></button>
+<a class="btn-floating btn waves-effect waves-light green accent-3" (click)="addUsuarioForm()"><i class="material-icons">add</i></a>
 <button class="button is-dark is-outlined" style="margin-left: 5px;" [routerLink]="['/home']"><i class="fas fa-arrow-left" style="margin-right: 2px;"></i> Regresar</button>
 <hr>
 
 
 <div class="content">
 
-<table class="table is-striped">
+<table class="responsive-table highlight">
     <thead>
       <tr>
         <th>Nº</th>
         <th>Nombre</th>
-        <th>Imagen</th>
         <th>Correo</th>
         <th>Edad</th>
         <th>Genero</th>
@@ -26,16 +25,13 @@
       <tr *ngFor="let usuario of usuarioService.usuarios | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
         <th>{{i+1}}</th>
         <td>{{usuario.nombre}}</td>
-        <td><figure class="image is-32x32">
-          <img class="is-rounded" src="{{usuario.imagen}}">
-        </figure></td>
         <td>{{usuario.correo}}</td>
         <td>{{usuario.edad}}</td>
         <td>{{usuario.genero}}</td>
         <td>{{usuario.rol}}</td>
         <td>
-            <button class="button is-warning is-outlined" (click)="updUsuarioForm(usuario)"><span class="fas fa-edit"></span>Editar</button>
-            <button class="button is-danger is-outlined" style="margin-left: 5px;" (click)="deleteUsuario(usuario._id)"><span class="fas fa-trash-alt"></span>Eliminar</button>
+          <a class="btn-floating btn-small waves-effect waves-light yellow" (click)="updUsuarioForm(usuario)"><i class="material-icons">mode_edit</i></a>
+          <a class="btn-floating btn-small waves-effect waves-light red accent-4" (click)="deleteUsuario(usuario._id)"><i class="material-icons">delete</i></a>
         </td>
       </tr>
     </tbody>

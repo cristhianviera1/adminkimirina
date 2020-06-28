@@ -28,6 +28,7 @@
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "node_modules/materialize-css/dist/css/materialize.min.css",
               "node_modules/@mdi/font/css/materialdesignicons.min.css",
+              "node_modules/materialize-social/materialize-social.css",
               "src/styles.css"
             ],
             "scripts": [

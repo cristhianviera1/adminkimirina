@@ -26,6 +26,7 @@
     "file-saver": "^2.0.2",
     "jquery": "^3.5.1",
     "materialize-css": "^1.0.0-rc.2",
+    "materialize-social": "^1.0.3",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.4.0",
     "sweetalert2": "^9.7.0",
