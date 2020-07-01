@@ -196,12 +196,47 @@ export class UsuariosComponent implements OnInit {
           this.getUsuarios();
         });
         Swal.fire(
-          'Eliminada!',
+          'Eliminado!',
           'El usuario ha sido eliminado.',
           'success'
-        )
+        );
       }
-    })
+    });
+  }
+
+  softDelete(_id: string) {
+    const env = { id: _id };
+
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: "No podras resvertir esta acción!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminalo!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.usuarioService.softDelete(env).subscribe(res => {
+          if (res["status"] == 200) {
+          console.log(res);
+          this.getUsuarios();
+          Swal.fire(
+            'Eliminado!',
+            'El usuario ha sido eliminado.',
+            'success'
+          );
+          } else {
+            Swal.fire(
+              'Eliminado!',
+              'El usuario ha sido eliminado.',
+              'success'
+            );
+          }
+        });
+      }
+    });
   }
 
   cerrarModal() {

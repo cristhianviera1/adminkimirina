@@ -32,7 +32,7 @@
           <td>{{usuario.rol}}</td>
           <td>
             <a class="btn-floating btn-small waves-effect waves-light yellow" (click)="updUsuarioForm(usuario)"><i class="material-icons">mode_edit</i></a>
-            <a class="btn-floating btn-small waves-effect waves-light red accent-4" (click)="deleteUsuario(usuario._id)"><i class="material-icons">delete</i></a>
+            <a class="btn-floating btn-small waves-effect waves-light red accent-4" (click)="softDelete(usuario._id)"><i class="material-icons">delete</i></a>
           </td>
         </tr>
       </tbody>

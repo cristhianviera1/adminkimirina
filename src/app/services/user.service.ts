@@ -13,6 +13,7 @@ export class UserService {
   url = '/usuario';
   login = '/login';
   logout = '/logout';
+  soft = '/soft';
   cuenta: Usuario;
   esAdmin = null;
 
@@ -67,7 +68,14 @@ export class UserService {
     const headers = {
       responseType: 'text'
     };
-    return this.httpClient.post(environment.API_URL + this.url + this.logout, json,{headers});
+    return this.httpClient.post(environment.API_URL + this.url + this.logout, json, {headers});
+  }
+
+  softDelete(json) {
+    const headers = {
+      responseType: 'text'
+    };
+    return this.httpClient.post(environment.API_URL + this.url + this.soft, json, {headers});
   }
 
   isLoggedIn() {
