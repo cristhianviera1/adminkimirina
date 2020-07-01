@@ -3,6 +3,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Usuario } from './../../models/usuario';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-usuarios',
@@ -25,6 +26,21 @@ export class UsuariosComponent implements OnInit {
 
   ngOnInit() {
     this.getUsuarios();
+
+    // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function() {
+      $('.modal').modal();
+    });
+
+    // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function() {
+      $('input#nombre').characterCounter();
+    });
+
+    // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function() {
+      $('select').formSelect();
+    });
 
     this.postForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
