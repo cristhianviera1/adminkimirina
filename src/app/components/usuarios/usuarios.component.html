@@ -2,7 +2,6 @@
 
 <div class="container">
   <h1 class="title is-2">Lista de usuarios</h1>
-  <a class="btn-floating btn waves-effect waves-light green accent-3" (click)="addUsuarioForm()"><i class="material-icons">add</i></a>
   <a class="btn-floating btn waves-effect waves-light modal-trigger purple accent-3" href="#modal1"><i class="material-icons">add</i></a>
   <button class="button is-dark is-outlined" style="margin-left: 5px;" [routerLink]="['/home']"><i class="fas fa-arrow-left" style="margin-right: 2px;"></i> Regresar</button>
   <hr>
@@ -31,7 +30,7 @@
           <td>{{usuario.genero}}</td>
           <td>{{usuario.rol}}</td>
           <td>
-            <a class="btn-floating btn-small waves-effect waves-light yellow" (click)="updUsuarioForm(usuario)"><i class="material-icons">mode_edit</i></a>
+            <a class="btn-floating btn-small waves-effect waves-light modal-trigger yellow" (click)="updUsuarioForm(usuario)"><i class="material-icons">mode_edit</i></a>
             <a class="btn-floating btn-small waves-effect waves-light red accent-4" (click)="softDelete(usuario._id)"><i class="material-icons">delete</i></a>
           </td>
         </tr>
@@ -43,7 +42,6 @@
   </div>
 </div>
 
-<div class="container">
   <!-- Modal Structure -->
   <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -51,50 +49,103 @@
       <p>Crea un nuevo usuario!</p>
       <hr>
       <div class="row">
-        <form class="col s12" (ngSubmit)='postUsuario()'>
+        <form class="col s12" [formGroup]="postForm" (ngSubmit)='postUsuario()' novalidate>
           <div class="row">
             <div class="input-field col s6">
               <i class="material-icons prefix">account_circle</i>
-              <input id="nombre" type="text" class="validate" data-length="50">
+              <input id="nombre" name="nombre" type="text" class="validate" required minlength="6" maxlength="50" formControlName="nombre">
               <label for="nombre">Nombre</label>
+              <div *ngIf="f.nombre.touched && !f.nombre.errors">
+                <span class="helper-text" style="color: #4CAF50;">Bien</span>
+              </div>
+              <div *ngIf="f.nombre.touched && f.nombre.errors || submitted && f.nombre.errors">
+                <div *ngIf="f.nombre.errors.required">
+                  <span class="helper-text" style="color: #d50000;">El nombre es requerido</span>
+                </div>
+                <div *ngIf="f.nombre.errors.minlength">
+                  <span class="helper-text" style="color: #d50000;">El nombre debe contener al menos 6 caracteres</span>
+                </div>
+              </div>
             </div>
             <div class="input-field col s6">
               <i class="material-icons prefix">email</i>
-              <input id="email" type="email" class="validate">
+              <input id="email" type="email" required class="validate" formControlName="correo">
               <label for="email">Email</label>
-              <span class="helper-text" data-error="Correo no valido" data-success="right">Ejm: hola@gmail.com</span>
+              <div *ngIf="f.correo.touched && !f.correo.errors">
+                <span class="helper-text" style="color: #4CAF50;">Bien</span>
+              </div>
+              <div *ngIf="f.correo.touched && f.correo.errors || submitted && f.correo.errors">
+                <div *ngIf="f.correo.errors.required">
+                  <span class="helper-text" style="color: #d50000;">El correo es requerido</span>
+                </div>
+                <div *ngIf="f.correo.errors.email">
+                  <span class="helper-text" style="color: #d50000;">El correo es invalido</span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
               <i class="material-icons prefix">lock</i>
-              <input id="password" type="password" class="validate">
+              <input id="password" type="password" minlength="6" required class="validate" formControlName="password">
               <label for="password">Password</label>
+              <div *ngIf="f.password.touched && !f.password.errors">
+                <span class="helper-text" style="color: #4CAF50;">Bien</span>
+              </div>
+              <div *ngIf="f.password.touched && f.password.errors || submitted && f.password.errors">
+                <div *ngIf="f.password.errors.required">
+                  <span class="helper-text" style="color: #d50000;">La contraseña es requerida</span>
+                </div>
+                <div *ngIf="f.password.errors.minlength">
+                  <span class="helper-text" style="color: #d50000;">La contraseña debe tener al menos 6 caracteres</span>
+                </div>
+              </div>
             </div>
             <div class="input-field col s6">
               <i class="material-icons prefix">cake</i>
-              <input id="edad" type="number" class="validate">
+              <input id="edad" type="number" required min="18" class="validate" formControlName="edad">
               <label for="edad">Edad</label>
+              <div *ngIf="f.edad.touched && !f.edad.errors">
+                <span class="helper-text" style="color: #4CAF50;">Bien</span>
+              </div>
+              <div *ngIf="f.edad.touched && f.edad.errors || submitted && f.edad.errors">
+                <div  *ngIf="f.edad.errors.required">
+                  <span class="helper-text" style="color: #d50000;">La edad es requerida</span>
+                </div>
+                <div *ngIf="f.edad.errors.min">
+                  <span class="helper-text" style="color: #d50000;">Debes tener al menos 18 años</span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="input-field col s6">
-              <select>
+              <select id="genero" required formControlName="genero">
                 <option value="" disabled selected>Escoje una opción</option>
                 <option value="Masculino">Masculino</option>
                 <option value="Femenino">Femenino</option>
                 <option value="Otro">Otro</option>
               </select>
               <label>Genero</label>
+              <div *ngIf="f.genero.touched && f.genero.errors || submitted && f.genero.errors">
+                <div *ngIf="f.genero.errors.required">
+                  <span class="helper-text" style="color: #d50000;">Debe selecionar un item</span>
+                </div>
+              </div>
             </div>
             <div class="input-field col s6">
-              <select>
+              <select id="rol" required formControlName="rol">
                 <option value="" disabled selected>Escoje una opción</option>
                 <option value="admin">Administrador</option>
                 <option value="brigadista">Brigadista</option>
                 <option value="usuario">Usuario</option>
               </select>
               <label>Rol</label>
+              <div *ngIf="f.rol.touched && f.rol.errors || submitted && f.rol.errors">
+                <div *ngIf="f.rol.errors.required">
+                  <span class="helper-text" style="color: #d50000;">Debe selecionar un item</span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row">
@@ -105,13 +156,13 @@
                   <input type="file" accept="image/*" (change)="uploadFile($event)">
                 </div>
                 <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text">
+                  <input class="file-path validate" type="text" placeholder="Sube tu foto de perfil">
                 </div>
               </div>
             </div>
           </div>
           <div class="row">
-            <button class="btn waves-effect waves-light" type="submit" name="action">Crear
+            <button class="btn waves-effect waves-light" [disabled]="!postForm.valid">Crear
               <i class="material-icons right">send</i>
             </button>
           </div>
@@ -119,396 +170,139 @@
       </div>
     </div>
     <div class="modal-footer">  
-        <a class="modal-close waves-effect waves-red btn red"></a>
+        <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal()"></a>
     </div>
   </div>
 
-<div class="container">
-    <ng-template [ngIf]="addUsuario">
-        <div id="modal" class="modal is-active">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Nuevo usuario</p>
-                    <button class="delete" aria-label="close" (click)="cerrarModal()"></button>
-                </header>
-                <section class="modal-card-body">
-
-                    <form [formGroup]="postForm" (ngSubmit)='postUsuario()'>
-
-                        <div class="field">
-                            <label class="label">Nombre</label>
-                            <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa tu nombre" formControlName="nombre">
-                            </div>
-                            <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
-                              <div *ngIf="f.nombre.errors.required">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    El nombre es un campo <strong>Requerido</strong>.
-                                  </div>
-                                </article>
-                              </div>
-                            </div>
-                        </div>
-                          
-                          <div class="field">
-                            <label class="label">Email</label>
-                            <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="hola@gmail.com" formControlName="correo" >
-                              <span class="icon is-small is-left">
-                                <i class="fas fa-envelope"></i>
-                              </span>
-                            </div>
-                            <div *ngIf="submitted && f.correo.errors" class="invalid-feedback">
-                              <div *ngIf="f.correo.errors.required">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    El correo es un campo <strong>Requerido</strong>.
-                                  </div>
-                                </article>
-                              </div>
-                              <div *ngIf="f.correo.errors.email">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    Debe ser un email valido.
-                                  </div>
-                                </article>
-                              </div>
-                          </div>
-                          </div>
-
-                          <div class="field">
-                            <label class="label">Contraseña</label>
-                            <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password" formControlName="password">
-                              <span class="icon is-small is-left">
-                                <i class="fas fa-lock"></i>
-                              </span>
-                            </p>
-                            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                              <div *ngIf="f.password.errors.required">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    La contraseña es un campo <strong>Requerido</strong>.
-                                  </div>
-                                </article>
-                              </div>
-                              <div *ngIf="f.password.errors.minlength">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    La contraseña debe tener al menos 6 caracteres.
-                                  </div>
-                                </article>
-                              </div>
-                          </div>
-                          </div>
-
-                          <div class="field is-horizontal">
-                            <div class="field-body">
-                                <div class="field">
-                                    <label class="label">Edad</label>
-                                    <div class="control">
-                                      <input class="input" type="number" placeholder="edad" formControlName="edad" >
-                                    </div>
-                                    <div *ngIf="submitted && f.edad.errors" class="invalid-feedback">
-                                      <div *ngIf="f.edad.errors.required">
-                                        <article class="message is-danger is-small" style="margin-top: 5px;">
-                                          <div class="message-body">
-                                            La edad es un campo <strong>Requerido</strong>.
-                                          </div>
-                                        </article>
-                                      </div>
-                                      <div *ngIf="f.edad.errors.min">
-                                        <article class="message is-danger is-small" style="margin-top: 5px;">
-                                          <div class="message-body">
-                                            Debes tener al menos 18 años.
-                                          </div>
-                                        </article>
-                                      </div>
-                                    </div>
-                                </div>
-                                  
-
-                                <div class="field">
-                                    <label class="label">Genero</label>
-                                    <div class="control">
-                                      <div class="select">
-                                        <select formControlName="genero">
-                                          <option value="Masculino">Masculino</option>
-                                          <option value="Femenino">Femenino</option>
-                                          <option value="Otro">Otro</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div *ngIf="submitted && f.genero.errors" class="invalid-feedback">
-                                      <div *ngIf="f.genero.errors.required">
-                                        <article class="message is-danger is-small" style="margin-top: 5px;">
-                                          <div class="message-body">
-                                            Debes seleccionar un item.
-                                          </div>
-                                        </article>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="field">
-                                    <label class="label">Rol</label>
-                                    <div class="control">
-                                      <div class="select">
-                                        <select formControlName="rol">
-                                          <option value="admin">admin</option>
-                                          <option value="brigadista">brigadista</option>
-                                          <option value="usuario">usuario</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div *ngIf="submitted && f.rol.errors" class="invalid-feedback">
-                                      <div *ngIf="f.rol.errors.required">
-                                        <article class="message is-danger is-small" style="margin-top: 5px;">
-                                          <div class="message-body">
-                                            Debes seleccionar un item.
-                                          </div>
-                                        </article>
-                                      </div>
-                                    </div>
-                                  </div>
-                              
-                            </div>
-                          </div>
-                    
-                          
-                          <div class="file is-centered is-success is-boxed">
-                            <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" (change)="uploadFile($event)">
-                              <span class="file-cta">
-                                <span class="file-icon">
-                                  <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">
-                                  Sube una foto…
-                                </span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="content">
-                            <div class="columns is-mobile is-centered" style="margin-top: 20px">
-                            <div class="card">
-                              <div class="card-image">
-                                <div class="preview" *ngIf="preview && preview !== null">                         
-                                    <img class="is-centered" [src]="preview" width="200" height="100" style="max-height: 100px; max-width: 200px">
-                                </div>
-                              </div>
-                            </div>
-                            </div>
-                          </div>
-                          
-                          <hr>
-                          <div class="field is-grouped">
-                            <div class="control">
-                              <button class="button is-link">Crear</button>
-                            </div>
-                          </div>
-                          
-                    </form>
-
-                </section>
+  <div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Editar</h4>
+      <p>Modifica un usuario!</p>
+      <hr>
+      <div class="row">
+        <form class="col s12" [formGroup]="putForm" (ngSubmit)='putUsuario()' novalidate>
+          <div class="row">
+            <input type="hidden" formControlName="_id" [(ngModel)]="usuarioService.selectedUsuario._id">
+            <div class="input-field col s6">
+              <i class="material-icons prefix">account_circle</i>
+              <input id="nombre2" type="text" class="validate" required minlength="6" maxlength="50" formControlName="nombre" [(ngModel)]="usuarioService.selectedUsuario.nombre">
+              <label for="nombre2">Nombre</label>
+              <div *ngIf="fp.nombre.touched && !fp.nombre.errors">
+                <span class="helper-text" style="color: #4CAF50;">Bien</span>
+              </div>
+              <div *ngIf="fp.nombre.touched && fp.nombre.errors || submitted && fp.nombre.errors">
+                <div *ngIf="fp.nombre.errors.required">
+                  <span class="helper-text" style="color: #d50000;">El nombre es requerido</span>
+                </div>
+                <div *ngIf="fp.nombre.errors.minlength">
+                  <span class="helper-text" style="color: #d50000;">El nombre debe contener al menos 6 caracteres</span>
+                </div>
+              </div>
             </div>
-        </div>
-    </ng-template>
-</div>
-
-
-<div class="content">
-    <ng-template [ngIf]="updUsuario">
-        <div id="modalupd" class="modal is-active">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Editar usuario</p>
-                    <button class="delete" aria-label="close" (click)="cerrarModalUpd(usuarioUdpForm)"></button>
-                </header>
-                <section class="modal-card-body">
-
-                    <form [formGroup]="putForm" (ngSubmit)='putUsuario()'>
-                        <input type="hidden" formControlName="_id" [(ngModel)]="usuarioService.selectedUsuario._id">
-
-                        <div class="field">
-                            <label class="label">Nombre</label>
-                            <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa tu nombre" formControlName="nombre" [(ngModel)]="usuarioService.selectedUsuario.nombre">
-                            </div>
-                            <div *ngIf="submitted && fp.nombre.errors" class="invalid-feedback">
-                              <div *ngIf="fp.nombre.errors.required">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    El nombre es un campo <strong>Requerido</strong>.
-                                  </div>
-                                </article>
-                              </div>
-                            </div>
-                          </div>
-                          
-                          <div class="field">
-                            <label class="label">Email</label>
-                            <div class="control has-icons-left has-icons-right">
-                              <input class="input" type="email" placeholder="hola@gmail.com" formControlName="correo" [(ngModel)]="usuarioService.selectedUsuario.correo">
-                              <span class="icon is-small is-left">
-                                <i class="fas fa-envelope"></i>
-                              </span>
-                            </div>
-                            <div *ngIf="submitted && fp.correo.errors" class="invalid-feedback">
-                              <div *ngIf="fp.correo.errors.required">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    El correo es un campo <strong>Requerido</strong>.
-                                  </div>
-                                </article>
-                              </div>
-                              <div *ngIf="fp.correo.errors.email">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    Debe ser un email valido.
-                                  </div>
-                                </article>
-                              </div>
-                          </div>
-                          </div>
-
-                          <div class="field">
-                            <label class="label">Contraseña</label>
-                            <p class="control has-icons-left">
-                              <input class="input" type="password" placeholder="Password" formControlName="password" [(ngModel)]="usuarioService.selectedUsuario.password">
-                              <span class="icon is-small is-left">
-                                <i class="fas fa-lock"></i>
-                              </span>
-                            </p>
-                            <div *ngIf="submitted && fp.password.errors" class="invalid-feedback">
-                              <div *ngIf="fp.password.errors.required">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    La contraseña es un campo <strong>Requerido</strong>.
-                                  </div>
-                                </article>
-                              </div>
-                              <div *ngIf="fp.password.errors.minlength">
-                                <article class="message is-danger is-small" style="margin-top: 5px;">
-                                  <div class="message-body">
-                                    La contraseña debe tener al menos 6 caracteres.
-                                  </div>
-                                </article>
-                              </div>
-                          </div>
-                          </div>
-
-                          <div class="field is-horizontal">
-                            <div class="field-body">
-                                <div class="field">
-                                    <label class="label">Edad</label>
-                                    <div class="control">
-                                      <input class="input" type="number" placeholder="edad" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.edad">
-                                    </div>
-                                    <div *ngIf="submitted && fp.edad.errors" class="invalid-feedback">
-                                      <div *ngIf="fp.edad.errors.required">
-                                        <article class="message is-danger is-small" style="margin-top: 5px;">
-                                          <div class="message-body">
-                                            La edad es un campo <strong>Requerido</strong>.
-                                          </div>
-                                        </article>
-                                      </div>
-                                      <div *ngIf="fp.edad.errors.min">
-                                        <article class="message is-danger is-small" style="margin-top: 5px;">
-                                          <div class="message-body">
-                                            Debes tener al menos 18 años.
-                                          </div>
-                                        </article>
-                                      </div>
-                                    </div>
-                                  </div>
-                                <div class="field">
-                                    <label class="label">Genero</label>
-                                    <div class="control">
-                                      <div class="select">
-                                        <select formControlName="genero" [(ngModel)]="usuarioService.selectedUsuario.genero">
-                                          <option value="Masculino">Masculino</option>
-                                          <option value="Femenino">Femenino</option>
-                                          <option value="Otro">Otro</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div *ngIf="submitted && fp.genero.errors" class="invalid-feedback">
-                                      <div *ngIf="fp.genero.errors.required">
-                                        <article class="message is-danger is-small" style="margin-top: 5px;">
-                                          <div class="message-body">
-                                            Debes seleccionar un item.
-                                          </div>
-                                        </article>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="field">
-                                    <label class="label">Rol</label>
-                                    <div class="control">
-                                      <div class="select">
-                                        <select formControlName="rol" [(ngModel)]="usuarioService.selectedUsuario.rol">
-                                          <option value="admin">admin</option>
-                                          <option value="brigadista">brigadista</option>
-                                          <option value="usuario">usuario</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div *ngIf="submitted && fp.rol.errors" class="invalid-feedback">
-                                      <div *ngIf="fp.rol.errors.required">
-                                        <article class="message is-danger is-small" style="margin-top: 5px;">
-                                          <div class="message-body">
-                                            Debes seleccionar un item.
-                                          </div>
-                                        </article>
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <input type="hidden" formControlName="image" [(ngModel)]="usuarioService.selectedUsuario.imagen">
-                              
-                            </div>
-                          </div>
-                          
-                          <div class="file is-centered is-success is-boxed">
-                            <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" (change)="updateFile($event)">
-                              <span class="file-cta">
-                                <span class="file-icon">
-                                  <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">
-                                  Sube una foto…
-                                </span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="content">
-                            <div class="columns is-mobile is-centered" style="margin-top: 20px">
-                            <div class="card">
-                              <div class="card-image">
-                                <div class="preview" *ngIf="preview && preview !== null">                         
-                                    <img class="is-centered" [src]="preview" width="200" height="100" style="max-height: 100px; max-width: 200px">
-                                </div>
-                              </div>
-                            </div>
-                            </div>
-                          </div>
-                          
-                          
-                          <div class="field is-grouped">
-                            <div class="control">
-                              <button class="button is-link" type="submit">Actualizar</button>
-                            </div>
-                          </div>
-                    </form>
-
-                </section>
+            <div class="input-field col s6">
+              <i class="material-icons prefix">email</i>
+              <input id="email2" type="email" required class="validate" formControlName="correo" [(ngModel)]="usuarioService.selectedUsuario.correo">
+              <label for="email2">Email</label>
+              <div *ngIf="fp.correo.touched && !fp.correo.errors">
+                <span class="helper-text" style="color: #4CAF50;">Bien</span>
+              </div>
+              <div *ngIf="fp.correo.touched && fp.correo.errors || submitted && fp.correo.errors">
+                <div *ngIf="fp.correo.errors.required">
+                  <span class="helper-text" style="color: #d50000;">El correo es requerido</span>
+                </div>
+                <div *ngIf="fp.correo.errors.email">
+                  <span class="helper-text" style="color: #d50000;">El correo es invalido</span>
+                </div>
+              </div>
             </div>
-        </div>
-    </ng-template>
-</div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <i class="material-icons prefix">lock</i>
+              <input id="password2" type="password" minlength="6" required class="validate" formControlName="password" [(ngModel)]="usuarioService.selectedUsuario.password">
+              <label for="password2">Password</label>
+              <div *ngIf="fp.password.touched && !fp.password.errors">
+                <span class="helper-text" style="color: #4CAF50;">Bien</span>
+              </div>
+              <div *ngIf="fp.password.touched && fp.password.errors || submitted && fp.password.errors">
+                <div *ngIf="fp.password.errors.required">
+                  <span class="helper-text" style="color: #d50000;">La contraseña es requerida</span>
+                </div>
+                <div *ngIf="fp.password.errors.minlength">
+                  <span class="helper-text" style="color: #d50000;">La contraseña debe tener al menos 6 caracteres</span>
+                </div>
+              </div>
+            </div>
+            <div class="input-field col s6">
+              <i class="material-icons prefix">cake</i>
+              <input id="edad2" type="number" required min="18" class="validate" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.edad">
+              <label for="edad2">Edad</label>
+              <div *ngIf="fp.edad.touched && !fp.edad.errors">
+                <span class="helper-text" style="color: #4CAF50;">Bien</span>
+              </div>
+              <div *ngIf="fp.edad.touched && fp.edad.errors || submitted && fp.edad.errors">
+                <div  *ngIf="fp.edad.errors.required">
+                  <span class="helper-text" style="color: #d50000;">La edad es requerida</span>
+                </div>
+                <div *ngIf="fp.edad.errors.min">
+                  <span class="helper-text" style="color: #d50000;">Debes tener al menos 18 años</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s6">
+              <select id="genero2" required formControlName="genero" [(ngModel)]="usuarioService.selectedUsuario.genero">
+                <option value="" disabled>Escoje una opción</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+              </select>
+              <label>Genero</label>
+              <div *ngIf="fp.genero.touched && fp.genero.errors || submitted && fp.genero.errors">
+                <div *ngIf="fp.genero.errors.required">
+                  <span class="helper-text" style="color: #d50000;">Debe selecionar un item</span>
+                </div>
+              </div>
+            </div>
+            <div class="input-field col s6">
+              <select id="rol2" required formControlName="rol" [(ngModel)]="usuarioService.selectedUsuario.rol">
+                <option value="" disabled>Escoje una opción</option>
+                <option value="admin">Administrador</option>
+                <option value="brigadista">Brigadista</option>
+                <option value="usuario">Usuario</option>
+              </select>
+              <label>Rol</label>
+              <div *ngIf="fp.rol.touched && fp.rol.errors || submitted && fp.rol.errors">
+                <div *ngIf="fp.rol.errors.required">
+                  <span class="helper-text" style="color: #d50000;">Debe selecionar un item</span>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" formControlName="image" [(ngModel)]="usuarioService.selectedUsuario.imagen">
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Sube una foto</span>
+                  <input type="file" accept="image/*" (change)="updateFile($event)">
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Cambia tu foto de perfil">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <button class="btn waves-effect waves-light" [disabled]="!putForm.valid">Actualizar
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">  
+        <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModalUpd()"></a>
+    </div>
+  </div>

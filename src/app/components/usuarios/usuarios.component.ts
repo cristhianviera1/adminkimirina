@@ -15,7 +15,7 @@ export class UsuariosComponent implements OnInit {
 
   addUsuario = false;
   updUsuario = false;
-  paginaActual: number = 1;
+  paginaActual = 1;
   postForm: FormGroup;
   putForm: FormGroup;
   preview: string;
@@ -34,18 +34,13 @@ export class UsuariosComponent implements OnInit {
 
     // tslint:disable-next-line: only-arrow-functions
     $(document).ready(function() {
-      $('input#nombre').characterCounter();
-    });
-
-    // tslint:disable-next-line: only-arrow-functions
-    $(document).ready(function() {
       $('select').formSelect();
     });
 
     this.postForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       correo: ['',  [Validators.required, Validators.email]],
-      nombre: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.minLength(6)]],
       edad: ['', [Validators.required, Validators.min(18)]],
       genero: ['', Validators.required],
       rol: ['', Validators.required],
@@ -64,7 +59,7 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  //Aceso a los controles de la forms
+  // Acceso a los controles de la form
   get f() { return this.postForm.controls; }
   get fp() { return this.putForm.controls; }
 
@@ -77,7 +72,7 @@ export class UsuariosComponent implements OnInit {
 
     this.postForm.get('image').updateValueAndValidity();
 
-    //File preview
+    // File preview
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -94,7 +89,7 @@ export class UsuariosComponent implements OnInit {
 
     this.putForm.get('image').updateValueAndValidity();
 
-    //File preview
+    // File preview
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -131,7 +126,7 @@ export class UsuariosComponent implements OnInit {
 
 
 
-  //---------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------
 
   getUsuarios() {
     this.usuarioService.getUsuarios().subscribe(res => {
@@ -139,15 +134,13 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  addUsuarioForm() {
-    this.addUsuario = true;
-    this.preview = '';
-  }
-
   updUsuarioForm(usuario: Usuario) {
-    this.updUsuario = true;
     this.usuarioService.selectedUsuario = usuario;
-    this.preview = '';
+    $('#modal2').modal('open');
+    $('#nombre2').next().addClass('active');
+    $('#email2').next().addClass('active');
+    $('#password2').next().addClass('active');
+    $('#edad2').next().addClass('active');
   }
 
   putUsuario() {
@@ -182,7 +175,7 @@ export class UsuariosComponent implements OnInit {
 
     Swal.fire({
       title: 'Estas seguro?',
-      text: "No podras resvertir esta acción!",
+      text: 'No podras resvertir esta acción!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -209,7 +202,7 @@ export class UsuariosComponent implements OnInit {
 
     Swal.fire({
       title: 'Estas seguro?',
-      text: "No podras resvertir esta acción!",
+      text: 'No podras resvertir esta acción!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -229,9 +222,9 @@ export class UsuariosComponent implements OnInit {
           );
           } else {
             Swal.fire(
-              'Eliminado!',
-              'El usuario ha sido eliminado.',
-              'success'
+              'Error',
+              'No se ha podido eliminar el usuario.',
+              'error'
             );
           }
         });
@@ -240,19 +233,47 @@ export class UsuariosComponent implements OnInit {
   }
 
   cerrarModal() {
-    const modal = document.getElementById("modal");
-    modal.classList.remove("is-active");
-    this.addUsuario = false;
+    $('.modal').modal('close');
+    // Validos
+    $('#nombre').removeClass('valid').val('');
+    $('#nombre').next().removeClass('active');
+    $('#email').removeClass('valid').val('');
+    $('#email').next().removeClass('active');
+    $('#password').removeClass('valid').val('');
+    $('#password').next().removeClass('active');
+    $('#edad').removeClass('valid').val('');
+    $('#edad').next().removeClass('active');
+    // Invalidos
+    $('#nombre').removeClass('invalid').val('');
+    $('#email').removeClass('invalid').val('');
+    $('#password').removeClass('invalid').val('');
+    $('#edad').removeClass('invalid').val('');
+
     this.postForm.reset();
+    this.postForm.clearValidators();
     this.preview = null;
   }
 
   cerrarModalUpd() {
-    const modal = document.getElementById("modalupd");
-    modal.classList.remove("is-active");
-    this.updUsuario = false;
+    $('.modal').modal('close');
+    // Validos
+    $('#nombre2').removeClass('valid').val('');
+    $('#nombre2').next().removeClass('active');
+    $('#email2').removeClass('valid').val('');
+    $('#email2').next().removeClass('active');
+    $('#password2').removeClass('valid').val('');
+    $('#password2').next().removeClass('active');
+    $('#edad2').removeClass('valid').val('');
+    $('#edad2').next().removeClass('active');
+    // Invalidos
+    $('#nombre2').removeClass('invalid').val('');
+    $('#email2').removeClass('invalid').val('');
+    $('#password2').removeClass('invalid').val('');
+    $('#edad2').removeClass('invalid').val('');
+
+    // this.putForm.reset();
+    this.putForm.clearValidators();
     this.preview = null;
-    //this.putForm.controls['image'].reset();
   }
 
 
