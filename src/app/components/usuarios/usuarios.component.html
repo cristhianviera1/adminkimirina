@@ -2,7 +2,7 @@
 
 <div class="container">
   <h1 class="title is-2">Lista de usuarios</h1>
-  <a class="btn-floating btn waves-effect waves-light modal-trigger purple accent-3" href="#modal1"><i class="material-icons">add</i></a>
+  <a class="btn-floating btn waves-effect waves-light modal-trigger green" href="#modal1"><i class="material-icons">add</i></a>
   <button class="button is-dark is-outlined" style="margin-left: 5px;" [routerLink]="['/home']"><i class="fas fa-arrow-left" style="margin-right: 2px;"></i> Regresar</button>
   <hr>
 
@@ -37,7 +37,7 @@
       </tbody>
     </table>
 
-    <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+    <pagination-controls (pageChange)="paginaActual = $event" responsive="true" previousLabel="Anterior" nextLabel="Siguiente" screenReaderCurrentLabel = "Estás en la página"></pagination-controls>
 
   </div>
 </div>
@@ -51,7 +51,7 @@
       <div class="row">
         <form class="col s12" [formGroup]="postForm" (ngSubmit)='postUsuario()' novalidate>
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">account_circle</i>
               <input id="nombre" name="nombre" type="text" class="validate" required minlength="6" maxlength="50" formControlName="nombre">
               <label for="nombre">Nombre</label>
@@ -67,7 +67,7 @@
                 </div>
               </div>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">email</i>
               <input id="email" type="email" required class="validate" formControlName="correo">
               <label for="email">Email</label>
@@ -85,7 +85,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">lock</i>
               <input id="password" type="password" minlength="6" required class="validate" formControlName="password">
               <label for="password">Password</label>
@@ -101,7 +101,7 @@
                 </div>
               </div>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">cake</i>
               <input id="edad" type="number" required min="18" class="validate" formControlName="edad">
               <label for="edad">Edad</label>
@@ -119,7 +119,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <select id="genero" required formControlName="genero">
                 <option value="" disabled selected>Escoje una opción</option>
                 <option value="Masculino">Masculino</option>
@@ -133,7 +133,7 @@
                 </div>
               </div>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <select id="rol" required formControlName="rol">
                 <option value="" disabled selected>Escoje una opción</option>
                 <option value="admin">Administrador</option>
@@ -149,9 +149,9 @@
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s6 m12 l12">
               <div class="file-field input-field">
-                <div class="btn">
+                <div class="btn-small">
                   <span>Sube una foto</span>
                   <input type="file" accept="image/*" (change)="uploadFile($event)">
                 </div>
@@ -183,7 +183,7 @@
         <form class="col s12" [formGroup]="putForm" (ngSubmit)='putUsuario()' novalidate>
           <div class="row">
             <input type="hidden" formControlName="_id" [(ngModel)]="usuarioService.selectedUsuario._id">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">account_circle</i>
               <input id="nombre2" type="text" class="validate" required minlength="6" maxlength="50" formControlName="nombre" [(ngModel)]="usuarioService.selectedUsuario.nombre">
               <label for="nombre2">Nombre</label>
@@ -199,7 +199,7 @@
                 </div>
               </div>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">email</i>
               <input id="email2" type="email" required class="validate" formControlName="correo" [(ngModel)]="usuarioService.selectedUsuario.correo">
               <label for="email2">Email</label>
@@ -217,7 +217,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">lock</i>
               <input id="password2" type="password" minlength="6" required class="validate" formControlName="password" [(ngModel)]="usuarioService.selectedUsuario.password">
               <label for="password2">Password</label>
@@ -233,7 +233,7 @@
                 </div>
               </div>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">cake</i>
               <input id="edad2" type="number" required min="18" class="validate" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.edad">
               <label for="edad2">Edad</label>
@@ -251,7 +251,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <select id="genero2" required formControlName="genero" [(ngModel)]="usuarioService.selectedUsuario.genero">
                 <option value="" disabled>Escoje una opción</option>
                 <option value="Masculino">Masculino</option>
@@ -265,7 +265,7 @@
                 </div>
               </div>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6 l6">
               <select id="rol2" required formControlName="rol" [(ngModel)]="usuarioService.selectedUsuario.rol">
                 <option value="" disabled>Escoje una opción</option>
                 <option value="admin">Administrador</option>
@@ -282,9 +282,9 @@
             <input type="hidden" formControlName="image" [(ngModel)]="usuarioService.selectedUsuario.imagen">
           </div>
           <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s6 m12 l12">
               <div class="file-field input-field">
-                <div class="btn">
+                <div class="btn-small">
                   <span>Sube una foto</span>
                   <input type="file" accept="image/*" (change)="updateFile($event)">
                 </div>

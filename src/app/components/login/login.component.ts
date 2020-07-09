@@ -4,6 +4,7 @@ import { Usuario } from './../../models/usuario';
 import { Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,10 @@ export class LoginComponent implements OnInit {
   constructor(private usuarioService: UserService, private router: Router) { }
 
   ngOnInit() {
+    // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function() {
+      $('.sidenav').sidenav();
+     });
   }
 
   loginUsuario(form: NgForm) {

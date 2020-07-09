@@ -2,21 +2,21 @@
 
 <div class="container">
 <h1 class="title is-2">Lista de productos y servicios</h1>
-<button class="button is-primary is-outlined" (click)="addProductoForm()">Nuevo <span class="fas fa-plus" style="margin-left: 5px;"></span></button>
+<a class="btn-floating btn waves-effect waves-light modal-trigger green" href="#modal1"><i class="material-icons">add</i></a>
 <button class="button is-dark is-outlined" style="margin-left: 5px;" [routerLink]="['/home']"><i class="fas fa-arrow-left" style="margin-right: 2px;"></i> Regresar</button>
 <hr>
 
 
 <div class="content">
 
-<table class="table is-striped">
+<table class="responsive-table highlight">
     <thead>
       <tr>
         <th>Nº</th>
         <th>Titulo</th>
-        <th>Descripcion</th>
+        <th>Descripción</th>
         <th>Precio</th>
-        <th>Observaciones</th>
+        <th>Observación</th>
         <th>Link</th>
         <th>Imagen</th>
         <th>Operaciones</th>
@@ -29,211 +29,229 @@
         <td>{{producto.descripcion}}</td>
         <td>{{producto.precio}}</td>
         <td>{{producto.observaciones}}</td>
-        <td>{{producto.link}}</td>
-        <td><img class="img-responsive" src="{{producto.imagen}}" alt=""></td>
+        <td><a href="{{producto.link}}" target="_blank">{{producto.link}}</a></td>
+        <td><img class="img-responsive" style="max-width: 100px; max-height: 100px; min-width: 100px; min-height: 100px;" src="{{producto.imagen}}" alt=""></td>
         <td>
-            <button class="button is-warning is-outlined" (click)="updProductoForm(producto)"><span class="fas fa-edit"></span>Editar</button>
-            <button class="button is-danger is-outlined" style="margin-top: 5px;" (click)="deleteProducto(producto._id)"><span class="fas fa-trash-alt"></span>Eliminar</button>
+          <a class="btn-floating btn-small waves-effect waves-light modal-trigger yellow" (click)="updProductoForm(producto)"><i class="material-icons">mode_edit</i></a>
+          <a class="btn-floating btn-small waves-effect waves-light red accent-4" (click)="deleteProducto(producto._id)"><i class="material-icons">delete</i></a>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+  <pagination-controls (pageChange)="paginaActual = $event" responsive="true" previousLabel="Anterior" nextLabel="Siguiente" screenReaderCurrentLabel = "Estás en la página"></pagination-controls>
 
 </div>
 
 </div>
 
-<div class="content">
-    <ng-template [ngIf]="addProducto">
-        <div id="modal" class="modal is-active">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Nuevo producto o servicio</p>
-                    <button class="delete" aria-label="close" (click)="cerrarModal()"></button>
-                </header>
-                <section class="modal-card-body">
-
-                    <form [formGroup]="postForm" (ngSubmit)='postProducto()'>
-
-                        <div class="field">
-                            <label class="label">Titulo</label>
-                            <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa el titulo del producto o servicio" formControlName="titulo">
-                            </div>
-                          </div>
-                          
-                          <div class="field">
-                            <label class="label">Descripcion</label>
-                            <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa una breve descripción" formControlName="descripcion"></textarea>
-                            </div>
-                          </div>
-
-                          <div class="field">
-                            <label class="label">Precio</label>
-                            <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa el precio del servicio o producto" formControlName="precio">
-                              <span class="icon is-small is-left">
-                                <i class="fas fa-dollar-sign"></i>
-                              </span>
-                            </p>
-                          </div>
-
-                          <div class="field">
-                            <label class="label">Observaciones</label>
-                            <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa las observaciones acerca del producto o servicio" formControlName="observaciones"></textarea>
-                            </div>
-                          </div>
-
-                          <div class="field">
-                            <label class="label">Link</label>
-                            <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" formControlName="link">
-                              <span class="icon is-small is-left">
-                                <i class="fas fa-link"></i>
-                              </span>
-                            </p>
-                          </div>
-
-
-                          <div class="file is-centered is-success is-boxed">
-                            <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" (change)="uploadFile($event)">
-                              <span class="file-cta">
-                                <span class="file-icon">
-                                  <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">
-                                  Sube una foto…
-                                </span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="content">
-                            <div class="columns is-mobile is-centered" style="margin-top: 20px">
-                            <div class="card">
-                              <div class="card-image">
-                                <div class="preview" *ngIf="preview && preview !== null">                         
-                                    <img class="is-centered" [src]="preview" width="200" height="100" style="max-height: 100px; max-width: 200px">
-                                </div>
-                              </div>
-                            </div>
-                            </div>
-                          </div>
-                       
-                          
-                          <div class="field is-grouped">
-                            <div class="control">
-                              <button class="button is-link">Crear</button>
-                            </div>
-                          </div>
-                    </form>
-
-                </section>
+ 
+<div id="modal1" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4>Nuevo</h4>
+    <p>Crea un nuevo producto o servicio!</p>
+    <hr>
+    <div class="row">
+      <form class="col s12" [formGroup]="postForm" (ngSubmit)='postProducto()' novalidate>
+        <div class="row">
+          <div class="input-field col s12 m6 l6">
+            <i class="material-icons prefix">title</i>
+            <input id="titulo" type="text" class="validate" required minlength="6" maxlength="50" formControlName="titulo">
+            <label for="titulo">Titulo</label>
+            <div *ngIf="f.titulo.touched && !f.titulo.errors">
+              <span class="helper-text" style="color: #4CAF50;">Bien</span>
             </div>
+            <div *ngIf="f.titulo.touched && f.titulo.errors || submitted && f.titulo.errors">
+              <div *ngIf="f.titulo.errors.required">
+                <span class="helper-text" style="color: #d50000;">El titulo es requerido</span>
+              </div>
+              <div *ngIf="f.titulo.errors.minlength">
+                <span class="helper-text" style="color: #d50000;">El titulo debe contener al menos 6 caracteres</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-field col s12 m6 l6">
+            <i class="material-icons prefix">attach_money</i>
+            <input id="precio" type="text" required class="validate" formControlName="precio">
+            <label for="precio">Precio</label>
+            <div *ngIf="f.precio.touched && !f.precio.errors">
+              <span class="helper-text" style="color: #4CAF50;">Bien</span>
+            </div>
+            <div *ngIf="f.precio.touched && f.precio.errors || submitted && f.precio.errors">
+              <div *ngIf="f.precio.errors.required">
+                <span class="helper-text" style="color: #d50000;">El precio es requerido</span>
+              </div>
+            </div>
+          </div>
         </div>
-    </ng-template>
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="material-icons prefix">insert_link</i>
+            <input id="link" type="url" required class="validate" formControlName="link">
+            <label for="link">Url</label>
+            <div *ngIf="f.link.touched && !f.link.errors">
+              <span class="helper-text" style="color: #4CAF50;">Bien</span>
+            </div>
+            <div *ngIf="f.link.touched && f.link.errors || submitted && f.link.errors">
+              <div *ngIf="f.link.errors.required">
+                <span class="helper-text" style="color: #d50000;">El link es requerido</span>
+              </div>
+              <div *ngIf="f.link.errors.pattern">
+                <span class="helper-text" style="color: #d50000;">No es una URL valida</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m6 l6">
+            <i class="material-icons prefix">remove_red_eye</i>
+            <textarea id="observacion" class="materialize-textarea" formControlName="observaciones"></textarea>
+            <label>Observación</label>
+            <div *ngIf="f.observaciones.touched && f.observaciones.errors || submitted && f.observaciones.errors">
+              <div *ngIf="f.observaciones.errors.required">
+                <span class="helper-text" style="color: #d50000;">Debe ingresar una observación</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-field col s12 m6 l6">
+            <i class="material-icons prefix">description</i>
+            <textarea id="descripcion" class="materialize-textarea" formControlName="descripcion"></textarea>
+            <label>Descripción</label>
+            <div *ngIf="f.descripcion.touched && f.descripcion.errors || submitted && f.descripcion.errors">
+              <div *ngIf="f.descripcion.errors.required">
+                <span class="helper-text" style="color: #d50000;">Debe ingresar una descripción</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6 m12 l12">
+            <div class="file-field input-field">
+              <div class="btn-small">
+                <span>Sube una imagen</span>
+                <input type="file" accept="image/*" (change)="uploadFile($event)">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Sube una imagen">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn waves-effect waves-light" [disabled]="!postForm.valid">Crear
+            <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">  
+      <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal()"></a>
+  </div>
 </div>
 
-
-<div class="content">
-    <ng-template [ngIf]="updProducto">
-        <div id="modalupd" class="modal is-active">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Editar productos o servicios</p>
-                    <button class="delete" aria-label="close" (click)="cerrarModalUpd()"></button>
-                </header>
-                <section class="modal-card-body">
-
-                    <form [formGroup]="putForm" (ngSubmit)='putProducto()'>
-                        <input type="hidden" formControlName="_id" [(ngModel)]="productoService.selectedProducto._id">
-
-                        <div class="field">
-                            <label class="label">Titulo</label>
-                            <div class="control">
-                              <input class="input" type="text" placeholder="Ingresa el titulo del producto o servicio" formControlName="titulo" [(ngModel)]="productoService.selectedProducto.titulo">
-                            </div>
-                          </div>
-                          
-                          <div class="field">
-                            <label class="label">Descripcion</label>
-                            <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa una breve descripción" formControlName="descripcion" [(ngModel)]="productoService.selectedProducto.descripcion"></textarea>
-                            </div>
-                          </div>
-
-                          <div class="field">
-                            <label class="label">Precio</label>
-                            <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa el precio del producto o servicio" formControlName="precio" [(ngModel)]="productoService.selectedProducto.precio">
-                              <span class="icon is-small is-left">
-                                <i class="fas fa-dollar-sign"></i>
-                              </span>
-                            </p>
-                          </div>
-
-                          <div class="field">
-                            <label class="label">Observaciones</label>
-                            <div class="control">
-                                <textarea class="textarea" placeholder="Ingresa las observaciones acerca del producto o servicio" formControlName="observaciones" [(ngModel)]="productoService.selectedProducto.observaciones"></textarea>
-                            </div>
-                          </div>
-
-                          <div class="field">
-                            <label class="label">Link</label>
-                            <p class="control has-icons-left">
-                                <input class="input" type="text" placeholder="Ingresa un link para redireccionar para mas info" formControlName="link" [(ngModel)]="productoService.selectedProducto.link">
-                              <span class="icon is-small is-left">
-                                <i class="fas fa-link"></i>
-                              </span>
-                            </p>
-                          </div>
-
-                          <input type="hidden" formControlName="image" [(ngModel)]="productoService.selectedProducto.imagen">
-
-                          <div class="file is-centered is-success is-boxed">
-                            <label class="file-label">
-                              <input class="file-input" accept="image/*" type="file" (change)="updateFile($event)">
-                              <span class="file-cta">
-                                <span class="file-icon">
-                                  <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">
-                                  Sube una foto…
-                                </span>
-                              </span>
-                            </label>
-                          </div>
-
-                          <div class="content">
-                            <div class="columns is-mobile is-centered" style="margin-top: 20px">
-                            <div class="card">
-                              <div class="card-image">
-                                <div class="preview" *ngIf="preview && preview !== null">                         
-                                    <img class="is-centered" [src]="preview" width="200" height="100" style="max-height: 100px; max-width: 200px">
-                                </div>
-                              </div>
-                            </div>
-                            </div>
-                          </div>
-                          
-                          
-                          <div class="field is-grouped">
-                            <div class="control">
-                              <button class="button is-link">Actualizar</button>
-                            </div>
-                          </div>
-                    </form>
-
-                </section>
+<div id="modal2" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4>Nuevo</h4>
+    <p>Crea un nuevo producto o servicio!</p>
+    <hr>
+    <div class="row">
+      <form class="col s12" [formGroup]="putForm" (ngSubmit)='putProducto()' novalidate>
+        <div class="row">
+          <input type="hidden" formControlName="_id" [(ngModel)]="productoService.selectedProducto._id">
+          <div class="input-field col s12 m6 l6">
+            <i class="material-icons prefix">title</i>
+            <input id="titulo1" type="text" class="validate" required minlength="6" maxlength="50" formControlName="titulo" [(ngModel)]="productoService.selectedProducto.titulo">
+            <label for="titulo1">Titulo</label>
+            <div *ngIf="f.titulo.touched && !f.titulo.errors">
+              <span class="helper-text" style="color: #4CAF50;">Bien</span>
             </div>
+            <div *ngIf="f.titulo.touched && f.titulo.errors || submitted && f.titulo.errors">
+              <div *ngIf="f.titulo.errors.required">
+                <span class="helper-text" style="color: #d50000;">El titulo es requerido</span>
+              </div>
+              <div *ngIf="f.titulo.errors.minlength">
+                <span class="helper-text" style="color: #d50000;">El titulo debe contener al menos 6 caracteres</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-field col s12 m6 l6">
+            <i class="material-icons prefix">attach_money</i>
+            <input id="precio1" type="text" required class="validate" formControlName="precio" [(ngModel)]="productoService.selectedProducto.precio">
+            <label for="precio1">Precio</label>
+            <div *ngIf="f.precio.touched && !f.precio.errors">
+              <span class="helper-text" style="color: #4CAF50;">Bien</span>
+            </div>
+            <div *ngIf="f.precio.touched && f.precio.errors || submitted && f.precio.errors">
+              <div *ngIf="f.precio.errors.required">
+                <span class="helper-text" style="color: #d50000;">El precio es requerido</span>
+              </div>
+            </div>
+          </div>
         </div>
-    </ng-template>
+        <div class="row">
+          <div class="input-field col s12 m12 l12">
+            <i class="material-icons prefix">insert_link</i>
+            <input id="link1" type="url" required class="validate" formControlName="link" [(ngModel)]="productoService.selectedProducto.link">
+            <label for="link1">Url</label>
+            <div *ngIf="f.link.touched && !f.link.errors">
+              <span class="helper-text" style="color: #4CAF50;">Bien</span>
+            </div>
+            <div *ngIf="f.link.touched && f.link.errors || submitted && f.link.errors">
+              <div *ngIf="f.link.errors.required">
+                <span class="helper-text" style="color: #d50000;">El link es requerido</span>
+              </div>
+              <div *ngIf="f.link.errors.pattern">
+                <span class="helper-text" style="color: #d50000;">No es una URL valida</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m6 l6">
+            <i class="material-icons prefix">remove_red_eye</i>
+            <textarea id="observacion1" class="materialize-textarea" formControlName="observaciones" [(ngModel)]="productoService.selectedProducto.observaciones"></textarea>
+            <label>Observación</label>
+            <div *ngIf="f.observaciones.touched && f.observaciones.errors || submitted && f.observaciones.errors">
+              <div *ngIf="f.observaciones.errors.required">
+                <span class="helper-text" style="color: #d50000;">Debe ingresar una observación</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-field col s12 m6 l6">
+            <i class="material-icons prefix">description</i>
+            <textarea id="descripcion1" class="materialize-textarea" formControlName="descripcion" [(ngModel)]="productoService.selectedProducto.descripcion"></textarea>
+            <label>Descripción</label>
+            <div *ngIf="f.descripcion.touched && f.descripcion.errors || submitted && f.descripcion.errors">
+              <div *ngIf="f.descripcion.errors.required">
+                <span class="helper-text" style="color: #d50000;">Debe ingresar una descripción</span>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" formControlName="image" [(ngModel)]="productoService.selectedProducto.imagen">
+        </div>
+        <div class="row">
+          <div class="input-field col s6 m12 l12">
+            <div class="file-field input-field">
+              <div class="btn-small">
+                <span>Sube una imagen</span>
+                <input type="file" accept="image/*" (change)="updateFile($event)">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text" placeholder="Sube una imagen">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn waves-effect waves-light" [disabled]="!putForm.valid">Actualizar
+            <i class="material-icons right">send</i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">  
+      <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModalUpd()"></a>
+  </div>
 </div>

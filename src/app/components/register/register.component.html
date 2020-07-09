@@ -1,27 +1,31 @@
 <body>
-
-  <nav>
-    <div class="nav-wrapper">
-      <a [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
-      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
+  <section class="hero is-info is-medium is-bold">
+    <div class="hero-head">
+      <nav>
+        <div class="nav-wrapper">
+          <a [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
+          <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+          <ul class="right hide-on-med-and-down">
+            <li><a [routerLink]="['/kimirina']">Inicio</a></li>
+            <li><a href="#">Quienes somos?</a></li>
+            <li><a [routerLink]="['/register']">Registrate</a></li>
+            <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
+          </ul>
+        </div>
+      </nav>
+    
+      <ul class="sidenav" id="mobile-demo">
         <li><a [routerLink]="['/kimirina']">Inicio</a></li>
         <li><a href="#">Quienes somos?</a></li>
         <li><a [routerLink]="['/register']">Registrate</a></li>
-        <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
+        <li><a [routerLink]="['/login']">Inicia Sesión</a></li>
       </ul>
     </div>
-  </nav>
-
-  <ul class="sidenav" id="mobile-demo">
-    <li><a [routerLink]="['/kimirina']">Inicio</a></li>
-    <li><a href="#">Quienes somos?</a></li>
-    <li><a [routerLink]="['/register']">Registrate</a></li>
-    <li><a [routerLink]="['/login']">Inicia Sesión</a></li>
-  </ul>
+  </section>
     
-  <section>
+  <section class="container">
     <div class="hero-body">
+      <div class="content">
       <div class="column is-8 is-offset-2 register">
         <div class="columns">
           <div class="column left">
@@ -32,18 +36,23 @@
           <div class="column right has-text-centered">
             <h1 class="title is-4">Crea tu cuenta</h1>
             <p class="description">Lorem ipsum dolor, sit amet consectetur adipisicing elit</p>
-            <form>
-              <div class="field">
+            <form class="col s12">
+              <div class="row">
+              <div class="input-field col s12 m12 l12">
                 <div class="control">
-                  <input class="input is-medium" type="text" placeholder="Name">
+                  <i class="material-icons prefix">account_box</i>
+                  <input class="input is-medium" type="text" placeholder="Nombre">
                 </div>
               </div>
-
-              <div class="field">
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m12 l12">
                 <div class="control">
+                  <i class="material-icons prefix">email</i>
                   <input class="input is-medium" type="email" placeholder="Email">
                 </div>
               </div>
+            </div>
               <button class="button is-block is-info is-fullwidth is-medium red lighten-1">Registrame</button>
               <br />
               <small><em>Lorem ipsum dolor sit amet consectetur.</em></small>
@@ -52,9 +61,8 @@
         </div>
       </div>
     </div>
+    </div>
   </section>
-
-
+  <app-footer></app-footer>
 </body>
 
-<app-footer></app-footer>
