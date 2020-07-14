@@ -34,6 +34,8 @@ export class ProductosComponent implements OnInit {
 
     $('#observacion').val('New Text');
     $('#descripcion').val('New Text');
+    $('#observacion1').val('New Text');
+    $('#descripcion1').val('New Text');
 
     this.postForm = this.formBuilder.group({
       titulo: ['', Validators.minLength(6)],

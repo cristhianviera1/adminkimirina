@@ -3,6 +3,7 @@ import { NovedadesService } from './../../services/novedades.service';
 import { Novedad } from './../../models/novedad';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
+declare var $: any;
 
 @Component({
   selector: 'app-novedades',
@@ -18,16 +19,27 @@ export class NovedadesComponent implements OnInit {
   postForm: FormGroup;
   putForm: FormGroup;
   preview: string;
+  reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
   constructor(private novedadService: NovedadesService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.getNovedades();
 
+    // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function() {
+      $('.modal').modal();
+    });
+
+    $('#observacion').val('New Text');
+    $('#descripcion').val('New Text');
+    $('#observacion1').val('New Text');
+    $('#descripcion1').val('New Text');
+
     this.postForm = this.formBuilder.group({
       titulo: ['', Validators.minLength(6)],
       descripcion: ['', Validators.required],
-      link: ['', Validators.required],
+      link: ['', [Validators.required, Validators.pattern(this.reg)]],
       image: [null]
     });
 
@@ -35,20 +47,22 @@ export class NovedadesComponent implements OnInit {
       _id: [''],
       titulo: ['', Validators.minLength(6)],
       descripcion: ['', Validators.required],
-      link: ['', Validators.required],
+      link: ['', [Validators.required, Validators.pattern(this.reg)]],
       image: [null]
     });
   }
 
-  addNovedadForm() {
-    this.addNovedad = true;
-    this.preview = '';
-  }
+  // Acceso a los controles de la form
+  get f() { return this.postForm.controls; }
+  get fp() { return this.putForm.controls; }
 
   updNovedadForm(novedad: Novedad) {
-    this.updNovedad = true;
     this.novedadService.selectedNovedad = novedad;
-    this.preview = '';
+    $('#modal2').modal('open');
+    $('#titulo1').next().addClass('active');
+    $('#precio1').next().addClass('active');
+    $('#link1').next().addClass('active');
+    $('#descripcion1').next().addClass('active');
   }
 
   getNovedades() {
@@ -159,17 +173,51 @@ export class NovedadesComponent implements OnInit {
   }
 
   cerrarModal() {
-    const modal = document.getElementById("modal");
-    modal.classList.remove("is-active");
-    this.addNovedad = false;
+    $('.modal').modal('close');
+    // Validos
+    $('#titulo').removeClass('valid').val('');
+    $('#titulo').next().removeClass('active');
+    $('#precio').removeClass('valid').val('');
+    $('#precio').next().removeClass('active');
+    $('#link').removeClass('valid').val('');
+    $('#link').next().removeClass('active');
+    $('#observacion').removeClass('valid').val('');
+    $('#observacion').next().removeClass('active');
+    $('#descripcion').removeClass('valid').val('');
+    $('#descripcion').next().removeClass('active');
+    // Invalidos
+    $('#titulo').removeClass('invalid').val('');
+    $('#precio').removeClass('invalid').val('');
+    $('#link').removeClass('invalid').val('');
+    $('#observacion').removeClass('invalid').val('');
+    $('#descripcion').removeClass('invalid').val('');
+
     this.postForm.reset();
+    this.postForm.clearValidators();
     this.preview = null;
   }
 
   cerrarModalUpd() {
-    const modal = document.getElementById("modalupd");
-    modal.classList.remove("is-active");
-    this.updNovedad = false;
+    $('.modal').modal('close');
+    // Validos
+    $('#titulo').removeClass('valid').val('');
+    $('#titulo').next().removeClass('active');
+    $('#precio').removeClass('valid').val('');
+    $('#precio').next().removeClass('active');
+    $('#link').removeClass('valid').val('');
+    $('#link').next().removeClass('active');
+    $('#observacion').removeClass('valid').val('');
+    $('#observacion').next().removeClass('active');
+    $('#descripcion').removeClass('valid').val('');
+    $('#descripcion').next().removeClass('active');
+    // Invalidos
+    $('#titulo').removeClass('invalid').val('');
+    $('#precio').removeClass('invalid').val('');
+    $('#link').removeClass('invalid').val('');
+    $('#observacion').removeClass('invalid').val('');
+    $('#descripcion').removeClass('invalid').val('');
+
+    this.putForm.clearValidators();
     this.preview = null;
   }
 
