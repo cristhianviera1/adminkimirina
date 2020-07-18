@@ -13,7 +13,6 @@ declare var $: any;
 })
 export class UsuariosComponent implements OnInit {
 
-  addUsuario = false;
   updUsuario = false;
   paginaActual = 1;
   postForm: FormGroup;
@@ -36,6 +35,20 @@ export class UsuariosComponent implements OnInit {
     $(document).ready(function() {
       $('select').formSelect();
     });
+
+    // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function() {
+      $('#email').on('change keyup paste', function() {
+      $(this).val($(this).val().toLowerCase());
+       });
+     });
+
+     // tslint:disable-next-line: only-arrow-functions
+    $(document).ready(function() {
+      $('#email2').on('change keyup paste', function() {
+      $(this).val($(this).val().toLowerCase());
+       });
+     });
 
     this.postForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -171,6 +184,7 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line: variable-name
   deleteUsuario(_id: string) {
 
     Swal.fire({
@@ -197,6 +211,7 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line: variable-name
   softDelete(_id: string) {
     const env = { id: _id };
 
@@ -212,7 +227,8 @@ export class UsuariosComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.usuarioService.softDelete(env).subscribe(res => {
-          if (res["status"] == 200) {
+          // tslint:disable-next-line: no-string-literal tslint:disable-next-line: triple-equals
+          if (res['status'] == 200) {
           console.log(res);
           this.getUsuarios();
           Swal.fire(

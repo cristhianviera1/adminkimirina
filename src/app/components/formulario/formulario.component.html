@@ -3,23 +3,29 @@
 <div class="container">
 
   <h1 class="title is-2">Lista de formularios</h1>
-  <button class="button is-primary is-outlined" (click)="exportarToExcel()">Exportar a Excel<span class="fas fa-file-excel" style="margin-left: 5px;"></span></button>
-  <button class="button is-dark is-outlined" style="margin-left: 5px;" [routerLink]="['/home']"><i class="fas fa-arrow-left" style="margin-right: 2px;"></i> Regresar</button>
+  <div class="row">
+    <div class="col s6 m9 l9">
+      <a class="waves-effect waves-light btn deep-orange lighten-1" style="margin-left: 5px;" [routerLink]="['/home']"><i class="material-icons left">arrow_back</i>Regresar</a>
+    </div>
+    <div class="col s6 m3 l3">
+      <a class="waves-effect waves-light btn green accent-3" (click)="exportarToExcel()"><i class="material-icons left">file_download</i>Exportar a Excel</a>
+    </div>
+  </div>
   <hr>
   <div class="content">
-    <table class="table is-striped">
+    <table class="responsive-table highlight">
         <thead>
-          <tr>
-            <th>Nº</th>
-            <th>Usuario</th>
-            <th>Fecha</th>
-            <th>Pregunta 1</th>
-            <th>Pregunta 2</th>
-            <th>Pregunta 3</th>
-            <th>Pregunta 4</th>
-            <th>Pregunta 5</th>
-            <th>Pregunta 6</th>
-            <th>Pregunta 7</th>
+          <tr style="max-width: 200px;">
+            <th style="overflow: auto;">Nº</th>
+            <th style="overflow: auto;">Usuario</th>
+            <th style="overflow: auto;">Fecha</th>
+            <th style="overflow: auto;">¿En los últimos 6 meses se ha hecho la prueba de VIH?</th>
+            <th style="overflow: auto;">¿En los últimos 6 meses usted ha tenido, alguna infección de transmisión sexual?</th>
+            <th style="overflow: auto;">¿En los últimos 6 meses, ha tenido sexo anal o vaginal sin protección?</th>
+            <th style="overflow: auto;">¿En los últimos 6 meses, usted ha tenido una pareja VIH positivo?</th>
+            <th style="overflow: auto;">¿Usted utilizó condón, en su última relación sexual?</th>
+            <th style="overflow: auto;">¿En los últimos 6 meses ha recibido Transfusiones de sangre?</th>
+            <th style="overflow: auto;">De los siguientes servicios que oferta Kimirina ¿Cuál ha utilizado usted?</th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +44,7 @@
         </tbody>
       </table>
     
-      <pagination-controls (pageChange)="paginaActual = $event"></pagination-controls>
+      <pagination-controls (pageChange)="paginaActual = $event" responsive="true" previousLabel="Anterior" nextLabel="Siguiente" screenReaderCurrentLabel = "Estás en la página"></pagination-controls>
     
   </div>
 </div>
