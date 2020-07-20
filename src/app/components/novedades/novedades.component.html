@@ -76,7 +76,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="material-icons prefix">insert_link</i>
-            <input id="link" type="url" required class="validate" formControlName="link">
+            <input id="link" type="url" required pattern="http(s?)(:\/\/)((www.)?)(([^.]+)\.)?([a-zA-z0-9\-_]+)(.?)(\/[^\s]*)?" class="validate" formControlName="link">
             <label for="link">Url</label>
             <div *ngIf="f.link.touched && !f.link.errors">
               <span class="helper-text" style="color: #4CAF50;">Bien</span>
@@ -108,7 +108,7 @@
             <div class="file-field input-field">
               <div class="btn-small">
                 <span>Sube una imagen</span>
-                <input type="file" accept="image/*" (change)="uploadFile($event)">
+                <input type="file" accept="image/*" (change)="uploadFile($event, true)">
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text" placeholder="Sube una imagen">
@@ -125,7 +125,7 @@
     </div>
   </div>
   <div class="modal-footer">  
-      <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal()"></a>
+      <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal(true)"></a>
   </div>
 </div>
 
@@ -158,7 +158,7 @@
         <div class="row">
           <div class="input-field col s12 m12 l12">
             <i class="material-icons prefix">insert_link</i>
-            <input id="link1" type="url" required class="validate" formControlName="link" [(ngModel)]="novedadService.selectedNovedad.link">
+            <input id="link1" type="url" required pattern="http(s?)(:\/\/)((www.)?)(([^.]+)\.)?([a-zA-z0-9\-_]+)(.?)(\/[^\s]*)?" class="validate" formControlName="link" [(ngModel)]="novedadService.selectedNovedad.link">
             <label for="link1">Url</label>
             <div *ngIf="f.link.touched && !f.link.errors">
               <span class="helper-text" style="color: #4CAF50;">Bien</span>
@@ -191,7 +191,7 @@
             <div class="file-field input-field">
               <div class="btn-small">
                 <span>Sube una imagen</span>
-                <input type="file" accept="image/*" (change)="updateFile($event)">
+                <input type="file" accept="image/*" (change)="uploadFile($event, false)">
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text" placeholder="Sube una imagen">
@@ -208,6 +208,6 @@
     </div>
   </div>
   <div class="modal-footer">  
-      <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModalUpd()"></a>
+      <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal(false)"></a>
   </div>
 </div>
