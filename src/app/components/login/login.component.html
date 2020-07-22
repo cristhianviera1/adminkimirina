@@ -1,24 +1,5 @@
 <body>
-    
-  <nav>
-    <div class="nav-wrapper">
-      <a [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
-      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a [routerLink]="['/kimirina']">Inicio</a></li>
-        <li><a href="#">Quienes somos?</a></li>
-        <li><a [routerLink]="['/register']">Registrate</a></li>
-        <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <ul class="sidenav" id="mobile-demo">
-    <li><a [routerLink]="['/kimirina']">Inicio</a></li>
-    <li><a href="#">Quienes somos?</a></li>
-    <li><a [routerLink]="['/register']">Registrate</a></li>
-    <li><a [routerLink]="['/login']">Inicia Sesión</a></li>
-  </ul>
+  <app-navbar></app-navbar>
 
   <section class="hero is-success is-fullheight">
       <div class="hero-body">
@@ -57,4 +38,5 @@
           </div>
       </div>
   </section>
+  <app-footer></app-footer>
 </body>

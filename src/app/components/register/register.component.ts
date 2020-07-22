@@ -11,10 +11,6 @@ export class RegisterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-     // tslint:disable-next-line: only-arrow-functions
-     $(document).ready(function() {
-      $('.sidenav').sidenav();
-     });
   }
 
 }

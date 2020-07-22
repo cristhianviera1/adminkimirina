@@ -1,27 +1,9 @@
 <body>
   <section class="hero is-info is-medium is-bold">
       <div class="hero-head">
-        <nav>
-          <div class="nav-wrapper">
-            <a [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
-            <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-            <ul class="right hide-on-med-and-down">
-              <li><a [routerLink]="['/kimirina']">Inicio</a></li>
-              <li><a href="#">Quienes somos?</a></li>
-              <li><a [routerLink]="['/register']">Registrate</a></li>
-              <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
-            </ul>
-          </div>
-        </nav>
-      
-        <ul class="sidenav" id="mobile-demo">
-          <li><a [routerLink]="['/kimirina']">Inicio</a></li>
-          <li><a href="#">Quienes somos?</a></li>
-          <li><a [routerLink]="['/register']">Registrate</a></li>
-          <li><a [routerLink]="['/login']">Inicia Sesión</a></li>
-        </ul>
+        <app-navbar></app-navbar>
       </div>
-      <div class="hero-body red accent-1">
+      <div class="hero-body imagen">
           <div class="container has-text-centered">
               <h1 class="title">
               Organización Kimirina
@@ -34,10 +16,10 @@
   </section>
   <div class="box cta">
       <p class="has-text-centered">
-          <span class="tag is-primary">New</span> Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          <span class="tag is-primary">Recuerda</span> "Nos inventamos limitaciones que realmente no existen, lo difícil es distinguir entre nuestras limitaciones reales y nuestros temores."
       </p>
   </div>
-  <section class="container">
+    <section id="cards" class="container">
       <div class="columns features">
           <div class="column is-4">
               <div class="card is-shady">
@@ -46,9 +28,9 @@
                   </div>
                   <div class="card-content">
                       <div class="content">
-                          <h4>Tristique senectus et netus et. </h4>
-                          <p>Purus semper eget duis at tellus at urna condimentum mattis. Non blandit massa enim nec. Integer enim neque volutpat ac tincidunt vitae semper quis. Accumsan tortor posuere ac ut consequat semper viverra nam.</p>
-                          <p><a href="#">Learn more</a></p>
+                          <h4>Historia. </h4>
+                          <p>Cuando Corporación Kimirina en 1999 decide emprender un “caminar juntos” como la primera organización ecuatoriana experta en VIH y como una de las organizaciones de enlace de la Alianza Internacional contra el VIH/Sida, el mundo y el Ecuador enfrentaban ya desde hace algunos años, la gravedad de la expansión de la epidemia del Sida.</p>
+                          <p><a href="https://www.kimirina.org/quienes-somos/historia">Leer mas</a></p>
                       </div>
                   </div>
               </div>
@@ -60,10 +42,9 @@
                   </div>
                   <div class="card-content">
                       <div class="content">
-                          <h4>Tempor orci dapibus ultrices in.</h4>
-                          <p>Ut venenatis tellus in metus vulputate. Amet consectetur adipiscing elit pellentesque. Sed arcu non odio euismod lacinia at quis risus. Faucibus turpis in eu mi bibendum neque egestas cmonsu songue. Phasellus vestibulum lorem
-                          sed risus.</p>
-                          <p><a href="#">Learn more</a></p>
+                          <h4>Cumplimiento y transparencia.</h4>
+                          <p>La Corporación Kimirina desde su creación se encuentra estrechamente comprometida con todos los temas relacionados a las buenas prácticas a través de la suma de ideas, decisiones, creatividad y solidaridad como opciones claves que nos conduce a mejorar en gran medida nuestro trabajo para con el objetivo de mitigar el impacto de la epidemia del VIH.</p>
+                          <p><a href="https://www.kimirina.org/quienes-somos/compromiso-institucional">Leer mas</a></p>
                       </div>
                   </div>
               </div>
@@ -75,18 +56,24 @@
                   </div>
                   <div class="card-content">
                       <div class="content">
-                          <h4> Leo integer malesuada nunc vel risus. </h4>
-                          <p>Imperdiet dui accumsan sit amet nulla facilisi morbi. Fusce ut placerat orci nulla pellentesque dignissim enim. Libero id faucibus nisl tincidunt eget nullam. Commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                          <p><a href="#">Learn more</a></p>
+                          <h4> ¿Con quienes tranajamos?</h4>
+                          <p>La respuesta de la Corporación Kimirina frente al VIH se enfoca en la característica de la epidemia concentrada en las poblaciones claves, que de acuerdo a la definición de ONUSIDA, son aquellas que tienen más probabilidades de vivir con el VIH o que se ven desproporcionadamente afectadas por el virus.</p>
+                          <p><a href="https://www.kimirina.org/quienes-somos/con-quienes-trabajamos">Leer mas</a></p>
                       </div>
                   </div>
               </div>
           </div>
       </div>
+    </section>
+    <section id="info">
+      <div class="imagen-lazo">
       <div class="intro column is-8 is-offset-2">
-          <h2 class="title">Ingresa a nuestra comunidad!</h2><br>
-          <p class="subtitle">Vel fringilla est ullamcorper eget nulla facilisi. Nulla facilisi nullam vehicula ipsum a. Neque egestas congue quisque egestas diam in arcu cursus.</p>
+          <h2 class="title2">Trabajamos desde la Comunidad en la respuesta a la epidemia del VIH!</h2><br>
+          <p class="subtitle2">Corporación Kimirina es una organización comunitaria especializada en la respuesta a la epidemia del VIH, la que haciendo honor a su nombre «trabajando juntos por un fin» es un colectivo de actores quienes han conseguido con éxito complementar el saber técnico, la gestión transparente y el compromiso político con el fin de alcanzar una sociedad justa y equitativa, en la cual personas con vulnerabilidades por situaciones de estigma y discriminación o tradicionalmente excluidas tienen un rol central en las decisiones para la acción, como poblaciones clave frente al VIH.</p>
       </div>
+    </div>
+    </section>
+    <section id="posts" class="container">
       <div class="sandbox">
           <div class="tile is-ancestor">
               <div class="tile is-parent is-shady">
@@ -202,6 +189,6 @@
               </div>
           </div>
       </div>
-  </section>
+    </section>
   <app-footer></app-footer>
 </body>

@@ -13,7 +13,6 @@ import { HomeComponent } from './components/home/home.component';
 import { Page404Component } from './components/page404/page404.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ProductosComponent } from './components/productos/productos.component';
-import { NoticiasComponent } from './components/noticias/noticias.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { ExportadorxlsService } from './services/exportadorxls.service';
@@ -31,7 +30,6 @@ import { FooterComponent } from './components/footer/footer.component';
     Page404Component,
     UsuariosComponent,
     ProductosComponent,
-    NoticiasComponent,
     NovedadesComponent,
     FormularioComponent,
     RegisterComponent,

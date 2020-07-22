@@ -17,10 +17,7 @@ export class LoginComponent implements OnInit {
   constructor(private usuarioService: UserService, private router: Router) { }
 
   ngOnInit() {
-    // tslint:disable-next-line: only-arrow-functions
-    $(document).ready(function() {
-      $('.sidenav').sidenav();
-     });
+
   }
 
   loginUsuario(form: NgForm) {
@@ -29,7 +26,7 @@ export class LoginComponent implements OnInit {
       this.usuarioService.cuenta = res["usuario"] as Usuario;
       const usuarioLogado = this.usuarioService.cuenta;
       if (usuarioLogado.rol !== "admin") {
-        Swal.fire('Error', `Ha ocurrido un error al iniciar la session!`, 'error');
+        Swal.fire('Error', `Necesitas ser Administrador para ingresar!`, 'error');
       } else {
         localStorage.setItem("usuariologeado", JSON.stringify(this.usuarioService.cuenta));
         Swal.fire('Bienvenido', `Has iniciado sesión con éxito!`, 'success');

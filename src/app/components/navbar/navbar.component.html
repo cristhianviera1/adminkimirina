@@ -1,13 +1,24 @@
 <nav>
     <div class="nav-wrapper">
-        <a [routerLink]="['/home']" class="brand-logo">Kimirina App</a>
-        <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
+      <a *ngIf="!isLogged" [routerLink]="['/kimirina']" class="brand-logo">Kimirina App</a>
+      <a *ngIf="isLogged" [routerLink]="['/home']" class="brand-logo">Kimirina App</a>
+      <a href="" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul *ngIf="!isLogged" class="right hide-on-med-and-down">
+        <li><a [routerLink]="['/kimirina']">Inicio</a></li>
+        <li><a href="#info">Quienes somos?</a></li>
+        <li><a [routerLink]="['/register']">Registrate</a></li>
+        <li><a [routerLink]="['/login']" style="margin-right: 5px;">Inicia Sesión</a></li>
+      </ul>
+      <ul *ngIf="isLogged" class="right hide-on-med-and-down">
         <li><a style="margin-right: 5px;" (click)="logoutUsuario()"><i class="material-icons right">exit_to_app</i>Cerrar Sesión</a></li>
         </ul>
     </div>
-</nav>
+  </nav>
 
-<ul class="sidenav" id="mobile-demo">
-    <li><a (click)="logoutUsuario()"><i class="material-icons left">exit_to_app</i>Cerrar Sesión</a></li>
-</ul>
+  <ul class="sidenav" id="mobile-demo">
+    <li *ngIf="!isLogged"><a [routerLink]="['/kimirina']">Inicio</a></li>
+    <li *ngIf="!isLogged"><a href="#">Quienes somos?</a></li>
+    <li *ngIf="!isLogged"><a [routerLink]="['/register']">Registrate</a></li>
+    <li *ngIf="!isLogged"><a [routerLink]="['/login']">Inicia Sesión</a></li>
+    <li *ngIf="isLogged"><a (click)="logoutUsuario()"><i class="material-icons left">exit_to_app</i>Cerrar Sesión</a></li>
+  </ul>

@@ -10,6 +10,8 @@ declare var $: any;
 })
 export class NavbarComponent implements OnInit {
 
+  isLogged = false;
+
   constructor(private usuarioService: UserService, private router: Router) { }
 
   ngOnInit() {
@@ -17,13 +19,25 @@ export class NavbarComponent implements OnInit {
     $(document).ready(function() {
       $('.sidenav').sidenav();
      });
+
+    this.isLoggedIn();
+  }
+
+  isLoggedIn() {
+    const usuarioLogado = localStorage.getItem('usuariologeado');
+
+    if (usuarioLogado == null) {
+      this.isLogged = false;
+    } else {
+      this.isLogged = true;
+    }
   }
 
   logoutUsuario() {
-    var usuarioJson = localStorage.getItem('usuariologeado');
-    var usuarioObjeto = JSON.parse(usuarioJson);
+    const usuarioJson = localStorage.getItem('usuariologeado');
+    const usuarioObjeto = JSON.parse(usuarioJson);
     console.log(usuarioObjeto.id);
-    var env = { id: usuarioObjeto.id };
+    const env = { id: usuarioObjeto.id };
     this.usuarioService.logoutUsuario(env).subscribe(res => {
       if (res["status"] == 200) {
         console.log(res);
