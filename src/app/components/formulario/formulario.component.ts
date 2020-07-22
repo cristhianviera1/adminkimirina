@@ -23,9 +23,7 @@ export class FormularioComponent implements OnInit {
 
   getFormularios() {
     this.formularioService.getFormularios().subscribe(res => {
-      console.log(res);
       this.formularioService.formularios = res as Formulario[];
-      console.log("esto tengo"+ this.formularioService.formularios);
     });
   }
 

@@ -15,11 +15,11 @@ export class NovedadesComponent implements OnInit {
 
   addNovedad = false;
   updNovedad = false;
-  paginaActual: number = 1;
+  paginaActual = 1;
   postForm: FormGroup;
   putForm: FormGroup;
   preview: string;
-  reg = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+  reg = '^(http|https|ftp)?(://)?(www|ftp)?.?[a-z0-9-]+(.|:)([a-z0-9-]+)+([/?].*)?$';
 
   constructor(private novedadService: NovedadesService, private formBuilder: FormBuilder) { }
 
@@ -30,11 +30,6 @@ export class NovedadesComponent implements OnInit {
     $(document).ready(function() {
       $('.modal').modal();
     });
-
-    $('#observacion').val('New Text');
-    $('#descripcion').val('New Text');
-    $('#observacion1').val('New Text');
-    $('#descripcion1').val('New Text');
 
     this.postForm = this.formBuilder.group({
       titulo: ['', Validators.minLength(6)],
@@ -71,16 +66,24 @@ export class NovedadesComponent implements OnInit {
     });
   }
 
-  //---------------------------------------------------
-  uploadFile(event) {
+  // Subir imagen
+  uploadFile(event, accion: boolean) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.postForm.patchValue({
-      image: file
-    });
 
-    this.postForm.get('image').updateValueAndValidity();
+    if (accion === true) {
+      this.postForm.patchValue({
+        image: file
+      });
+      this.postForm.get('image').updateValueAndValidity();
+    } else {
+      this.putForm.patchValue({
+        image: file
+      });
 
-    //File preview
+      this.putForm.get('image').updateValueAndValidity();
+    }
+
+    // File preview
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -89,23 +92,7 @@ export class NovedadesComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  updateFile(event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    this.putForm.patchValue({
-      image: file
-    });
-
-    this.putForm.get('image').updateValueAndValidity();
-
-    //File preview
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.preview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-  }
-  //------------------------------------------------
+  // ------------------------------------------------
 
   postNovedad() {
     console.log(this.postForm.value);
@@ -118,7 +105,7 @@ export class NovedadesComponent implements OnInit {
         console.log(res);
         this.getNovedades();
       });
-    this.cerrarModal();
+    this.cerrarModal(true);
     Swal.fire(
       'Muy Bien',
       'Novedad creada exitosamente',
@@ -138,7 +125,7 @@ export class NovedadesComponent implements OnInit {
       this.getNovedades();
       location.reload();
     });
-    this.cerrarModalUpd();
+    this.cerrarModal(false);
     Swal.fire(
       'Muy Bien',
       'Novedad actualizada exitosamente',
@@ -146,11 +133,12 @@ export class NovedadesComponent implements OnInit {
     );
   }
 
+  // tslint:disable-next-line: variable-name
   deleteNovedad(_id: string) {
 
     Swal.fire({
       title: 'Estas seguro?',
-      text: "No podras resvertir esta acción!",
+      text: 'No podras resvertir esta acción!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -172,9 +160,10 @@ export class NovedadesComponent implements OnInit {
     });
   }
 
-  cerrarModal() {
+  cerrarModal(accion: boolean) {
     $('.modal').modal('close');
-    // Validos
+    if (accion === true) {
+      // Validos
     $('#titulo').removeClass('valid').val('');
     $('#titulo').next().removeClass('active');
     $('#precio').removeClass('valid').val('');
@@ -194,12 +183,8 @@ export class NovedadesComponent implements OnInit {
 
     this.postForm.reset();
     this.postForm.clearValidators();
-    this.preview = null;
-  }
-
-  cerrarModalUpd() {
-    $('.modal').modal('close');
-    // Validos
+    } else {
+      // Validos
     $('#titulo').removeClass('valid').val('');
     $('#titulo').next().removeClass('active');
     $('#precio').removeClass('valid').val('');
@@ -218,8 +203,8 @@ export class NovedadesComponent implements OnInit {
     $('#descripcion').removeClass('invalid').val('');
 
     this.putForm.clearValidators();
+    }
     this.preview = null;
   }
-
 
 }
