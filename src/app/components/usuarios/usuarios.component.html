@@ -2,8 +2,14 @@
 
 <div class="container">
   <h1 class="title is-2">Lista de usuarios</h1>
-  <a class="btn-floating btn waves-effect waves-light modal-trigger green" href="#modal1"><i class="material-icons">add</i></a>
-  <button class="button is-dark is-outlined" style="margin-left: 5px;" [routerLink]="['/home']"><i class="fas fa-arrow-left" style="margin-right: 2px;"></i> Regresar</button>
+  <div class="row">
+    <div class="col s8 m11 l11">
+      <a class="waves-effect waves-light btn deep-orange lighten-1" style="margin-left: 5px;" [routerLink]="['/home']"><i class="material-icons left">arrow_back</i>Regresar</a>
+    </div>
+    <div class="col s4 m1 l1">
+      <a class="btn-floating btn waves-effect waves-light modal-trigger green" href="#modal1"><i class="material-icons">add</i></a>
+    </div>
+  </div>
   <hr>
 
 
@@ -16,7 +22,7 @@
           <th>Nombre</th>
           <th>Correo</th>
           <th>Edad</th>
-          <th>Genero</th>
+          <th>Género</th>
           <th>Rol</th>
           <th>Operaciones</th>
         </tr>
@@ -54,7 +60,7 @@
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">account_circle</i>
               <input id="nombre" name="nombre" type="text" class="validate" required minlength="6" maxlength="50" formControlName="nombre">
-              <label for="nombre">Nombre</label>
+              <label for="nombre">Nombre Completo</label>
               <div *ngIf="f.nombre.touched && !f.nombre.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
               </div>
@@ -69,7 +75,7 @@
             </div>
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">email</i>
-              <input id="email" type="email" required class="validate" formControlName="correo">
+              <input id="email" type="email" required class="validate" pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$" formControlName="correo">
               <label for="email">Email</label>
               <div *ngIf="f.correo.touched && !f.correo.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
@@ -78,7 +84,7 @@
                 <div *ngIf="f.correo.errors.required">
                   <span class="helper-text" style="color: #d50000;">El correo es requerido</span>
                 </div>
-                <div *ngIf="f.correo.errors.email">
+                <div *ngIf="f.correo.errors.pattern">
                   <span class="helper-text" style="color: #d50000;">El correo es invalido</span>
                 </div>
               </div>
@@ -87,9 +93,9 @@
           <div class="row">
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">lock</i>
-              <input id="password" type="password" minlength="6" required class="validate" formControlName="password">
+              <input id="password" type="password" minlength="8" maxlength="60" required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" class="validate" formControlName="password">
               <label for="password">Password</label>
-              <div *ngIf="f.password.touched && !f.password.errors">
+              <div *ngIf="!f.password.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
               </div>
               <div *ngIf="f.password.touched && f.password.errors || submitted && f.password.errors">
@@ -97,23 +103,23 @@
                   <span class="helper-text" style="color: #d50000;">La contraseña es requerida</span>
                 </div>
                 <div *ngIf="f.password.errors.minlength">
-                  <span class="helper-text" style="color: #d50000;">La contraseña debe tener al menos 6 caracteres</span>
+                  <span class="helper-text" style="color: #d50000;">La contraseña debe tener al menos 8 caracteres</span>
+                </div>
+                <div *ngIf="f.password.errors.pattern">
+                  <span class="helper-text" style="color: #d50000;">La contraseña debe contener Mayusculas, minisculas y un numero</span>
                 </div>
               </div>
             </div>
             <div class="input-field col s12 m6 l6">
-              <i class="material-icons prefix">cake</i>
-              <input id="edad" type="number" required min="18" class="validate" formControlName="edad">
-              <label for="edad">Edad</label>
+              <i class="material-icons prefix">date_range</i>
+              <input id="edad" type="date" required class="validate" formControlName="edad">
+              <label for="edad">Fecha de nacimiento</label>
               <div *ngIf="f.edad.touched && !f.edad.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
               </div>
               <div *ngIf="f.edad.touched && f.edad.errors || submitted && f.edad.errors">
                 <div  *ngIf="f.edad.errors.required">
                   <span class="helper-text" style="color: #d50000;">La edad es requerida</span>
-                </div>
-                <div *ngIf="f.edad.errors.min">
-                  <span class="helper-text" style="color: #d50000;">Debes tener al menos 18 años</span>
                 </div>
               </div>
             </div>
@@ -126,7 +132,7 @@
                 <option value="Femenino">Femenino</option>
                 <option value="Otro">Otro</option>
               </select>
-              <label>Genero</label>
+              <label>Género</label>
               <div *ngIf="f.genero.touched && f.genero.errors || submitted && f.genero.errors">
                 <div *ngIf="f.genero.errors.required">
                   <span class="helper-text" style="color: #d50000;">Debe selecionar un item</span>
@@ -136,9 +142,9 @@
             <div class="input-field col s12 m6 l6">
               <select id="rol" required formControlName="rol">
                 <option value="" disabled selected>Escoje una opción</option>
-                <option value="admin">Administrador</option>
-                <option value="brigadista">Brigadista</option>
-                <option value="usuario">Usuario</option>
+                <option value="admin">admin</option>
+                <option value="brigadista">brigadista</option>
+                <option value="usuario">usuario</option>
               </select>
               <label>Rol</label>
               <div *ngIf="f.rol.touched && f.rol.errors || submitted && f.rol.errors">
@@ -153,7 +159,7 @@
               <div class="file-field input-field">
                 <div class="btn-small">
                   <span>Sube una foto</span>
-                  <input type="file" accept="image/*" (change)="uploadFile($event)">
+                  <input type="file" accept="image/*" (change)="uploadFile($event, true)">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text" placeholder="Sube tu foto de perfil">
@@ -170,7 +176,7 @@
       </div>
     </div>
     <div class="modal-footer">  
-        <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal()"></a>
+        <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal(true)"></a>
     </div>
   </div>
 
@@ -186,7 +192,7 @@
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">account_circle</i>
               <input id="nombre2" type="text" class="validate" required minlength="6" maxlength="50" formControlName="nombre" [(ngModel)]="usuarioService.selectedUsuario.nombre">
-              <label for="nombre2">Nombre</label>
+              <label for="nombre2">Nombre Completo</label>
               <div *ngIf="fp.nombre.touched && !fp.nombre.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
               </div>
@@ -201,7 +207,7 @@
             </div>
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">email</i>
-              <input id="email2" type="email" required class="validate" formControlName="correo" [(ngModel)]="usuarioService.selectedUsuario.correo">
+              <input id="email2" type="email" required pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$" class="validate" formControlName="correo" [(ngModel)]="usuarioService.selectedUsuario.correo">
               <label for="email2">Email</label>
               <div *ngIf="fp.correo.touched && !fp.correo.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
@@ -210,7 +216,7 @@
                 <div *ngIf="fp.correo.errors.required">
                   <span class="helper-text" style="color: #d50000;">El correo es requerido</span>
                 </div>
-                <div *ngIf="fp.correo.errors.email">
+                <div *ngIf="fp.correo.errors.pattern">
                   <span class="helper-text" style="color: #d50000;">El correo es invalido</span>
                 </div>
               </div>
@@ -219,7 +225,7 @@
           <div class="row">
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">lock</i>
-              <input id="password2" type="password" minlength="6" required class="validate" formControlName="password" [(ngModel)]="usuarioService.selectedUsuario.password">
+              <input id="password2" type="password" minlength="6" maxlength="60" required pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" class="validate" formControlName="password" [(ngModel)]="usuarioService.selectedUsuario.password">
               <label for="password2">Password</label>
               <div *ngIf="fp.password.touched && !fp.password.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
@@ -231,21 +237,21 @@
                 <div *ngIf="fp.password.errors.minlength">
                   <span class="helper-text" style="color: #d50000;">La contraseña debe tener al menos 6 caracteres</span>
                 </div>
+                <div *ngIf="fp.password.errors.pattern">
+                  <span class="helper-text" style="color: #d50000;">La contraseña debe contener Mayusculas, minisculas y un numero</span>
+                </div>
               </div>
             </div>
             <div class="input-field col s12 m6 l6">
-              <i class="material-icons prefix">cake</i>
-              <input id="edad2" type="number" required min="18" class="validate" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.edad">
-              <label for="edad2">Edad</label>
+              <i class="material-icons prefix">date_range</i>
+              <input id="edad2" type="date" required class="validate" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.edad">
+              <label for="edad2">Fecha de nacimiento</label>
               <div *ngIf="fp.edad.touched && !fp.edad.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
               </div>
               <div *ngIf="fp.edad.touched && fp.edad.errors || submitted && fp.edad.errors">
                 <div  *ngIf="fp.edad.errors.required">
                   <span class="helper-text" style="color: #d50000;">La edad es requerida</span>
-                </div>
-                <div *ngIf="fp.edad.errors.min">
-                  <span class="helper-text" style="color: #d50000;">Debes tener al menos 18 años</span>
                 </div>
               </div>
             </div>
@@ -258,7 +264,7 @@
                 <option value="Femenino">Femenino</option>
                 <option value="Otro">Otro</option>
               </select>
-              <label>Genero</label>
+              <label>Género</label>
               <div *ngIf="fp.genero.touched && fp.genero.errors || submitted && fp.genero.errors">
                 <div *ngIf="fp.genero.errors.required">
                   <span class="helper-text" style="color: #d50000;">Debe selecionar un item</span>
@@ -268,9 +274,9 @@
             <div class="input-field col s12 m6 l6">
               <select id="rol2" required formControlName="rol" [(ngModel)]="usuarioService.selectedUsuario.rol">
                 <option value="" disabled>Escoje una opción</option>
-                <option value="admin">Administrador</option>
-                <option value="brigadista">Brigadista</option>
-                <option value="usuario">Usuario</option>
+                <option value="admin">admin</option>
+                <option value="brigadista">brigadista</option>
+                <option value="usuario">usuario</option>
               </select>
               <label>Rol</label>
               <div *ngIf="fp.rol.touched && fp.rol.errors || submitted && fp.rol.errors">
@@ -286,7 +292,7 @@
               <div class="file-field input-field">
                 <div class="btn-small">
                   <span>Sube una foto</span>
-                  <input type="file" accept="image/*" (change)="updateFile($event)">
+                  <input type="file" accept="image/*" (change)="uploadFile($event, false)">
                 </div>
                 <div class="file-path-wrapper">
                   <input class="file-path validate" type="text" placeholder="Cambia tu foto de perfil">
@@ -303,6 +309,6 @@
       </div>
     </div>
     <div class="modal-footer">  
-        <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModalUpd()"></a>
+        <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal(false)"></a>
     </div>
   </div>

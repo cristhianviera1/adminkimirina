@@ -13,13 +13,13 @@ declare var $: any;
 })
 export class UsuariosComponent implements OnInit {
 
-  addUsuario = false;
-  updUsuario = false;
   paginaActual = 1;
   postForm: FormGroup;
   putForm: FormGroup;
   preview: string;
   submitted = false;
+  passwordPattern = '(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,60}';
+  emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
 
 
   constructor(private usuarioService: UserService, private formBuilder: FormBuilder) { }
@@ -29,19 +29,21 @@ export class UsuariosComponent implements OnInit {
 
     // tslint:disable-next-line: only-arrow-functions
     $(document).ready(function() {
+      // lanzar modal
       $('.modal').modal();
-    });
-
-    // tslint:disable-next-line: only-arrow-functions
-    $(document).ready(function() {
+      // lanzar select
       $('select').formSelect();
+      // lanzar email en minusculas
+      $('#email, #email2').on('change keyup paste', function() {
+        $(this).val($(this).val().toLowerCase());
+         });
     });
 
     this.postForm = this.formBuilder.group({
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      correo: ['',  [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.passwordPattern)]],
+      correo: ['',  [Validators.required, Validators.pattern(this.emailPattern)]],
       nombre: ['', [Validators.required, Validators.minLength(6)]],
-      edad: ['', [Validators.required, Validators.min(18)]],
+      edad: ['', Validators.required],
       genero: ['', Validators.required],
       rol: ['', Validators.required],
       image: [null]
@@ -49,10 +51,10 @@ export class UsuariosComponent implements OnInit {
 
     this.putForm = this.formBuilder.group({
       _id: [''],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      correo: ['',  [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.passwordPattern)]],
+      correo: ['',  [Validators.required, Validators.pattern(this.emailPattern)]],
       nombre: ['', [Validators.required, Validators.minLength(6)]],
-      edad: ['', [Validators.required, Validators.min(18)]],
+      edad: ['', Validators.required],
       genero: ['', Validators.required],
       rol: ['', Validators.required],
       image: [null]
@@ -63,31 +65,22 @@ export class UsuariosComponent implements OnInit {
   get f() { return this.postForm.controls; }
   get fp() { return this.putForm.controls; }
 
-  uploadFile(event) {
+  // Subir imagen
+  uploadFile(event, accion: boolean) {
     const file = (event.target as HTMLInputElement).files[0];
-    this.postForm.patchValue({
-      image: file
-    });
 
+    if (accion === true) {
+      this.postForm.patchValue({
+        image: file
+      });
+      this.postForm.get('image').updateValueAndValidity();
+    } else {
+      this.putForm.patchValue({
+        image: file
+      });
 
-    this.postForm.get('image').updateValueAndValidity();
-
-    // File preview
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.preview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  updateFile(event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    this.putForm.patchValue({
-      image: file
-    });
-
-    this.putForm.get('image').updateValueAndValidity();
+      this.putForm.get('image').updateValueAndValidity();
+    }
 
     // File preview
 
@@ -115,7 +108,7 @@ export class UsuariosComponent implements OnInit {
         console.log(res);
         this.getUsuarios();
       });
-      this.cerrarModal();
+      this.cerrarModal(true);
       Swal.fire(
         'Muy Bien',
           'Usuario creado exitosamente',
@@ -162,7 +155,7 @@ export class UsuariosComponent implements OnInit {
         this.getUsuarios();
         location.reload();
       });
-      this.cerrarModalUpd();
+      this.cerrarModal(false);
       Swal.fire(
         'Muy Bien',
           'Usuario actualizado exitosamente',
@@ -171,6 +164,7 @@ export class UsuariosComponent implements OnInit {
     }
   }
 
+  // tslint:disable-next-line: variable-name
   deleteUsuario(_id: string) {
 
     Swal.fire({
@@ -197,6 +191,7 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
+  // tslint:disable-next-line: variable-name
   softDelete(_id: string) {
     const env = { id: _id };
 
@@ -212,7 +207,8 @@ export class UsuariosComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.usuarioService.softDelete(env).subscribe(res => {
-          if (res["status"] == 200) {
+          // tslint:disable-next-line: no-string-literal tslint:disable-next-line: triple-equals
+          if (res['status'] == 200) {
           console.log(res);
           this.getUsuarios();
           Swal.fire(
@@ -232,9 +228,10 @@ export class UsuariosComponent implements OnInit {
     });
   }
 
-  cerrarModal() {
+  cerrarModal(accion: boolean) {
     $('.modal').modal('close');
-    // Validos
+    if (accion === true) {
+      // Validos
     $('#nombre').removeClass('valid').val('');
     $('#nombre').next().removeClass('active');
     $('#email').removeClass('valid').val('');
@@ -251,12 +248,8 @@ export class UsuariosComponent implements OnInit {
 
     this.postForm.reset();
     this.postForm.clearValidators();
-    this.preview = null;
-  }
-
-  cerrarModalUpd() {
-    $('.modal').modal('close');
-    // Validos
+    } else {
+      // Validos
     $('#nombre2').removeClass('valid').val('');
     $('#nombre2').next().removeClass('active');
     $('#email2').removeClass('valid').val('');
@@ -273,6 +266,7 @@ export class UsuariosComponent implements OnInit {
 
     // this.putForm.reset();
     this.putForm.clearValidators();
+    }
     this.preview = null;
   }
 
