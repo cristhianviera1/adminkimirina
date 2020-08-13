@@ -16,7 +16,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           KEY: ${{ secrets.SSHKEY }}
-          port: ${{ secrets.PORT }}
           script: |
             cd ${{ secrets.PATH_WEB_DEV }}
             git pull origin development
