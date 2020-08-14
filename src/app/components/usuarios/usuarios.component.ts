@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Usuario } from './../../models/usuario';
-import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 declare var $: any;
 
@@ -13,7 +13,8 @@ declare var $: any;
 })
 export class UsuariosComponent implements OnInit {
 
-  paginaActual = 1;
+  currentPage = 1;
+  filtertext: '';
   postForm: FormGroup;
   putForm: FormGroup;
   preview: string;
@@ -25,6 +26,7 @@ export class UsuariosComponent implements OnInit {
   constructor(private usuarioService: UserService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.filtertext = '';
     this.getUsuarios();
 
     // tslint:disable-next-line: only-arrow-functions
@@ -105,15 +107,19 @@ export class UsuariosComponent implements OnInit {
         this.postForm.value.rol,
         this.postForm.value.image
       ).subscribe(res => {
-        console.log(res);
-        this.getUsuarios();
+        if (res["status"] == 200) {
+          this.getUsuarios();
+          this.cerrarModal(true);
+          Swal.fire(
+            'Muy Bien',
+            'Se ha creado exitosamente',
+            'success'
+          );
+        } else {
+          this.cerrarModal(true);
+        }
       });
       this.cerrarModal(true);
-      Swal.fire(
-        'Muy Bien',
-          'Usuario creado exitosamente',
-          'success'
-        );
     }
   }
 
@@ -248,6 +254,7 @@ export class UsuariosComponent implements OnInit {
 
     this.postForm.reset();
     this.postForm.clearValidators();
+    this.postForm.clearAsyncValidators();
     } else {
       // Validos
     $('#nombre2').removeClass('valid').val('');

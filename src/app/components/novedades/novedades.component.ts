@@ -15,7 +15,8 @@ export class NovedadesComponent implements OnInit {
 
   addNovedad = false;
   updNovedad = false;
-  paginaActual = 1;
+  currentPage = 1;
+  filtertext: '';
   postForm: FormGroup;
   putForm: FormGroup;
   preview: string;
@@ -24,6 +25,7 @@ export class NovedadesComponent implements OnInit {
   constructor(private novedadService: NovedadesService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.filtertext = '';
     this.getNovedades();
 
     // tslint:disable-next-line: only-arrow-functions
@@ -102,15 +104,19 @@ export class NovedadesComponent implements OnInit {
       this.postForm.value.link,
       this.postForm.value.image
     ).subscribe(res => {
-        console.log(res);
+      if (res["status"] == 200) {
         this.getNovedades();
+        this.cerrarModal(true);
+        Swal.fire(
+          'Muy Bien',
+          'Se ha creado exitosamente',
+          'success'
+        );
+      } else {
+        this.cerrarModal(true);
+      }
       });
     this.cerrarModal(true);
-    Swal.fire(
-      'Muy Bien',
-      'Novedad creada exitosamente',
-      'success'
-    );
   }
 
   putNovedad() {
