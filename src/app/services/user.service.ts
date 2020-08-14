@@ -26,38 +26,36 @@ export class UserService {
   }
 
   postUsuarios(password: string, correo: string, nombre: string, edad: string, genero: string, rol: string, image: File) {
-    var formData = new FormData();
-    formData.append("password", password);
-    formData.append("correo", correo);
-    formData.append("nombre", nombre);
-    formData.append("edad", edad);
-    formData.append("genero", genero);
-    formData.append("rol", rol);
-    formData.append("image", image);
+    const formData = new FormData();
+    formData.append('password', password);
+    formData.append('correo', correo);
+    formData.append('nombre', nombre);
+    formData.append('edad', edad);
+    formData.append('genero', genero);
+    formData.append('rol', rol);
+    formData.append('image', image);
 
     return this.httpClient.post<Usuario>(environment.API_URL + this.url, formData, { reportProgress: true, observe: 'events'});
   }
 
-  /*
-  postUsuarios(usuario) {
-    return this.httpClient.post(environment.API_URL + this.url, usuario);
-  }*/
 
+  // tslint:disable-next-line: variable-name
   putUsuarios(_id: string, password: string, correo: string, nombre: string, edad: string, genero: string, rol: string, image: File) {
-    var formData = new FormData();
-    formData.append("password", password);
-    formData.append("correo", correo);
-    formData.append("nombre", nombre);
-    formData.append("edad", edad);
-    formData.append("genero", genero);
-    formData.append("rol", rol);
-    formData.append("image", image);
+    const formData = new FormData();
+    formData.append('password', password);
+    formData.append('correo', correo);
+    formData.append('nombre', nombre);
+    formData.append('edad', edad);
+    formData.append('genero', genero);
+    formData.append('rol', rol);
+    formData.append('image', image);
 
     return this.httpClient.put<Usuario>(environment.API_URL + this.url + `/${_id}`, formData);
   }
 
+  // tslint:disable-next-line: variable-name
   deleteUsuario(_id: string) {
-    return this.httpClient.delete(environment.API_URL + this.url+ `/${_id}`);
+    return this.httpClient.delete(environment.API_URL + this.url + `/${_id}`);
   }
 
   loginUsuario(usuario: Usuario) {
@@ -79,8 +77,8 @@ export class UserService {
   }
 
   isLoggedIn() {
-    var usuarioLogado: Usuario;
-    var session = localStorage.getItem('usuariologeado');
+    let usuarioLogado: Usuario;
+    const session = localStorage.getItem('usuariologeado');
     usuarioLogado = JSON.parse(session);
 
     if (usuarioLogado == null) {
@@ -92,7 +90,7 @@ export class UserService {
     }
     this.esAdmin = usuarioLogado.rol;
 
-    if (this.esAdmin !== "admin" || this.esAdmin == null) {
+    if (this.esAdmin !== 'admin' || this.esAdmin == null) {
       return false;
     }
     return true;

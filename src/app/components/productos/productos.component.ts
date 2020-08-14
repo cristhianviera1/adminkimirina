@@ -16,7 +16,8 @@ export class ProductosComponent implements OnInit {
 
   addProducto = false;
   updProducto = false;
-  paginaActual = 1;
+  currentPage = 1;
+  filtertext: '';
   postForm: FormGroup;
   putForm: FormGroup;
   preview: string;
@@ -25,6 +26,7 @@ export class ProductosComponent implements OnInit {
   constructor(private productoService: ProductosService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
+    this.filtertext = '';
     this.getProductos();
 
     // tslint:disable-next-line: only-arrow-functions
@@ -110,15 +112,19 @@ export class ProductosComponent implements OnInit {
       this.postForm.value.observaciones,
       this.postForm.value.image
     ).subscribe(res => {
-        console.log(res);
+      if (res["status"] == 200) {
         this.getProductos();
+        this.cerrarModal(true);
+        Swal.fire(
+          'Muy Bien',
+          'Se ha creado exitosamente',
+          'success'
+        );
+      } else {
+        this.cerrarModal(true);
+      }
       });
     this.cerrarModal(true);
-    Swal.fire(
-      'Muy Bien',
-      'Producto creado exitosamente',
-      'success'
-    );
   }
 
   putProducto() {

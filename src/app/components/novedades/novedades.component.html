@@ -1,7 +1,16 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-<h1 class="title is-2">Lista de novedades</h1>
+  <div class="row">
+    <div class="col s12 m7 l7">
+      <h1 class="title is-2">Lista de novedades</h1>
+    </div>
+    <div class="input-field col s12 m5 l5" style="margin-top: 35px;">
+        <i class="material-icons prefix">search</i>
+        <input id="icon_prefix" name="filtertext" type="text" [(ngModel)]="filtertext">
+        <label for="icon_prefix">Busqueda</label>
+    </div>
+  </div>
 <div class="row">
   <div class="col s8 m11 l11">
     <a class="waves-effect waves-light btn deep-orange lighten-1" style="margin-left: 5px;" [routerLink]="['/home']"><i class="material-icons left">arrow_back</i>Regresar</a>
@@ -27,7 +36,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let novedad of novedadService.novedades | paginate: {itemsPerPage: 10, currentPage: paginaActual}; index as i">
+      <tr *ngFor="let novedad of novedadService.novedades | filtertable:filtertext | paginate: {itemsPerPage: 10, currentPage: currentPage}; index as i">
         <th>{{i+1}}</th>
         <td>{{novedad.titulo}}</td>
         <td>{{novedad.fechaPublicacion}}</td>

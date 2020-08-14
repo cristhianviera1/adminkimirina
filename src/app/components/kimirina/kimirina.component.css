@@ -6,10 +6,11 @@ html,body {
   max-width: 700px;
 }
 .hero-body .title {
-  color: rgb(0, 0, 0) !important;
+  color: rgb(255, 255, 255) !important;
+  font-weight: bold;
 }
 .hero-body .subtitle {
-  color: rgb(102, 102, 102) !important;
+  color: rgb(248, 246, 246) !important;
   padding-top: 2rem;
   line-height: 1.5;
 }
@@ -76,7 +77,7 @@ box-shadow: 0 10px 16px rgba(0, 0, 0, .13), 0 6px 6px rgba(0, 0, 0, .19);
 }
 
 .imagen {
-  background: url(../../../assets/img/baner_principal.webp);
+  background: url(../../../assets/img/baner_principal.jpg);
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;

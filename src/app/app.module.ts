@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { AlifeFileToBase64Module } from 'alife-file-to-base64';
@@ -20,6 +20,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { KimirinaComponent } from './components/kimirina/kimirina.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+// interceptor http
+import { HttpErrorInterceptor } from './services/errorInterceptor';
+import { FiltertablePipe } from './pipes/filtertable.pipe';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +38,8 @@ import { FooterComponent } from './components/footer/footer.component';
     FormularioComponent,
     RegisterComponent,
     KimirinaComponent,
-    FooterComponent
+    FooterComponent,
+    FiltertablePipe
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,7 @@ import { FooterComponent } from './components/footer/footer.component';
     AlifeFileToBase64Module,
     ReactiveFormsModule
   ],
-  providers: [ExportadorxlsService],
+  providers: [ExportadorxlsService, { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

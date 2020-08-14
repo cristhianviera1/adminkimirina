@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 declare var $: any;
 
 @Component({
@@ -10,9 +12,10 @@ declare var $: any;
 })
 export class NavbarComponent implements OnInit {
 
-  isLogged = false;
-
   constructor(private usuarioService: UserService, private router: Router) { }
+
+  isLogged = false;
+  isTimeOut = false;
 
   ngOnInit() {
     // tslint:disable-next-line: only-arrow-functions
@@ -30,21 +33,40 @@ export class NavbarComponent implements OnInit {
       this.isLogged = false;
     } else {
       this.isLogged = true;
+      this.inactivityTime();
     }
   }
 
   logoutUsuario() {
     const usuarioJson = localStorage.getItem('usuariologeado');
     const usuarioObjeto = JSON.parse(usuarioJson);
-    console.log(usuarioObjeto.id);
     const env = { id: usuarioObjeto.id };
     this.usuarioService.logoutUsuario(env).subscribe(res => {
       if (res["status"] == 200) {
-        console.log(res);
         localStorage.clear();
         this.router.navigateByUrl('/kimirina');
       }
     });
+  }
+
+  inactivityTime() {
+    let time;
+
+    window.onload = resetTimer;
+
+    // DOM events
+    document.onmousemove = resetTimer;
+    document.onkeypress = resetTimer;
+
+    function resetTimer() {
+      clearTimeout(time);
+      time = setTimeout(timeOut, 6000000);
+    }
+
+    function timeOut() {
+      localStorage.clear();
+      window.location.reload();
+    }
   }
 
 }
