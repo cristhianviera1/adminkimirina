@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { Usuario } from './../../models/usuario';
+import { User } from '../../models/user';
 import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import Swal from 'sweetalert2';
 declare var $: any;
@@ -129,11 +129,11 @@ export class UsuariosComponent implements OnInit {
 
   getUsuarios() {
     this.usuarioService.getUsuarios().subscribe(res => {
-      this.usuarioService.usuarios = res as Usuario[];
+      this.usuarioService.usuarios = res as User[];
     });
   }
 
-  updUsuarioForm(usuario: Usuario) {
+  updUsuarioForm(usuario: User) {
     this.usuarioService.selectedUsuario = usuario;
     $('#modal2').modal('open');
     $('#nombre2').next().addClass('active');

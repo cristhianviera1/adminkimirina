@@ -15,7 +15,7 @@
                       <form #loginForm='ngForm' (ngSubmit)='loginUsuario(loginForm)' action="">
                           <div class="field">
                               <div class="control">
-                                  <input class="input" type="email" placeholder="Tu Email" autofocus="" name="correo"  #correo="ngModel" [(ngModel)]="usuarioService.selectedUsuario.correo">
+                                  <input class="input" type="email" placeholder="Tu Email" autofocus="" name="email"  #email="ngModel" [(ngModel)]="usuarioService.selectedUsuario.email">
                               </div>
                           </div>
 

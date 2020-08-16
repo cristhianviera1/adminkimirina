@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { Usuario } from './../../models/usuario';
+import { User } from '../../models/user';
 import { Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   loginUsuario(form: NgForm) {
     this.usuarioService.loginUsuario(form.value).subscribe(res => {
 
-      this.usuarioService.cuenta = res["usuario"] as Usuario;
+      this.usuarioService.cuenta = res["data"] as User;
       const usuarioLogado = this.usuarioService.cuenta;
       if (usuarioLogado.rol !== "admin") {
         Swal.fire('Error', `Necesitas ser Administrador para ingresar!`, 'error');

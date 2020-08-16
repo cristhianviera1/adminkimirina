@@ -185,7 +185,7 @@
         </form>
       </div>
     </div>
-    <div class="modal-footer">  
+    <div class="modal-footer">
         <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal(true)"></a>
     </div>
   </div>
@@ -201,7 +201,7 @@
             <input type="hidden" formControlName="_id" [(ngModel)]="usuarioService.selectedUsuario._id">
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">account_circle</i>
-              <input id="nombre2" type="text" class="validate" required minlength="6" maxlength="50" formControlName="nombre" [(ngModel)]="usuarioService.selectedUsuario.nombre">
+              <input id="nombre2" type="text" class="validate" required minlength="6" maxlength="50" formControlName="nombre" [(ngModel)]="usuarioService.selectedUsuario.name">
               <label for="nombre2">Nombre Completo</label>
               <div *ngIf="fp.nombre.touched && !fp.nombre.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
@@ -217,7 +217,7 @@
             </div>
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">email</i>
-              <input id="email2" type="email" required pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$" class="validate" formControlName="correo" [(ngModel)]="usuarioService.selectedUsuario.correo">
+              <input id="email2" type="email" required pattern="^[\w]{1,}[\w.+-]{0,}@[\w-]{2,}([.][a-zA-Z]{2,}|[.][\w-]{2,}[.][a-zA-Z]{2,})$" class="validate" formControlName="correo" [(ngModel)]="usuarioService.selectedUsuario.email">
               <label for="email2">Email</label>
               <div *ngIf="fp.correo.touched && !fp.correo.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
@@ -254,7 +254,7 @@
             </div>
             <div class="input-field col s12 m6 l6">
               <i class="material-icons prefix">date_range</i>
-              <input id="edad2" type="date" required class="validate" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.edad">
+              <input id="edad2" type="date" required class="validate" formControlName="edad" [(ngModel)]="usuarioService.selectedUsuario.age">
               <label for="edad2">Fecha de nacimiento</label>
               <div *ngIf="fp.edad.touched && !fp.edad.errors">
                 <span class="helper-text" style="color: #4CAF50;">Bien</span>
@@ -268,7 +268,7 @@
           </div>
           <div class="row">
             <div class="input-field col s12 m6 l6">
-              <select id="genero2" required formControlName="genero" [(ngModel)]="usuarioService.selectedUsuario.genero">
+              <select id="genero2" required formControlName="genero" [(ngModel)]="usuarioService.selectedUsuario.gender">
                 <option value="" disabled>Escoje una opción</option>
                 <option value="Masculino">Masculino</option>
                 <option value="Femenino">Femenino</option>
@@ -295,7 +295,7 @@
                 </div>
               </div>
             </div>
-            <input type="hidden" formControlName="image" [(ngModel)]="usuarioService.selectedUsuario.imagen">
+            <input type="hidden" formControlName="image" [(ngModel)]="usuarioService.selectedUsuario.image">
           </div>
           <div class="row">
             <div class="input-field col s6 m12 l12">
@@ -318,7 +318,7 @@
         </form>
       </div>
     </div>
-    <div class="modal-footer">  
+    <div class="modal-footer">
         <a class="modal-close waves-effect waves-red btn red" (click)="cerrarModal(false)"></a>
     </div>
   </div>
