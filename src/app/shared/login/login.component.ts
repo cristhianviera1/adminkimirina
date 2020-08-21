@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   constructor(public authService: AuthService, private router: Router) {  }
 
   ngOnInit(): void {
+    this.isLoggedIn()
   }
 
   loginUser(form: NgForm) {
@@ -34,6 +35,14 @@ export class LoginComponent implements OnInit {
     }, (err) => {
       Swal.fire('Error', `Ha ocurrido un error al iniciar la session!`, 'error');
     });
+  }
+
+  isLoggedIn() {
+    const loggedUser = localStorage.getItem('loggedUser');
+
+    if (loggedUser !== null) {
+      this.router.navigateByUrl('/component/users');
+    }
   }
 
 }

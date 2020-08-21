@@ -8,4 +8,4 @@ export const environment = {
   API_URL: 'http://62.171.128.13:4008'
 };
 
-// http://62.171.128.13:4008
+// http://192.168.1.8:4000
