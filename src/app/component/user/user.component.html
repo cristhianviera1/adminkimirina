@@ -1,0 +1,178 @@
+<div class="row">
+    <div class="col-sm-12 col-md-10 col-xl-9">
+        <input type="text" class="form-control" placeholder="Busqueda" id="filterTable" [(ngModel)]="filtertext">
+    </div>
+    <div class="col-sm-12 col-md-10 col-xl-3">
+        <button type="button" class="btn btn-dark" (click)="open1(content1)"><i class="mdi mdi-plus"></i> Nuevo</button>
+    </div>
+</div>
+<br>
+<table class="table table-responsive table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Nº</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Fecha de nacimiento</th>
+        <th scope="col">Género</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Operaciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of userService.users | filtertable:filtertext | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+        <th>{{i+1}}</th>
+        <td>{{user.name}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.age}}</td>
+        <td>{{user.gender}}</td>
+        <td>{{user.rol}}</td>
+        <td>
+            <button type="button" class="btn btn-primary btn-sm" (click)="open2(content2,user)"><i class="mdi mdi-pencil"></i> Editar</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="softDelete(user._id)"><i class="mdi mdi-delete"></i> Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="userService.users.length"></ngb-pagination>
+
+
+  <ng-template #content1 let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Nuevo usuario</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="needs-validation" [formGroup]="postForm" (ngSubmit)='postUser()'>  
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="name">Nombre completo</label>
+              <input type="text" class="form-control" id="name" name="name" required formControlName="name">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="age">Fecha de nacimiento</label>
+              <div class="input-group">
+                <input id="age" class="form-control" type="date" required formControlName="age">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" [customErrorMessages]="customErrorMessages">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required formControlName="email" onkeyup="this.value = this.value.toLowerCase();">
+        </div>
+        <div class="form-group" [customErrorMessages]="customErrorMessages">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required formControlName="password">
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="gender">Genero</label>
+              <select id="gender" name="gender" class="form-control" required formControlName="gender">
+                <option value="" disabled selected>Escoje una opción</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+              </select>
+           </div>
+          </div>
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="rol">Rol</label>
+              <select id="rol" name="rol" class="form-control" required formControlName="rol">
+                <option value="" disabled selected>Escoje una opción</option>
+                <option value="admin">admin</option>
+                <option value="brigadista">brigadista</option>
+                <option value="usuario">usuario</option>
+              </select>
+            </div>
+          </div>
+        </div>  
+        <div class="form-group">
+          <div class="custom-file">
+            <input type="file" accept="image/*" class="custom-file-input" id="customFile" lang="es" (change)="uploadFile($event, true)">
+            <label class="custom-file-label" for="customFile">Sube una foto</label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-dark" type="submit" [disabled]="!postForm.valid">Guardar</button>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #content2 let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Editar usuario</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="putForm" (ngSubmit)='putUser()'>  
+        <input type="hidden" formControlName="_id" [(ngModel)]="userService.selectedUser._id">
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="name2">Nombre completo</label>
+              <input type="text" class="form-control" id="name2" name="name2" required formControlName="name" [(ngModel)]="userService.selectedUser.name">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="age2">Fecha de nacimiento</label>
+              <div class="input-group">
+                <input id="age2" class="form-control" type="date" placeholder="yyyy-mm-dd" required formControlName="age" [(ngModel)]="userService.selectedUser.age">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" [customErrorMessages]="customErrorMessages">
+          <label for="email2">Email</label>
+          <input type="email" class="form-control" id="email2" name="email2" required formControlName="email" [(ngModel)]="userService.selectedUser.email" onkeyup="this.value = this.value.toLowerCase();">
+        </div>
+        <div class="form-group" [customErrorMessages]="customErrorMessages">
+          <label for="password2">Password</label>
+          <input type="password" class="form-control" id="password2" name="password2" required formControlName="password" [(ngModel)]="userService.selectedUser.password">
+        </div>
+       
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="gender2">Genero</label>
+              <select id="gender2" name="gender2" class="form-control" required formControlName="gender" [(ngModel)]="userService.selectedUser.gender">
+                <option value="" disabled selected>Escoje una opción</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="rol2">Rol</label>
+              <select id="rol2" name="rol2" class="form-control" required formControlName="rol" [(ngModel)]="userService.selectedUser.rol">
+                <option value="" disabled selected>Escoje una opción</option>
+                <option value="admin">admin</option>
+                <option value="brigadista">brigadista</option>
+                <option value="usuario">usuario</option>
+              </select>
+            </div>
+          </div>
+        </div>  
+        <div class="form-group">
+          <input type="hidden" formControlName="image" [(ngModel)]="userService.selectedUser.imagen">
+          <div class="custom-file">
+            <input type="file" accept="image/*" class="custom-file-input" id="customFile2" lang="es" (change)="uploadFile($event, false)">
+            <label class="custom-file-label" for="customFile2">Sube una foto</label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-dark" type="submit" [disabled]="!putForm.valid">Guardar</button>
+      </form>
+    </div>
+  </ng-template>

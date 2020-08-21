@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-sm-12 col-md-10 col-xl-9">
+        <input type="text" class="form-control" placeholder="Busqueda" id="filterTable" [(ngModel)]="filtertext">
+    </div>
+    <div class="col-sm-12 col-md-10 col-xl-3">
+        <button type="button" class="btn btn-outline-success" (click)="exportToExcel()"><i class="mdi mdi-file-excel-box"></i> Exportar</button>
+    </div>
+</div>
+<br>
+<table class="table table-responsive table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Nº</th>
+        <th scope="col">Usuario</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">¿En los últimos 6 meses se ha hecho la prueba de VIH?</th>
+        <th scope="col">¿En los últimos 6 meses usted ha tenido, alguna infección de transmisión sexual?</th>
+        <th scope="col">¿En los últimos 6 meses, ha tenido sexo anal o vaginal sin protección?</th>
+        <th scope="col">¿En los últimos 6 meses, usted ha tenido una pareja VIH positivo?</th>
+        <th scope="col">¿Usted utilizó condón, en su última relación sexual?</th>
+        <th scope="col">¿En los últimos 6 meses ha recibido Transfusiones de sangre?</th>
+        <th scope="col">De los siguientes servicios que oferta Kimirina ¿Cuál ha utilizado usted?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let form of formService.forms | filtertable:filtertext | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+        <th>{{i+1}}</th>
+        <td>{{form.personFill}}</td>
+        <td>{{form.FillDate}}</td>
+        <td>{{form.questionOne}}</td>
+        <td>{{form.questionTwo}}</td>
+        <td>{{form.questionThree}}</td>
+        <td>{{form.questionFour}}</td>
+        <td>{{form.questionFive}}</td>
+        <td>{{form.questionSix}}</td>
+        <td>{{form.questionSeven}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="formService.forms.length"></ngb-pagination>

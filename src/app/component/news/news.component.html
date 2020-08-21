@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-sm-12 col-md-10 col-xl-9">
+        <input type="text" class="form-control" placeholder="Busqueda" id="filterTable" [(ngModel)]="filtertext">
+    </div>
+    <div class="col-sm-12 col-md-10 col-xl-3">
+        <button type="button" class="btn btn-dark" (click)="open1(content1)"><i class="mdi mdi-plus"></i> Nuevo</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 m-t-30">
+        <div class="card-deck">
+            <div class="card" *ngFor="let news of newsService.news | filtertable:filtertext | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                <img class="card-img-top img-responsive" *ngIf="news.image !== ''" src="{{news.image}}">
+                <img class="card-img-top img-responsive" *ngIf="news.image == ''" src="../../../assets/images/gallery/no-image-1.png"/>
+                <div class="card-body">
+                    <h4 class="card-title">{{news.title}}</h4> 
+                    <h5 class="card-title">Fecha de publicacion: {{news.publicationDate}}</h5>
+                    <h6>Descripcion: </h6>
+                    <p class="card-text">{{news.description}}</p>
+                    <p class="card-text">Link: <small class="text-muted"><a href="{{news.link}}" target="_blank">{{news.link}}</a></small></p>
+                </div>
+                <div class="card-footer" style="background-color: lightgray;">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="open2(content2,news)"><i class="mdi mdi-pencil"></i> Editar</button> |
+                    <button type="button" class="btn btn-danger btn-sm" (click)="deleteNews(news._id)"><i class="mdi mdi-delete"></i> Eliminar</button>
+                </div>
+            </div>
+        </div>
+        <br>
+        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="newsService.news.length"></ngb-pagination>
+    </div>
+</div>
+
+<ng-template #content1 let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Nueva noticia</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form class="needs-validation" [formGroup]="postForm" (ngSubmit)='postNews()'>  
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="title">Título</label>
+              <input type="text" class="form-control" id="title" name="title" required formControlName="title">
+            </div>
+          </div>
+        </div>
+        <div class="form-group" [customErrorMessages]="customErrorMessages">
+          <label for="link">Link</label>
+          <input type="url" class="form-control" id="link" name="link" required formControlName="link">
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+              <label for="description">Descripción</label>
+              <textarea class="form-control" id="description" required formControlName="description"></textarea>
+           </div>
+          </div>
+        </div>  
+        <div class="form-group">
+          <div class="custom-file">
+            <input type="file" accept="image/*" class="custom-file-input" id="customFile" lang="es" (change)="uploadFile($event, true)">
+            <label class="custom-file-label" for="customFile">Sube una foto</label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-dark" type="submit" [disabled]="!postForm.valid">Guardar</button>
+      </form>
+    </div>
+  </ng-template>
+
+  <ng-template #content2 let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Editar noticia</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="putForm" (ngSubmit)='putProduct()'>  
+        <input type="hidden" formControlName="_id" [(ngModel)]="newsService.selectedNews._id">
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+                <label for="title2">Título</label>
+                <input type="text" class="form-control" id="title2" name="title2" required formControlName="title" [(ngModel)]="newsService.selectedNews.title">
+            </div>
+          </div>
+        </div>
+        <div class="form-group" [customErrorMessages]="customErrorMessages">
+            <label for="link2">Link</label>
+            <input type="url" class="form-control" id="link2" name="link2" required formControlName="link" [(ngModel)]="newsService.selectedNews.link">
+        </div>
+       
+        <div class="row">
+          <div class="col">
+            <div class="form-group" [customErrorMessages]="customErrorMessages">
+                <label for="description2">Descripción</label>
+                <textarea class="form-control" id="description2" required formControlName="description" [(ngModel)]="newsService.selectedNews.description"></textarea>
+            </div>
+          </div>
+        </div>  
+        <div class="form-group">
+          <input type="hidden" formControlName="image" [(ngModel)]="newsService.selectedNews.imagen">
+          <div class="custom-file">
+            <input type="file" accept="image/*" class="custom-file-input" id="customFile2" lang="es" (change)="uploadFile($event, false)">
+            <label class="custom-file-label" for="customFile2">Sube una foto</label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-dark" type="submit" [disabled]="!putForm.valid">Guardar</button>
+      </form>
+    </div>
+  </ng-template>
