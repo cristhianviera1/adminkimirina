@@ -58,7 +58,7 @@ export class UserComponent implements OnInit {
       age: ['', Validators.required],
       gender: ['', Validators.required],
       rol: ['', Validators.required],
-      image: [null]
+      image: [null, Validators.required]
     });
 
     this.putForm = this.formBuilder.group({
@@ -82,12 +82,16 @@ export class UserComponent implements OnInit {
   uploadFile(event, accion: boolean) {
     const file = (event.target as HTMLInputElement).files[0];
 
+    const filename = file.name;
+
     if (accion === true) {
+      document.getElementById('filename').innerHTML= filename;
       this.postForm.patchValue({
         image: file
       });
       this.postForm.get('image').updateValueAndValidity();
     } else {
+      document.getElementById('filename2').innerHTML= filename;
       this.putForm.patchValue({
         image: file
       });

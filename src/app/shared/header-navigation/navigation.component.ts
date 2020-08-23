@@ -28,7 +28,6 @@ export class NavigationComponent implements OnInit {
   isLoggedIn() {
     const loggedUser = localStorage.getItem('loggedUser');
     this.userObject = JSON.parse(loggedUser);
-    console.log(this.userObject);
 
     if (loggedUser == null) {
       this.isLogged = false;
@@ -43,7 +42,6 @@ export class NavigationComponent implements OnInit {
     const userJson = localStorage.getItem('loggedUser');
     const userObject = JSON.parse(userJson);
     const env = { id: userObject._id };
-    console.log(env.id);
     this.authService.logOutUser(env).subscribe(res => {
       // tslint:disable-next-line: no-string-literal
       if (res["status"] == 200) {
