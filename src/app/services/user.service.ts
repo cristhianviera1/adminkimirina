@@ -59,7 +59,7 @@ export class UserService {
     const headers = {
       responseType: 'text'
     };
-    return this.httpClient.post(environment.API_URL + this.url + this.softDelete, json, {headers});
+    return this.httpClient.post(environment.API_URL + this.url + this.softDelete, json, {headers, reportProgress: true, observe: 'events'});
   }
 
 }

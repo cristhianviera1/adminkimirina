@@ -33,6 +33,9 @@ export class ProductComponent implements OnInit {
     }, {
       error: 'minlength',
       format: (label, error) => `${label} Debe contener al menos 6 caracteres`
+    }, {
+      error: 'min',
+      format: (label, error) => `${label} El valor minimo debe ser 0`
     }
   ];
 
@@ -48,7 +51,7 @@ export class ProductComponent implements OnInit {
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
       price: ['', Validators.required],
       observations: ['', Validators.required],
-      image: [null]
+      image: [null, Validators.required]
     });
 
     this.putForm = this.formBuilder.group({
@@ -56,7 +59,7 @@ export class ProductComponent implements OnInit {
       title: ['', Validators.minLength(6)],
       description: ['', Validators.required],
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
-      price: ['', Validators.required],
+      price: ['', Validators.required, Validators.min(0)],
       observations: ['', Validators.required],
       image: [null]
     });
@@ -72,12 +75,16 @@ export class ProductComponent implements OnInit {
   uploadFile(event, accion: boolean) {
     const file = (event.target as HTMLInputElement).files[0];
 
+    const filename = file.name;
+
     if (accion === true) {
+      document.getElementById('filename').innerHTML= filename;
       this.postForm.patchValue({
         image: file
       });
       this.postForm.get('image').updateValueAndValidity();
     } else {
+      document.getElementById('filename2').innerHTML= filename;
       this.putForm.patchValue({
         image: file
       });

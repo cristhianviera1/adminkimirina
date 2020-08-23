@@ -76,13 +76,13 @@
             </div>
           </div>
         </div>  
-        <div class="form-group">
+        <div class="form-group" [customErrorMessages]="customErrorMessages">
           <div class="custom-file">
-            <input type="file" accept="image/*" class="custom-file-input" id="customFile" lang="es" (change)="uploadFile($event, true)">
-            <label class="custom-file-label" for="customFile">Sube una foto</label>
+            <input type="file" accept="image/*" class="custom-file-input form-control" required id="customFile" lang="es" formControlName="image" (change)="uploadFile($event, true)">
+            <label id="filename" class="custom-file-label" for="customFile">Sube una foto</label>
           </div>
         </div>
-        <button type="button" class="btn btn-outline-dark" type="submit" [disabled]="!postForm.valid">Guardar</button>
+        <button type="button" class="btn btn-outline-dark" type="submit">Guardar</button>
       </form>
     </div>
   </ng-template>
@@ -136,7 +136,7 @@
           <input type="hidden" formControlName="image" [(ngModel)]="productService.selectedProduct.imagen">
           <div class="custom-file">
             <input type="file" accept="image/*" class="custom-file-input" id="customFile2" lang="es" (change)="uploadFile($event, false)">
-            <label class="custom-file-label" for="customFile2">Sube una foto</label>
+            <label id="filename2" class="custom-file-label" for="customFile2">Sube una foto</label>
           </div>
         </div>
         <button type="button" class="btn btn-outline-dark" type="submit" [disabled]="!putForm.valid">Guardar</button>
