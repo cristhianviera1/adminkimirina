@@ -59,7 +59,7 @@ export class ProductComponent implements OnInit {
       title: ['', Validators.minLength(6)],
       description: ['', Validators.required],
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
-      price: ['', Validators.required, Validators.min(0)],
+      price: ['', Validators.required],
       observations: ['', Validators.required],
       image: [null]
     });
