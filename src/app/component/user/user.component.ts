@@ -22,7 +22,6 @@ export class UserComponent implements OnInit {
   previewImage: string;
   passwordPattern = '(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,60}';
   emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
-  whiteSpecePattern = '^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$';
 
   // Error Messages
   customErrorMessages: ErrorMessage[] = [
@@ -55,7 +54,7 @@ export class UserComponent implements OnInit {
     this.postForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.passwordPattern)]],
       email: ['',  [Validators.required, Validators.pattern(this.emailPattern)]],
-      name: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.whiteSpecePattern)]],
+      name: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9_]+(?:\W+[a-zA-Z0-9_]+)*\W*$/)]],
       age: ['', Validators.required],
       gender: ['', Validators.required],
       rol: ['', Validators.required],
@@ -66,7 +65,7 @@ export class UserComponent implements OnInit {
       _id: [''],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(this.passwordPattern)]],
       email: ['',  [Validators.required, Validators.pattern(this.emailPattern)]],
-      name: ['', [Validators.required, Validators.minLength(6)]],
+      name: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^[a-zA-Z0-9_]+(?:\W+[a-zA-Z0-9_]+)*\W*$/)]],
       age: ['', Validators.required],
       gender: ['', Validators.required],
       rol: ['', Validators.required],

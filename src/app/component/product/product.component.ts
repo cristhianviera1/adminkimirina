@@ -21,7 +21,6 @@ export class ProductComponent implements OnInit {
   putForm: FormGroup;
   preview: string;
   urlPattern = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
-  whiteSpecePattern = '^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$';
 
   // Error Messages
   customErrorMessages: ErrorMessage[] = [
@@ -47,21 +46,21 @@ export class ProductComponent implements OnInit {
     this.getProducts();
 
     this.postForm = this.formBuilder.group({
-      title: ['', [Validators.minLength(6), Validators.pattern(this.whiteSpecePattern)]],
-      description: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
+      title: ['', [Validators.minLength(6), Validators.pattern(/^[a-zA-Z0-9_]+(?:\W+[a-zA-Z0-9_]+)*\W*$/)]],
+      description: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_]+(?:\W+[a-zA-Z0-9_]+)*\W*$/)]],
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
       price: ['', Validators.required],
-      observations: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
+      observations: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_]+(?:\W+[a-zA-Z0-9_]+)*\W*$/)]],
       image: [null, Validators.required]
     });
 
     this.putForm = this.formBuilder.group({
       _id: [''],
-      title: ['',[ Validators.minLength(6), Validators.pattern(this.whiteSpecePattern)]],
-      description: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
+      title: ['',[ Validators.minLength(6), Validators.pattern(/^[a-zA-Z0-9_]+(?:\W+[a-zA-Z0-9_]+)*\W*$/)]],
+      description: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_]+(?:\W+[a-zA-Z0-9_]+)*\W*$/)]],
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
       price: ['', Validators.required],
-      observations: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
+      observations: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9_]+(?:\W+[a-zA-Z0-9_]+)*\W*$/)]],
       image: [null]
     });
   }
