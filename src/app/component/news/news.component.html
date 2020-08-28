@@ -8,28 +8,35 @@
 </div>
 
 <div class="row">
-    <div class="col-12 m-t-30">
-        <div class="card-deck">
-            <div class="card" *ngFor="let news of newsService.news | filtertable:filtertext | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-                <img class="card-img-top img-responsive" *ngIf="news.image !== ''" src="{{news.image}}">
-                <img class="card-img-top img-responsive" *ngIf="news.image == ''" src="../../../assets/images/gallery/no-image-1.png"/>
-                <div class="card-body">
+  <div class="col-12 m-t-30">
+      <!-- Row -->
+      <div class="row">
+          <!-- column -->
+          <div class="col-lg-3 col-md-6" *ngFor="let news of newsService.news | filtertable:filtertext | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+              <!-- Card -->
+              <div class="card">
+                <img class="card-img-top img-responsive" style="min-height: 170px; max-height: 170px;" *ngIf="news.image !== ''" src="{{news.image}}">
+                <img class="card-img-top img-responsive" style="min-height: 170px; max-height: 170px;" *ngIf="news.image == '' || news.image == undefined" src="../../../assets/images/gallery/no-image-1.png"/>
+                  <div class="card-body">
                     <h4 class="card-title">{{news.title}}</h4> 
-                    <h5 class="card-title">Fecha de publicacion: {{news.publicationDate}}</h5>
-                    <h6>Descripcion: </h6>
+                    <h5 class="card-title">Fecha de publicación: {{news.publicationDate}}</h5>
+                    <h6>Descripción: </h6>
                     <p class="card-text">{{news.description}}</p>
                     <p class="card-text">Link: <small class="text-muted"><a href="{{news.link}}" target="_blank">{{news.link}}</a></small></p>
-                </div>
-                <div class="card-footer" style="background-color: lightgray;">
+                  </div>
+                  <div class="card-footer" style="background-color: lightgray;">
                     <button type="button" class="btn btn-primary btn-sm" (click)="open2(content2,news)"><i class="mdi mdi-pencil"></i> Editar</button> |
                     <button type="button" class="btn btn-danger btn-sm" (click)="deleteNews(news._id)"><i class="mdi mdi-delete"></i> Eliminar</button>
                 </div>
-            </div>
-        </div>
-        <br>
-        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="newsService.news.length"></ngb-pagination>
-    </div>
+              </div>
+              <!-- Card -->
+          </div>
+      </div>
+      <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="newsService.news.length"></ngb-pagination>
+      <!-- Row -->
+  </div>
 </div>
+
 
 <ng-template #content1 let-modal>
     <div class="modal-header">
@@ -79,7 +86,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]="putForm" (ngSubmit)='putProduct()'>  
+      <form [formGroup]="putForm" (ngSubmit)='putNews()'>  
         <input type="hidden" formControlName="_id" [(ngModel)]="newsService.selectedNews._id">
         <div class="row">
           <div class="col">
@@ -103,7 +110,7 @@
           </div>
         </div>  
         <div class="form-group">
-          <input type="hidden" formControlName="image" [(ngModel)]="newsService.selectedNews.imagen">
+          <input type="hidden" formControlName="image" [(ngModel)]="newsService.selectedNews.image">
           <div class="custom-file">
             <input type="file" accept="image/*" class="custom-file-input" id="customFile2" lang="es" (change)="uploadFile($event, false)">
             <label id="filename2" class="custom-file-label" for="customFile2">Sube una foto</label>

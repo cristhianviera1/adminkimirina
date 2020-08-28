@@ -13,8 +13,8 @@
     <!-- ============================================================== -->
     <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
         <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="profile-pic" *ngIf="userObject.image == ''" src="assets/images/gallery/no-profile-image.png"/>
-            <img class="profile-pic" *ngIf="userObject.image !== ''" src="{{userObject.image}}" alt="user"/></a>
+            <img class="profile-pic" style="min-width: 30px; max-width: 30px; min-height: 30px; max-height: 30px;" *ngIf="userObject.image == ''" src="assets/images/gallery/no-profile-image.png"/>
+            <img class="profile-pic" style="min-width: 30px; max-width: 30px; min-height: 30px; max-height: 30px;" *ngIf="userObject.image !== ''" src="{{userObject.image}}" alt="user"/></a>
         <div class="dropdown-menu" ngbDropdownMenu>
             <ul class="dropdown-user">
                 <li><a (click)="logoutUser()"><i class="fa fa-power-off"></i> Cerrar Sesión</a></li>
