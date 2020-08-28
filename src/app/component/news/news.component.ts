@@ -22,6 +22,7 @@ export class NewsComponent implements OnInit {
   preview: string;
   submittedForm = false;
   urlPattern = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+  whiteSpecePattern = '^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$';
 
   // Error Messages
   customErrorMessages: ErrorMessage[] = [
@@ -30,7 +31,7 @@ export class NewsComponent implements OnInit {
       format: (label, error) => `${label} Obligatorio!`
     }, {
       error: 'pattern',
-      format: (label, error) => `${label} Por favor ingresa una URL valida`
+      format: (label, error) => `${label} Esto no luce bien...`
     }, {
       error: 'minlength',
       format: (label, error) => `${label} Debe contener al menos 6 caracteres`
@@ -44,16 +45,16 @@ export class NewsComponent implements OnInit {
     this.getNews();
 
     this.postForm = this.formBuilder.group({
-      title: ['', Validators.minLength(6)],
-      description: ['', Validators.required],
+      title: ['', [Validators.minLength(6), Validators.pattern(this.whiteSpecePattern)]],
+      description: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
       image: [null, Validators.required]
     });
 
     this.putForm = this.formBuilder.group({
       _id: [''],
-      title: ['', Validators.minLength(6)],
-      description: ['', Validators.required],
+      title: ['', [Validators.minLength(6), Validators.pattern(this.whiteSpecePattern)]],
+      description: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
       image: [null]
     });
@@ -147,8 +148,8 @@ export class NewsComponent implements OnInit {
     } else {
     this.newsService.putNews(
       this.putForm.value._id,
-      this.putForm.value.titulo,
-      this.putForm.value.descripcion,
+      this.putForm.value.title,
+      this.putForm.value.description,
       this.putForm.value.link,
       this.putForm.value.image
     ).subscribe(res => {
@@ -156,7 +157,7 @@ export class NewsComponent implements OnInit {
           this.getNews();
           Swal.fire(
             'Muy Bien',
-            'Novedad actualizada exitosamente',
+            'Noticia actualizada exitosamente',
             'success'
           );
         }

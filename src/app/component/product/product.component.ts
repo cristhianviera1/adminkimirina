@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit {
   putForm: FormGroup;
   preview: string;
   urlPattern = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
+  whiteSpecePattern = '^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$';
 
   // Error Messages
   customErrorMessages: ErrorMessage[] = [
@@ -29,7 +30,7 @@ export class ProductComponent implements OnInit {
       format: (label, error) => `${label} Obligatorio!`
     }, {
       error: 'pattern',
-      format: (label, error) => `${label} Por favor ingresa una URL valida`
+      format: (label, error) => `${label} Esto no luce bien...`
     }, {
       error: 'minlength',
       format: (label, error) => `${label} Debe contener al menos 6 caracteres`
@@ -46,21 +47,21 @@ export class ProductComponent implements OnInit {
     this.getProducts();
 
     this.postForm = this.formBuilder.group({
-      title: ['', Validators.minLength(6)],
-      description: ['', Validators.required],
+      title: ['', [Validators.minLength(6), Validators.pattern(this.whiteSpecePattern)]],
+      description: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
       price: ['', Validators.required],
-      observations: ['', Validators.required],
+      observations: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
       image: [null, Validators.required]
     });
 
     this.putForm = this.formBuilder.group({
       _id: [''],
-      title: ['', Validators.minLength(6)],
-      description: ['', Validators.required],
+      title: ['',[ Validators.minLength(6), Validators.pattern(this.whiteSpecePattern)]],
+      description: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
       link: ['', [Validators.required, Validators.pattern(this.urlPattern)]],
       price: ['', Validators.required],
-      observations: ['', Validators.required],
+      observations: ['', [Validators.required, Validators.pattern(this.whiteSpecePattern)]],
       image: [null]
     });
   }

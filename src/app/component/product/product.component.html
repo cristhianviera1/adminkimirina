@@ -8,29 +8,35 @@
 </div>
 
 <div class="row">
-    <div class="col-12 m-t-30">
-        <div class="card-deck">
-            <div class="card" *ngFor="let product of productService.products | filtertable:filtertext | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
-                <img class="card-img-top img-responsive" *ngIf="product.image !== ''" src="{{product.image}}">
-                <img class="card-img-top img-responsive" *ngIf="product.image == ''" src="../../../assets/images/gallery/no-image-1.png"/>
-                <div class="card-body">
-                    <h4 class="card-title">{{product.title}}</h4> 
-                    <h5 class="card-title">Precio: {{product.price}}</h5>
-                    <h6>Descripcion: </h6>
-                    <p class="card-text">{{product.description}}</p>
-                    <h6>Observaciones: </h6>
-                    <p class="card-text">{{product.observations}}</p>
-                    <p class="card-text">Link: <small class="text-muted"><a href="{{product.link}}" target="_blank">{{product.link}}</a></small></p>
-                </div>
-                <div class="card-footer" style="background-color: lightgray;">
+  <div class="col-12 m-t-30">
+      <!-- Row -->
+      <div class="row">
+          <!-- column -->
+          <div class="col-lg-3 col-md-6" *ngFor="let product of productService.products | filtertable:filtertext | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+              <!-- Card -->
+              <div class="card">
+                <img class="card-img-top img-responsive" style="min-height: 170px; max-height: 170px;" *ngIf="product.image !== ''" src="{{product.image}}">
+                <img class="card-img-top img-responsive" style="min-height: 170px; max-height: 170px;" *ngIf="product.image == '' || product.image == undefined" src="../../../assets/images/gallery/no-image-1.png"/>
+                  <div class="card-body">
+                      <h4 class="card-title">{{product.title}}</h4>
+                      <h5 class="card-title">Precio: {{product.price}}</h5>
+                      <h6>Descripción: </h6>
+                      <p class="card-text">{{product.description}}</p>
+                      <h6>Observaciones: </h6>
+                      <p class="card-text">{{product.observations}}</p>
+                      <p class="card-text">Link: <small class="text-muted"><a href="{{product.link}}" target="_blank">{{product.link}}</a></small></p>
+                  </div>
+                  <div class="card-footer" style="background-color: lightgray;">
                     <button type="button" class="btn btn-primary btn-sm" (click)="open2(content2,product)"><i class="mdi mdi-pencil"></i> Editar</button> |
                     <button type="button" class="btn btn-danger btn-sm" (click)="deleteProduct(product._id)"><i class="mdi mdi-delete"></i> Eliminar</button>
                 </div>
-            </div>
-        </div>
-        <br>
-        <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="productService.products.length"></ngb-pagination>
-    </div>
+              </div>
+              <!-- Card -->
+          </div>
+      </div>
+      <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="productService.products.length"></ngb-pagination>
+      <!-- Row -->
+  </div>
 </div>
 
 <ng-template #content1 let-modal>
@@ -133,7 +139,7 @@
           </div>
         </div>  
         <div class="form-group">
-          <input type="hidden" formControlName="image" [(ngModel)]="productService.selectedProduct.imagen">
+          <input type="hidden" formControlName="image" [(ngModel)]="productService.selectedProduct.image">
           <div class="custom-file">
             <input type="file" accept="image/*" class="custom-file-input" id="customFile2" lang="es" (change)="uploadFile($event, false)">
             <label id="filename2" class="custom-file-label" for="customFile2">Sube una foto</label>
