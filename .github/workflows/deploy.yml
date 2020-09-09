@@ -21,4 +21,5 @@ jobs:
             cd ${{ secrets.PATH_WEB_DEV }}
             git pull origin development
             npm i
+            npm run build
             /root/.nvm/versions/node/v12.18.0/bin/pm2 restart all
