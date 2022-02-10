@@ -34,7 +34,7 @@
     "ng-chartist": "^1.1.1",
     "ng2-charts": "^2.3.2",
     "ngx-perfect-scrollbar": "^6.1.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "popper.js": "^1.12.5",
     "rxjs": "^6.6.0",
     "rxjs-compat": "^6.6.0",
